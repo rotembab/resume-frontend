@@ -34,4 +34,14 @@ export const AppTheme = createTheme({
       default: '#161312', //background color black
     },
   },
+
+  typography: {
+    fontFamily: "'Poppins', sans-serif",
+    h1: {
+      fontWeight: 700,
+    },
+    h3: {
+      fontWeight: 500,
+    },
+  },
 });
