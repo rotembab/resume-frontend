@@ -29,6 +29,9 @@ export const AppTheme = createTheme({
     primary: {
       main: '#ff0000', //red primary color
     },
+    secondary: {
+      main: '#ffffff', //white secondary
+    },
 
     background: {
       default: '#161312', //background color black
@@ -36,12 +39,20 @@ export const AppTheme = createTheme({
   },
 
   typography: {
-    fontFamily: "'Poppins', sans-serif",
+    fontFamily: "'Inter', sans-serif",
+
     h1: {
       fontWeight: 700,
+      fontFamily: "'Poppins', sans-serif",
     },
     h3: {
       fontWeight: 500,
+      fontFamily: "'Poppins', sans-serif",
+    },
+    button: {
+      fontWeight: 700,
+      fontFamily: "'Inter', sans-serif",
+      textTransform: 'none',
     },
   },
 });
