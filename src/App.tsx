@@ -1,5 +1,9 @@
-function App() {
-  return <></>;
-}
+import { AppButton } from './components/ui/button.component';
 
-export default App;
+export default function App() {
+  return (
+    <>
+      <AppButton />
+    </>
+  );
+}
