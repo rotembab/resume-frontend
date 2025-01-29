@@ -1,36 +1,33 @@
 import { createTheme } from '@mui/material/styles';
+import { CustomColor, customColors } from './custom-colors';
+import { CSSProperties } from 'react';
+
+type CustomPaletteColor = {
+  main: CSSProperties['color'];
+  contrastText?: CSSProperties['color'];
+  light?: CSSProperties['color'];
+  dark?: CSSProperties['color'];
+};
 
 declare module '@mui/material/styles' {
-  interface Palette {
-    customColors: {
-      darkest: string;
-      heading: string;
-      paragraph: string;
-    };
-  }
-  interface PaletteOptions {
-    customColors?: {
-      darkest?: string;
-      heading?: string;
-      paragraph?: string;
-    };
-  }
+  interface Palette extends Record<CustomColor, CustomPaletteColor> {}
+  interface PaletteOptions
+    extends Partial<Record<CustomColor, CustomPaletteColor>> {}
 }
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides extends Record<CustomColor, true> {}
+}
+
 export const AppTheme = createTheme({
   palette: {
     mode: 'dark',
-
-    customColors: {
-      darkest: '#1C1A19',
-      heading: '#353334',
-      paragraph: '#998e8f',
-    },
+    ...customColors,
 
     primary: {
       main: '#ff0000', //red primary color
     },
     secondary: {
-      main: '#ffffff', //white secondary
+      main: '#ffffff',
     },
 
     background: {
