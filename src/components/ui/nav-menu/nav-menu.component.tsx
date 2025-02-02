@@ -1,4 +1,4 @@
-import { AppBar, Box, Fade, Icon, Tooltip } from '@mui/material';
+import { AppBar, Box, Fade, Icon, Slide, Tooltip } from '@mui/material';
 import { customColors } from '../../../themes/custom-colors';
 import { NavMenuConfig } from './nav-menu-config';
 
@@ -30,13 +30,7 @@ export const NavMenu = ({}: NavMenuProps) => {
       >
         {config.map((item) => {
           return (
-            <Tooltip
-              slots={{
-                transition: Fade,
-              }}
-              title={item.tooltip}
-              placement='bottom'
-            >
+            <Tooltip title={item.tooltip} placement='bottom'>
               <Icon
                 key={item.icon.props.viewBox}
                 onClick={item.onClick}
