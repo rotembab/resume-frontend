@@ -5,12 +5,15 @@ import App from './App.tsx';
 import { ThemeProvider } from '@emotion/react';
 import { AppTheme } from './themes/theme.ts';
 import { CssBaseline } from '@mui/material';
+import { BrowserRouter } from 'react-router';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ThemeProvider theme={AppTheme}>
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={AppTheme}>
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
+    </BrowserRouter>
   </StrictMode>
 );
