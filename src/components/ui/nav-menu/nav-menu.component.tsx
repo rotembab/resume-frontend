@@ -1,4 +1,4 @@
-import { AppBar, Box, Fade, Icon, Slide, Tooltip } from '@mui/material';
+import { AppBar, Box, Icon, Tooltip } from '@mui/material';
 import { customColors } from '../../../themes/custom-colors';
 import { NavMenuConfig } from './nav-menu-config';
 
@@ -23,6 +23,7 @@ export const NavMenu = ({}: NavMenuProps) => {
       }}
     >
       <Box
+        key={'nav-menu-box'}
         sx={{
           display: 'flex',
           gap: '30px',
@@ -30,10 +31,16 @@ export const NavMenu = ({}: NavMenuProps) => {
       >
         {config.map((item) => {
           return (
-            <Tooltip title={item.tooltip} placement='bottom'>
+            <Tooltip
+              key={`${item.tooltip}_tooltip`}
+              title={item.tooltip}
+              placement='bottom'
+            >
               <Icon
-                key={item.icon.props.viewBox}
-                onClick={item.onClick}
+                key={`${item.tooltip}_icon`}
+                onClick={() => {
+                  item.onClick?.();
+                }}
                 color='secondary'
                 sx={{
                   cursor: 'pointer',
