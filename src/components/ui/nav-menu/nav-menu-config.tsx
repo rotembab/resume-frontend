@@ -6,7 +6,7 @@ import {
   FolderOutlined,
   HomeOutlined,
 } from '@mui/icons-material';
-import { useNavigate } from 'react-router';
+import { NavigateFunction } from 'react-router';
 
 export type NavMenuItem = {
   tooltip: string;
@@ -14,8 +14,7 @@ export type NavMenuItem = {
   onClick?: () => void;
 };
 
-export const NavMenuConfig = () => {
-  let navigate = useNavigate();
+export const NavMenuConfig = (navigate: NavigateFunction) => {
   return [
     {
       tooltip: 'Home',
@@ -27,22 +26,21 @@ export const NavMenuConfig = () => {
     {
       tooltip: 'Projects',
       icon: <FolderOutlined />,
-      onclick: () => {
-        alert('clicked');
+      onClick: () => {
         navigate('/projects');
       },
     },
     {
       tooltip: 'Experience',
       icon: <BusinessCenterOutlined />,
-      onclick: () => {
+      onClick: () => {
         navigate('/experience');
       },
     },
     {
       tooltip: 'Tools',
       icon: <ColorizeOutlined />,
-      onclick: () => {
+      onClick: () => {
         navigate('/tools');
       },
     },

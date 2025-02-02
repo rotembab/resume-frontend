@@ -1,11 +1,13 @@
 import { AppBar, Box, Icon, Tooltip } from '@mui/material';
 import { customColors } from '../../../themes/custom-colors';
 import { NavMenuConfig } from './nav-menu-config';
+import { useNavigate } from 'react-router';
 
 type NavMenuProps = {};
 
 export const NavMenu = ({}: NavMenuProps) => {
-  const config = NavMenuConfig();
+  let navigate = useNavigate();
+  const config = NavMenuConfig(navigate);
   return (
     <AppBar
       color='transparent'
