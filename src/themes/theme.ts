@@ -17,6 +17,12 @@ declare module '@mui/material/styles' {
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides extends Record<CustomColor, true> {}
 }
+declare module '@mui/material/AppBar' {
+  interface AppBarPropsColorOverrides extends Record<CustomColor, true> {}
+}
+declare module '@mui/material/Box' {
+  interface BoxPropsColorOverrides extends Record<CustomColor, true> {}
+}
 
 export const AppTheme = createTheme({
   palette: {
