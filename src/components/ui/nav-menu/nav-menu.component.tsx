@@ -1,10 +1,11 @@
 import { AppBar, Box, Fade, Icon, Tooltip } from '@mui/material';
 import { customColors } from '../../../themes/custom-colors';
-import { NavMenuConfig } from './navmenu-config';
+import { NavMenuConfig } from './nav-menu-config';
 
 type NavMenuProps = {};
 
 export const NavMenu = ({}: NavMenuProps) => {
+  const config = NavMenuConfig();
   return (
     <AppBar
       color='transparent'
@@ -20,7 +21,7 @@ export const NavMenu = ({}: NavMenuProps) => {
       }}
     >
       <Box>
-        {NavMenuConfig.map((item) => {
+        {config.map((item) => {
           return (
             <Tooltip
               slots={{
