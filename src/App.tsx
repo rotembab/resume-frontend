@@ -18,21 +18,20 @@ export default function App() {
       }}
     >
       <NavMenu />
-      <Slide key={location.pathname} in appear direction='down'>
-        <Grid container>
-          <Grid size={4}>
-            <DetailsCard />
-          </Grid>
-          <Grid size={8}>
-            <Routes>
-              <Route path='/' element={<HomePage />} />
-              <Route path='/projects' element={<ProjectsPage />} />
-              <Route path='/experience' element={<ExperiencePage />} />
-              <Route path='/tools' element={<ToolsPage />} />
-            </Routes>
-          </Grid>
+
+      <Grid container>
+        <Grid size={4}>
+          <DetailsCard />
         </Grid>
-      </Slide>
+        <Grid size={8}>
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/projects' element={<ProjectsPage />} />
+            <Route path='/experience' element={<ExperiencePage />} />
+            <Route path='/tools' element={<ToolsPage />} />
+          </Routes>
+        </Grid>
+      </Grid>
     </Container>
   );
 }

@@ -4,21 +4,29 @@ import { useLocation } from 'react-router';
 export const DetailsCard = () => {
   const location = useLocation();
   return (
-    <Fade
-      style={{
-        transitionDuration: '1s',
-      }}
-      key={location.pathname + 'fade'}
+    <Slide
+      timeout={{ enter: 400 }}
+      key={location.pathname}
       in
       appear
+      direction='down'
     >
-      <Card
-        sx={{
-          height: 100,
+      <Fade
+        style={{
+          transitionDuration: '1s',
         }}
+        key={location.pathname + 'fade'}
+        in
+        appear
       >
-        card
-      </Card>
-    </Fade>
+        <Card
+          sx={{
+            height: 100,
+          }}
+        >
+          card
+        </Card>
+      </Fade>
+    </Slide>
   );
 };
