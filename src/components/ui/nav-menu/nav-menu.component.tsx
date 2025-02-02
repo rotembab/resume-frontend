@@ -10,17 +10,24 @@ export const NavMenu = ({}: NavMenuProps) => {
     <AppBar
       color='transparent'
       sx={{
-        padding: '10px 20px',
+        padding: '10px 25px',
         position: 'absolute',
         width: 'max-content',
+        height: '48px',
+        flexWrap: 'nowrap',
         top: 30,
         left: '50%',
         transform: 'translateX(-50%)',
-        borderRadius: '10px',
+        borderRadius: '15px',
         backgroundColor: customColors.hoverColor.main,
       }}
     >
-      <Box>
+      <Box
+        sx={{
+          display: 'flex',
+          gap: '30px',
+        }}
+      >
         {config.map((item) => {
           return (
             <Tooltip
@@ -36,7 +43,6 @@ export const NavMenu = ({}: NavMenuProps) => {
                 color='secondary'
                 sx={{
                   cursor: 'pointer',
-                  margin: '0 10px',
                 }}
               >
                 {item.icon}
