@@ -1,5 +1,6 @@
-import { AppBar, Box } from '@mui/material';
+import { AppBar, Box, Fade, Icon, Tooltip } from '@mui/material';
 import { customColors } from '../../../themes/custom-colors';
+import { NavMenuConfig } from './navmenu-config';
 
 type NavMenuProps = {};
 
@@ -18,7 +19,31 @@ export const NavMenu = ({}: NavMenuProps) => {
         backgroundColor: customColors.hoverColor.main,
       }}
     >
-      <Box>{}</Box>
+      <Box>
+        {NavMenuConfig.map((item) => {
+          return (
+            <Tooltip
+              slots={{
+                transition: Fade,
+              }}
+              title={item.tooltip}
+              placement='bottom'
+            >
+              <Icon
+                key={item.icon.props.viewBox}
+                onClick={item.onClick}
+                color='secondary'
+                sx={{
+                  cursor: 'pointer',
+                  margin: '0 10px',
+                }}
+              >
+                {item.icon}
+              </Icon>
+            </Tooltip>
+          );
+        })}
+      </Box>
     </AppBar>
   );
 };
