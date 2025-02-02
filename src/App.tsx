@@ -7,12 +7,18 @@ import { ExperiencePage } from './components/pages/experience/experience.page';
 import { ToolsPage } from './components/pages/tools/tools.page';
 import { DetailsCard } from './components/ui/details-card/details-card.component';
 import Grid from '@mui/material/Grid2';
+import { Container } from '@mui/material';
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <NavMenu />
-      <div>
+    <Container
+      sx={{
+        height: '100%',
+      }}
+    >
+      <BrowserRouter>
+        <NavMenu />
+
         <Grid container>
           <Grid size={4}>
             <DetailsCard />
@@ -26,7 +32,7 @@ export default function App() {
             </Routes>
           </Grid>
         </Grid>
-      </div>
-    </BrowserRouter>
+      </BrowserRouter>
+    </Container>
   );
 }

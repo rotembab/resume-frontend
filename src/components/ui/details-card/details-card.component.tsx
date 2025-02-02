@@ -1,3 +1,4 @@
+import { Card } from '@mui/material';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router';
 
@@ -9,5 +10,5 @@ export const DetailsCard = () => {
     //whenever the location changes, re-render the component with the animation
   }, [location.pathname]);
 
-  return <div>card</div>;
+  return <Card>card</Card>;
 };
