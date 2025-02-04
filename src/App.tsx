@@ -11,18 +11,13 @@ import { Container } from '@mui/material';
 
 export default function App() {
   return (
-    <>
-      <NavMenu />
-      <Container
-        sx={{
-          height: '100%',
-        }}
-      >
-        <Grid size={12}></Grid>
+    <Container>
+      <Grid container paddingTop={20} gap={5}>
+        <NavMenu />
         <Grid size={4}>
           <DetailsCard />
         </Grid>
-        <Grid size={6}>
+        <Grid size={4}>
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/projects' element={<ProjectsPage />} />
@@ -30,7 +25,7 @@ export default function App() {
             <Route path='/tools' element={<ToolsPage />} />
           </Routes>
         </Grid>
-      </Container>
-    </>
+      </Grid>
+    </Container>
   );
 }

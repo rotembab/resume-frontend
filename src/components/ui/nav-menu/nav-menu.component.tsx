@@ -11,7 +11,7 @@ export const NavMenu = ({}: NavMenuProps) => {
   return (
     <>
       <AppBar
-        // color='transparent'
+        color='transparent'
         sx={{
           padding: '10px 25px',
           width: 'max-content',
