@@ -13,7 +13,7 @@ export const NavMenu = ({}: NavMenuProps) => {
       color='transparent'
       sx={{
         padding: '10px 25px',
-        position: 'absolute',
+
         width: 'max-content',
         height: '48px',
         flexWrap: 'nowrap',

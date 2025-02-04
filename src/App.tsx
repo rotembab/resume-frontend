@@ -16,13 +16,14 @@ export default function App() {
         height: '100%',
       }}
     >
-      <NavMenu />
-
-      <Grid container>
+      <Grid container gap={2}>
+        <Grid size={12}>
+          <NavMenu />
+        </Grid>
         <Grid size={4}>
           <DetailsCard />
         </Grid>
-        <Grid size={8}>
+        <Grid size={6}>
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/projects' element={<ProjectsPage />} />
