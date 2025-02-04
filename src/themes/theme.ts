@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { CustomColor, customColors } from './custom-colors';
 import { CSSProperties } from 'react';
 
@@ -24,40 +24,51 @@ declare module '@mui/material/Box' {
   interface BoxPropsColorOverrides extends Record<CustomColor, true> {}
 }
 
-export const AppTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    ...customColors,
+export const AppTheme = responsiveFontSizes(
+  createTheme({
+    palette: {
+      mode: 'dark',
+      ...customColors,
 
-    primary: {
-      main: '#ff0000', //red primary color
-    },
-    secondary: {
-      main: '#ffffff',
+      primary: {
+        main: '#ff0000', //red primary color
+      },
+      secondary: {
+        main: '#ffffff',
+      },
+
+      background: {
+        default: '#161312', //background color black
+      },
     },
 
-    background: {
-      default: '#161312', //background color black
-    },
-  },
-
-  typography: {
-    fontFamily: "'Inter', sans-serif",
-
-    h1: {
-      fontWeight: 700,
-      fontFamily: "'Poppins', sans-serif",
-      textTransform: 'uppercase',
-      fontSize: '110px',
-    },
-    h3: {
-      fontWeight: 500,
-      fontFamily: "'Poppins', sans-serif",
-    },
-    button: {
-      fontWeight: 700,
+    typography: {
       fontFamily: "'Inter', sans-serif",
-      textTransform: 'none',
+      caption: {
+        fontWeight: 400,
+        fontSize: '20px',
+      },
+      h1: {
+        fontWeight: 700,
+        fontFamily: "'Poppins', sans-serif",
+        textTransform: 'uppercase',
+        fontSize: '6.5rem',
+        '@media (max-width:900px)': {
+          fontSize: '3rem',
+        },
+        '@media (max-width:600px)': {
+          fontSize: '2rem',
+        },
+      },
+      h3: {
+        fontWeight: 500,
+        fontFamily: "'Poppins', sans-serif",
+      },
+      button: {
+        fontWeight: 700,
+        fontFamily: "'Inter', sans-serif",
+        textTransform: 'none',
+      },
     },
-  },
-});
+  })
+);

@@ -11,8 +11,17 @@ import { Container } from '@mui/material';
 
 export default function App() {
   return (
-    <Container maxWidth='lg'>
-      <Grid spacing={10} container paddingTop={20}>
+    <Container
+      sx={{
+        paddingTop: {
+          xs: '100px',
+          sm: '120px',
+          md: '160px',
+        },
+      }}
+      maxWidth='lg'
+    >
+      <Grid spacing={12} container>
         <NavMenu />
         <Grid
           size={{

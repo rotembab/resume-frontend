@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { translations } from '../../../lang/en';
 import { SlideFadeTransition } from '../../ui/slide-fade-transition/slide-fade-transition-component';
 
@@ -16,12 +16,19 @@ export const HomePage = () => {
         transitionDuration: '1s',
       }}
     >
-      <div>
+      <Box>
         <Typography variant='h1'>{translations.Home.heading1}</Typography>
         <Typography color='headingDarkColor' variant='h1'>
           {translations.Home.heading2}
         </Typography>
-      </div>
+        <Typography
+          sx={{ width: '100px', wordBreak: 'break-word' }}
+          color='paragraphColor'
+          variant='caption'
+        >
+          {translations.Home.description}
+        </Typography>
+      </Box>
     </SlideFadeTransition>
   );
 };
