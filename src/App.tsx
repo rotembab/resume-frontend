@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router';
+import { Route, Routes } from 'react-router';
 import { NavMenu } from './components/ui/nav-menu/nav-menu.component';
 import { HomePage } from './components/pages/home/home.page';
 
