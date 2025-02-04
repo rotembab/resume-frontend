@@ -44,9 +44,18 @@ export const AppTheme = responsiveFontSizes(
 
     typography: {
       fontFamily: "'Inter', sans-serif",
+
       caption: {
         fontWeight: 400,
         fontSize: '20px',
+        '@media (max-width:900px)': {
+          textAlign: 'center',
+          margin: 'auto',
+        },
+        '@media (max-width:600px)': {
+          textAlign: 'center',
+          margin: 'auto',
+        },
       },
       h1: {
         fontWeight: 700,
@@ -55,9 +64,11 @@ export const AppTheme = responsiveFontSizes(
         fontSize: '6.5rem',
         '@media (max-width:900px)': {
           fontSize: '3rem',
+          textAlign: 'center',
         },
         '@media (max-width:600px)': {
           fontSize: '2rem',
+          textAlign: 'center',
         },
       },
       h3: {

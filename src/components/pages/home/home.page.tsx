@@ -22,7 +22,8 @@ export const HomePage = () => {
           {translations.Home.heading2}
         </Typography>
         <Typography
-          sx={{ width: '100px', wordBreak: 'break-word' }}
+          display={'block'}
+          sx={{ width: '85%', wordBreak: 'break-word' }}
           color='paragraphColor'
           variant='caption'
         >

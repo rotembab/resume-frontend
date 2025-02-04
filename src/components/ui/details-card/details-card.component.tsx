@@ -1,6 +1,7 @@
-import { Card, Slide } from '@mui/material';
+import { Card } from '@mui/material';
 import { useLocation } from 'react-router';
 import { SlideFadeTransition } from '../slide-fade-transition/slide-fade-transition-component';
+import { Image } from '@mui/icons-material';
 
 export const DetailsCard = () => {
   const location = useLocation();
@@ -19,10 +20,14 @@ export const DetailsCard = () => {
     >
       <Card
         sx={{
+          backgroundColor: 'secondary.main',
+          color: 'secondary.contrastText',
+          width: '100%',
+          borderRadius: '1rem',
           height: 100,
         }}
       >
-        card
+        <Image />
       </Card>
     </SlideFadeTransition>
   );
