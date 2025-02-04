@@ -1,4 +1,5 @@
-import { Slide } from '@mui/material';
+import { Slide, Typography } from '@mui/material';
+import { translations } from '../../../lang/en';
 
 export const HomePage = () => {
   return (
@@ -10,7 +11,10 @@ export const HomePage = () => {
       direction='down'
     >
       <div>
-        <h1>Home Page</h1>
+        <Typography variant='h1'>{translations.Home.heading1}</Typography>
+        <Typography color='headingDarkColor' variant='h1'>
+          {translations.Home.heading2}
+        </Typography>
       </div>
     </Slide>
   );

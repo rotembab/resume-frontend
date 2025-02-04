@@ -47,6 +47,8 @@ export const AppTheme = createTheme({
     h1: {
       fontWeight: 700,
       fontFamily: "'Poppins', sans-serif",
+      textTransform: 'uppercase',
+      fontSize: '110px',
     },
     h3: {
       fontWeight: 500,
