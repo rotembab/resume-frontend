@@ -72,8 +72,9 @@ export const AppTheme = responsiveFontSizes(
         },
       },
       h3: {
-        fontWeight: 500,
+        fontWeight: 700,
         fontFamily: "'Poppins', sans-serif",
+        fontSize: '36px',
       },
       button: {
         fontWeight: 700,

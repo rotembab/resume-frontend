@@ -17,4 +17,9 @@ export const translations = {
     heading: 'Tools',
     description: 'Here are some of the tools I have worked with.',
   },
+  Card: {
+    name: 'Rotem Babani',
+    description:
+      'A Full Stack Developer that loves to create web applications and games.',
+  },
 };
