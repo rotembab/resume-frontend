@@ -17,7 +17,7 @@ export default function App() {
         <Grid size={4}>
           <DetailsCard />
         </Grid>
-        <Grid size={8}>
+        <Grid size={8} paddingX={10}>
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/projects' element={<ProjectsPage />} />
