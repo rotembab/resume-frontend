@@ -11,15 +11,14 @@ import { Container } from '@mui/material';
 
 export default function App() {
   return (
-    <Container
-      sx={{
-        height: '100%',
-      }}
-    >
-      <Grid container gap={2}>
-        <Grid size={12}>
-          <NavMenu />
-        </Grid>
+    <>
+      <NavMenu />
+      <Container
+        sx={{
+          height: '100%',
+        }}
+      >
+        <Grid size={12}></Grid>
         <Grid size={4}>
           <DetailsCard />
         </Grid>
@@ -31,7 +30,7 @@ export default function App() {
             <Route path='/tools' element={<ToolsPage />} />
           </Routes>
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </>
   );
 }
