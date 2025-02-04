@@ -3,9 +3,7 @@ import { customColors } from '../../../themes/custom-colors';
 import { NavMenuConfig } from './nav-menu-config';
 import { useNavigate } from 'react-router';
 
-type NavMenuProps = {};
-
-export const NavMenu = ({}: NavMenuProps) => {
+export const NavMenu = () => {
   let navigate = useNavigate();
   const config = NavMenuConfig(navigate);
   return (

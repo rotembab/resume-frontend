@@ -1,4 +1,4 @@
-import { Fade, Slide } from '@mui/material';
+import { Box, Fade, Slide } from '@mui/material';
 
 type TimeoutAttribute =
   | number
@@ -53,7 +53,7 @@ export const SlideFadeTransition = ({
       timeout={slideTimeout}
       direction={slideDirection}
     >
-      <div>
+      <Box>
         <Fade
           style={fadeStyle}
           in={fadeIn}
@@ -63,7 +63,7 @@ export const SlideFadeTransition = ({
         >
           {children as React.ReactElement}
         </Fade>
-      </div>
+      </Box>
     </Slide>
   );
 };
