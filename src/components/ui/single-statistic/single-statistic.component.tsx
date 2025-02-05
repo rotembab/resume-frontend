@@ -1,9 +1,13 @@
 import { Box, Typography } from '@mui/material';
 
-export const SingleStatistic = () => {
+type SingleStatisticProps = {
+  value: number;
+};
+
+export const SingleStatistic = ({ value }: SingleStatisticProps) => {
   return (
     <Box>
-      <Typography variant='h2'>+12</Typography>
+      <Typography variant='h2'>+{value}</Typography>
       <Typography
         color='paragraphColor'
         textTransform={'uppercase'}

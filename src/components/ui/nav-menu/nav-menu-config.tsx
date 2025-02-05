@@ -1,6 +1,8 @@
 // Adjust the import path as necessary
 
 import {
+  Build,
+  BuildOutlined,
   BusinessCenterOutlined,
   ColorizeOutlined,
   FolderOutlined,
@@ -44,7 +46,13 @@ export const NavMenuConfig = (
     },
     {
       tooltip: t('Tools.title'),
-      icon: <ColorizeOutlined />,
+      icon: (
+        <BuildOutlined
+          sx={{
+            fontSize: '22px',
+          }}
+        />
+      ),
       onClick: () => {
         navigate('/tools');
       },
