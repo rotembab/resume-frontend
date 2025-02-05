@@ -24,6 +24,6 @@ export const heTranslations = {
   },
   Contact: {
     title: 'צור קשר',
-    heading: 'בואו נדבר',
+    heading: 'בואו נעבוד ביחד',
   },
 };

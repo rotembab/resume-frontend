@@ -25,6 +25,6 @@ export const enTranslations = {
   },
   Contact: {
     title: 'Contact',
-    heading: "Let's Talk",
+    heading: "Let's Work Together",
   },
 };

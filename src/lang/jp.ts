@@ -25,6 +25,6 @@ export const jpTranslations = {
   },
   Contact: {
     title: 'コンタクト',
-    heading: '話しましょう',
+    heading: '一緒に働きましょう',
   },
 };
