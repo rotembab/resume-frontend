@@ -2,10 +2,12 @@ import { AppBar, Box, Icon, Tooltip } from '@mui/material';
 import { customColors } from '../../../themes/custom-colors';
 import { NavMenuConfig } from './nav-menu-config';
 import { useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 export const NavMenu = () => {
   let navigate = useNavigate();
-  const config = NavMenuConfig(navigate);
+  const { t } = useTranslation();
+  const config = NavMenuConfig(navigate, t);
   return (
     <AppBar
       color='transparent'

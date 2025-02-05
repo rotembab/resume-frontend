@@ -7,6 +7,7 @@ import {
   HomeOutlined,
   Phone,
 } from '@mui/icons-material';
+import { TFunction } from 'i18next';
 import { NavigateFunction } from 'react-router';
 
 export type NavMenuItem = {
@@ -15,38 +16,41 @@ export type NavMenuItem = {
   onClick?: () => void;
 };
 
-export const NavMenuConfig = (navigate: NavigateFunction) => {
+export const NavMenuConfig = (
+  navigate: NavigateFunction,
+  t: TFunction<'translation', undefined>
+) => {
   return [
     {
-      tooltip: 'Home',
+      tooltip: t('Home.title'),
       icon: <HomeOutlined />,
       onClick: () => {
         navigate('/');
       },
     },
     {
-      tooltip: 'Projects',
+      tooltip: t('Projects.title'),
       icon: <FolderOutlined />,
       onClick: () => {
         navigate('/projects');
       },
     },
     {
-      tooltip: 'Experience',
+      tooltip: t('Experience.title'),
       icon: <BusinessCenterOutlined />,
       onClick: () => {
         navigate('/experience');
       },
     },
     {
-      tooltip: 'Tools',
+      tooltip: t('Tools.title'),
       icon: <ColorizeOutlined />,
       onClick: () => {
         navigate('/tools');
       },
     },
     {
-      tooltip: 'Contact',
+      tooltip: t('Contact.title'),
       icon: <Phone />,
       onClick: () => {
         navigate('/contact');
