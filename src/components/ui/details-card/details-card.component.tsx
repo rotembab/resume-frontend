@@ -1,9 +1,10 @@
-import { Box, Button, Card, Typography } from '@mui/material';
+import { Box, Button, Card, CardMedia, Typography } from '@mui/material';
 import { useLocation } from 'react-router';
 import { SlideFadeTransition } from '../slide-fade-transition/slide-fade-transition-component';
 import Grid from '@mui/material/Grid2';
 import { detailsCardLinks } from './details-card-links.config';
 import { useTranslation } from 'react-i18next';
+import TempProfilePic from '../../../assets/TempProfilePic.jpeg';
 
 export const DetailsCard = () => {
   const { t } = useTranslation();
@@ -33,12 +34,13 @@ export const DetailsCard = () => {
       >
         <Grid container rowSpacing={2}>
           <Grid size={12}>
-            <img
+            <CardMedia
+              component='img'
+              image={TempProfilePic}
               style={{ borderRadius: '1rem' }}
+              alt='Profile'
               width={200}
               height={300}
-              src='https://placehold.co/400x600'
-              alt='placeholder'
             />
           </Grid>
           <Grid size={12}>
