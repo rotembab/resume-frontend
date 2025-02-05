@@ -16,7 +16,6 @@ export const SingleStatistic = ({
           margin: 'auto',
         },
       }}
-      width={'200px'}
     >
       <Typography variant='h2'>+{number}</Typography>
       <Typography

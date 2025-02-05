@@ -3,7 +3,15 @@ import Grid from '@mui/material/Grid2';
 
 export const Statistics = () => {
   return (
-    <Grid sx={{ textAlign: 'center' }} container>
+    <Grid
+      spacing={2}
+      sx={{
+        '@media (max-width: 900px)': {
+          textAlign: 'center',
+        },
+      }}
+      container
+    >
       <Grid
         size={{
           xs: 12,
