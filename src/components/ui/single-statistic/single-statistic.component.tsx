@@ -1,13 +1,24 @@
 import { Box, Typography } from '@mui/material';
 
 type SingleStatisticProps = {
-  value: number;
+  number: number;
+  description: string;
 };
 
-export const SingleStatistic = ({ value }: SingleStatisticProps) => {
+export const SingleStatistic = ({
+  number,
+  description,
+}: SingleStatisticProps) => {
   return (
-    <Box>
-      <Typography variant='h2'>+{value}</Typography>
+    <Box
+      sx={{
+        '@media (max-width: 900px)': {
+          margin: 'auto',
+        },
+      }}
+      width={'200px'}
+    >
+      <Typography variant='h2'>+{number}</Typography>
       <Typography
         color='paragraphColor'
         textTransform={'uppercase'}
@@ -21,7 +32,7 @@ export const SingleStatistic = ({ value }: SingleStatisticProps) => {
         }}
         variant='caption'
       >
-        Years Of Experience
+        {description}
       </Typography>
     </Box>
   );

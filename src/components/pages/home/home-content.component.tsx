@@ -34,7 +34,9 @@ export const HomeContent = () => {
             {t('Home.description')}
           </Typography>
         </Grid>
-        <Grid size={12}>{/* <Statistics /> */}</Grid>
+        <Grid size={12}>
+          <Statistics />
+        </Grid>
       </Grid>
     </SlideFadeTransition>
   );

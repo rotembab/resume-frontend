@@ -27,7 +27,7 @@ export default function App() {
         <Grid
           size={{
             xs: 12,
-            lg: 4,
+            md: 4,
           }}
         >
           <DetailsCard />
@@ -35,7 +35,7 @@ export default function App() {
         <Grid
           size={{
             xs: 12,
-            lg: 8,
+            md: 8,
           }}
         >
           <Routes>

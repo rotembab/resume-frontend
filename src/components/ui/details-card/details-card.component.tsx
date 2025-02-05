@@ -39,8 +39,13 @@ export const DetailsCard = () => {
               image={TempProfilePic}
               style={{ borderRadius: '1rem' }}
               alt='Profile'
-              width={200}
-              height={300}
+              width={'200px'}
+              height={'300px'}
+              sx={{
+                maxHeight: '300px',
+                maxWidth: '200px',
+                margin: 'auto',
+              }}
             />
           </Grid>
           <Grid size={12}>
