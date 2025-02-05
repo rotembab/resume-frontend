@@ -1,5 +1,5 @@
 import Grid from '@mui/material/Grid2';
-import { SlideFadeTransition } from '../slide-fade-transition/slide-fade-transition-component';
+import { SlideFadeTransition } from '../../ui/slide-fade-transition/slide-fade-transition-component';
 import { Typography } from '@mui/material';
 import { useInView } from 'react-intersection-observer';
 import { useTranslation } from 'react-i18next';
@@ -26,7 +26,10 @@ export const ContactMe = () => {
           }}
         >
           <Grid container>
-            <Typography variant='h1'>{t('Contact.heading')}</Typography>
+            <Typography variant='h1'>{t('Contact.heading1')}</Typography>
+            <Typography color='headingDarkColor' variant='h1'>
+              {t('Contact.heading2')}
+            </Typography>
           </Grid>
         </SlideFadeTransition>
       )}

@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { ContactMe } from '../../ui/contact-me/contact-me.component';
+import { ContactMe } from '../contact-me/contact-me.component';
 import { HomeContent } from './home-content.component';
 import Grid from '@mui/material/Grid2';
 
