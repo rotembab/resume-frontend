@@ -1,4 +1,4 @@
-import { Box, Button, Card, Link, Typography } from '@mui/material';
+import { Box, Button, Card, Typography } from '@mui/material';
 import { useLocation } from 'react-router';
 import { SlideFadeTransition } from '../slide-fade-transition/slide-fade-transition-component';
 import { translations } from '../../../lang/en';
