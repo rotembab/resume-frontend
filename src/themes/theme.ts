@@ -71,6 +71,19 @@ export const AppTheme = responsiveFontSizes(
           textAlign: 'center',
         },
       },
+      h2: {
+        fontWeight: 600,
+        fontFamily: "'Poppins', sans-serif",
+        fontSize: '70px',
+        '@media (max-width:900px)': {
+          fontSize: '36px',
+          textAlign: 'center',
+        },
+        '@media (max-width:600px)': {
+          fontSize: '24px',
+          textAlign: 'center',
+        },
+      },
       h3: {
         fontWeight: 700,
         fontFamily: "'Poppins', sans-serif",
