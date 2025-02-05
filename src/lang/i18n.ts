@@ -1,6 +1,7 @@
 import i18n, { t } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { enTranslations } from './en';
+import { heTranslations } from './he';
 
 i18n.use(initReactI18next).init({
   lng: 'en',
@@ -15,7 +16,9 @@ i18n.use(initReactI18next).init({
       },
     },
     he: {
-      translations: {},
+      translation: {
+        ...heTranslations,
+      },
     },
   },
 });
