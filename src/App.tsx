@@ -8,6 +8,7 @@ import { ToolsPage } from './components/pages/tools/tools.page';
 import { DetailsCard } from './components/ui/details-card/details-card.component';
 import Grid from '@mui/material/Grid2';
 import { Container } from '@mui/material';
+import { ContactMe } from './components/ui/contact-me/contact-me.component';
 
 export default function App() {
   return (
@@ -21,7 +22,7 @@ export default function App() {
       }}
       maxWidth='lg'
     >
-      <Grid spacing={12} container>
+      <Grid spacing={12} container position={'sticky'}>
         <NavMenu />
         <Grid
           size={{
@@ -42,6 +43,7 @@ export default function App() {
             <Route path='/projects' element={<ProjectsPage />} />
             <Route path='/experience' element={<ExperiencePage />} />
             <Route path='/tools' element={<ToolsPage />} />
+            <Route path='/contact' element={<ContactMe />} />
           </Routes>
         </Grid>
       </Grid>

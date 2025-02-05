@@ -5,6 +5,7 @@ import {
   ColorizeOutlined,
   FolderOutlined,
   HomeOutlined,
+  Phone,
 } from '@mui/icons-material';
 import { NavigateFunction } from 'react-router';
 
@@ -42,6 +43,13 @@ export const NavMenuConfig = (navigate: NavigateFunction) => {
       icon: <ColorizeOutlined />,
       onClick: () => {
         navigate('/tools');
+      },
+    },
+    {
+      tooltip: 'Contact',
+      icon: <Phone />,
+      onClick: () => {
+        navigate('/contact');
       },
     },
   ] as NavMenuItem[];
