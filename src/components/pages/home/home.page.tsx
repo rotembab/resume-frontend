@@ -1,18 +1,17 @@
 import { Box } from '@mui/material';
 import { ContactMe } from '../../ui/contact-me/contact-me.component';
 import { HomeContent } from './home-content.component';
+import Grid from '@mui/material/Grid2';
 
 export const HomePage = () => {
   return (
-    <>
-      <HomeContent />
-      <Box
-        sx={{
-          height: '100vh',
-          width: '100%',
-        }}
-      />
-      <ContactMe />
-    </>
+    <Grid container spacing={15}>
+      <Grid size={12}>
+        <HomeContent />
+      </Grid>
+      <Grid size={12}>
+        <ContactMe />
+      </Grid>
+    </Grid>
   );
 };
