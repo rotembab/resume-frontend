@@ -1,8 +1,9 @@
 import { Box, Typography } from '@mui/material';
-import { translations } from '../../../lang/en';
 import { SlideFadeTransition } from '../../ui/slide-fade-transition/slide-fade-transition-component';
+import { useTranslation } from 'react-i18next';
 
 export const HomeContent = () => {
+  const { t } = useTranslation();
   return (
     <SlideFadeTransition
       fadeAppear
@@ -17,9 +18,9 @@ export const HomeContent = () => {
       }}
     >
       <Box>
-        <Typography variant='h1'>{translations.Home.heading1}</Typography>
+        <Typography variant='h1'>{t('Home.heading1')}</Typography>
         <Typography color='headingDarkColor' variant='h1'>
-          {translations.Home.heading2}
+          {t('Home.heading2')}
         </Typography>
         <Typography
           display={'block'}
@@ -27,7 +28,7 @@ export const HomeContent = () => {
           color='paragraphColor'
           variant='caption'
         >
-          {translations.Home.description}
+          {t('Home.description')}
         </Typography>
       </Box>
     </SlideFadeTransition>

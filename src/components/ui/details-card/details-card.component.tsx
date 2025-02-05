@@ -1,10 +1,12 @@
 import { Box, Button, Card, Typography } from '@mui/material';
 import { useLocation } from 'react-router';
 import { SlideFadeTransition } from '../slide-fade-transition/slide-fade-transition-component';
-import { translations } from '../../../lang/en';
+
 import { detailsCardLinks } from './details-card-links.config';
+import { useTranslation } from 'react-i18next';
 
 export const DetailsCard = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   return (
     <SlideFadeTransition
@@ -36,7 +38,7 @@ export const DetailsCard = () => {
           src='https://placehold.co/400x600'
           alt='placeholder'
         />
-        <Typography variant='h3'>{translations.Card.name}</Typography>
+        <Typography variant='h3'>{t('Card.name')}</Typography>
         <Typography
           color='descriptionColor'
           variant='caption'
@@ -47,7 +49,7 @@ export const DetailsCard = () => {
             },
           }}
         >
-          {translations.Card.description}
+          {t('Card.description')}
         </Typography>
         <Box>
           {detailsCardLinks.map((item, index) => (

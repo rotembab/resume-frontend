@@ -1,4 +1,4 @@
-export const translations = {
+export const enTranslations = {
   Home: {
     heading1: 'Full Stack Developer',
     heading2: 'Game Developer',
