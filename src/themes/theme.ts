@@ -48,6 +48,10 @@ export const AppTheme = responsiveFontSizes(
       caption: {
         fontWeight: 400,
         fontSize: '20px',
+        '@media (max-width:1200px)': {
+          textAlign: 'center',
+          margin: 'auto',
+        },
         '@media (max-width:900px)': {
           textAlign: 'center',
           margin: 'auto',
@@ -62,6 +66,10 @@ export const AppTheme = responsiveFontSizes(
         fontFamily: "'Poppins', sans-serif",
         textTransform: 'uppercase',
         fontSize: '6.5rem',
+        '@media (max-width:1200px)': {
+          textAlign: 'center',
+          margin: 'auto',
+        },
         '@media (max-width:900px)': {
           fontSize: '3rem',
           textAlign: 'center',
@@ -75,6 +83,10 @@ export const AppTheme = responsiveFontSizes(
         fontWeight: 600,
         fontFamily: "'Poppins', sans-serif",
         fontSize: '70px',
+        '@media (max-width:1200px)': {
+          textAlign: 'center',
+          margin: 'auto',
+        },
         '@media (max-width:900px)': {
           fontSize: '36px',
           textAlign: 'center',

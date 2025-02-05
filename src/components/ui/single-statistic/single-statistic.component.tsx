@@ -12,8 +12,9 @@ export const SingleStatistic = ({
   return (
     <Box
       sx={{
-        '@media (max-width: 900px)': {
+        '@media (max-width: 1200px)': {
           margin: 'auto',
+          textAlign: 'center',
         },
       }}
     >

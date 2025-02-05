@@ -66,13 +66,15 @@ export const DetailsCard = () => {
             </Typography>
           </Grid>
           <Grid size={12}>
-            <Box>
+            <Grid container>
               {detailsCardLinks.map((item, index) => (
-                <Button key={item.link} href={item.link} target='_blank'>
-                  {item.icon}
-                </Button>
+                <Grid size={4}>
+                  <Button key={item.link} href={item.link} target='_blank'>
+                    {item.icon}
+                  </Button>
+                </Grid>
               ))}
-            </Box>
+            </Grid>
           </Grid>
         </Grid>
       </Card>
