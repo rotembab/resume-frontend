@@ -11,6 +11,15 @@ export const HomePage = () => {
       <Grid size={12}>
         <ContactMe />
       </Grid>
+      <Grid size={12}>
+        <ContactMe />
+      </Grid>
+      <Grid size={12}>
+        <ContactMe />
+      </Grid>
+      <Grid size={12}>
+        <ContactMe />
+      </Grid>
     </Grid>
   );
 };
