@@ -1,19 +1,13 @@
 import Grid from '@mui/material/Grid2';
 import { SlideFadeTransition } from '../../ui/slide-fade-transition/slide-fade-transition-component';
 import { Typography } from '@mui/material';
-import { useInView } from 'react-intersection-observer';
+
 import { useTranslation } from 'react-i18next';
 import { ContactForm } from './contact-form.component';
 
 export const ContactMe = () => {
-  // const { ref, inView } = useInView({
-  //   triggerOnce: true, // Ensures the component only loads once when in view
-  //   threshold: 1, // Adjust based on when you consider the component "visible"
-  // });
   const { t } = useTranslation();
   return (
-    // <div ref={ref}>
-    //   {inView && (
     <SlideFadeTransition
       fadeAppear
       fadeIn
@@ -21,9 +15,9 @@ export const ContactMe = () => {
       slideIn
       slideKey={'slide'}
       fadeKey={'fade'}
-      slideTimeout={{ enter: 500 }}
+      slideTimeout={{ enter: 700 }}
       fadeStyle={{
-        transitionDuration: '1s',
+        transitionDuration: '1.5s',
       }}
     >
       <Grid container>
@@ -38,7 +32,5 @@ export const ContactMe = () => {
         </Grid>
       </Grid>
     </SlideFadeTransition>
-    // )}
-    // </div>
   );
 };

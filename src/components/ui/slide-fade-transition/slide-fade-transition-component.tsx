@@ -1,4 +1,6 @@
 import { Box, Fade, Slide } from '@mui/material';
+import { useRef } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 type TimeoutAttribute =
   | number
@@ -41,29 +43,39 @@ export const SlideFadeTransition = ({
   slideDirection = 'down',
   slideStyle,
   fadeStyle,
-  slideContainer,
 }: SlideFadeTransitionProps) => {
+  const { ref: visibleRef, inView } = useInView({
+    triggerOnce: true,
+    threshold: 1,
+  });
+  const slideInRef = useRef<HTMLElement>(null);
   return (
-    <Slide
-      container={slideContainer}
-      style={slideStyle}
-      in={slideIn}
-      appear={slideAppear}
-      key={slideKey}
-      timeout={slideTimeout}
-      direction={slideDirection}
-    >
-      <Box>
-        <Fade
-          style={fadeStyle}
-          in={fadeIn}
-          appear={fadeAppear}
-          key={fadeKey}
-          timeout={fadeTimeout}
-        >
-          {children as React.ReactElement}
-        </Fade>
-      </Box>
-    </Slide>
+    <Box ref={visibleRef}>
+      {inView && (
+        <Box sx={{ overflow: 'hidden' }} ref={slideInRef}>
+          <Slide
+            container={slideInRef.current}
+            style={slideStyle}
+            in={slideIn}
+            appear={slideAppear}
+            key={slideKey}
+            timeout={slideTimeout}
+            direction={slideDirection}
+          >
+            <Box>
+              <Fade
+                style={fadeStyle}
+                in={fadeIn}
+                appear={fadeAppear}
+                key={fadeKey}
+                timeout={fadeTimeout}
+              >
+                {children as React.ReactElement}
+              </Fade>
+            </Box>
+          </Slide>
+        </Box>
+      )}
+    </Box>
   );
 };
