@@ -17,9 +17,9 @@ export const DetailsCard = () => {
       slideIn
       slideKey={location.pathname + '_slide'}
       fadeKey={location.pathname + '_fade'}
-      slideTimeout={{ enter: 400 }}
+      slideTimeout={{ enter: 700 }}
       fadeStyle={{
-        transitionDuration: '1s',
+        transitionDuration: '1.5s',
       }}
     >
       <Card
