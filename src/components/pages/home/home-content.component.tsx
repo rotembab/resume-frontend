@@ -7,7 +7,7 @@ import { Statistics } from './statistics/statistics.component';
 export const HomeContent = () => {
   const { t } = useTranslation();
   return (
-    <SlideFadeTransition key={location.pathname}>
+    <SlideFadeTransition transitionKey={location.pathname}>
       <Grid container rowSpacing={5}>
         <Grid size={12}>
           <Typography variant='h1'>{t('Home.heading1')}</Typography>

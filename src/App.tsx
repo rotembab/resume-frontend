@@ -22,7 +22,7 @@ export default function App() {
       }}
       maxWidth='lg'
     >
-      <Grid spacing={12} container position={'sticky'}>
+      <Grid spacing={12} container>
         <NavMenu />
         <Grid
           size={{
