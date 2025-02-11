@@ -1,4 +1,5 @@
 import { Box, Fade, Slide } from '@mui/material';
+import { motion } from 'motion/react';
 import { useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -52,28 +53,15 @@ export const SlideFadeTransition = ({
   return (
     <Box ref={visibleRef}>
       {inView && (
-        <Box sx={{ overflow: 'hidden' }} ref={slideInRef}>
-          <Slide
-            container={slideInRef.current}
-            style={slideStyle}
-            in={slideIn}
-            appear={slideAppear}
+        <Box ref={slideInRef}>
+          <motion.div
             key={slideKey}
-            timeout={slideTimeout}
-            direction={slideDirection}
+            initial={{ opacity: 0, y: '-5%' }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
           >
-            <Box>
-              <Fade
-                style={fadeStyle}
-                in={fadeIn}
-                appear={fadeAppear}
-                key={fadeKey}
-                timeout={fadeTimeout}
-              >
-                {children as React.ReactElement}
-              </Fade>
-            </Box>
-          </Slide>
+            {children as React.ReactElement}
+          </motion.div>
         </Box>
       )}
     </Box>
