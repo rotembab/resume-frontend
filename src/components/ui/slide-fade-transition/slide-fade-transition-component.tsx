@@ -1,53 +1,33 @@
-import { Box, Fade, Slide } from '@mui/material';
+import { Box } from '@mui/material';
 import { motion } from 'motion/react';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
-
-type TimeoutAttribute =
-  | number
-  | {
-      appear?: number | undefined;
-      enter?: number | undefined;
-      exit?: number | undefined;
-    }
-  | {
-      appear?: number | undefined;
-      enter?: number | undefined;
-      exit?: number | undefined;
-    };
 
 type SlideFadeTransitionProps = {
   children: React.ReactNode;
-  slideTimeout?: TimeoutAttribute;
-  fadeTimeout?: TimeoutAttribute;
-  slideKey: string;
-  fadeKey: string;
-  slideIn?: boolean;
-  slideAppear?: boolean;
-  fadeIn?: boolean;
-  fadeAppear?: boolean;
-  slideDirection?: 'down' | 'left' | 'right' | 'up';
-  slideStyle?: React.CSSProperties;
-  fadeStyle?: React.CSSProperties;
-  slideContainer?: Element | ((element: Element) => Element) | null;
+  key: React.Key;
+  threshold?: number;
+  startY?: string | number;
+  endY?: string | number;
+  startOpacity?: number;
+  endOpacity?: number;
+  duration?: number;
+  ease?: string;
 };
 export const SlideFadeTransition = ({
   children,
-  slideTimeout,
-  slideKey,
-  fadeTimeout,
-  fadeKey,
-  slideIn,
-  slideAppear,
-  fadeIn,
-  fadeAppear,
-  slideDirection = 'down',
-  slideStyle,
-  fadeStyle,
+  key,
+  threshold = 1,
+  startY = '-5%',
+  endY = 0,
+  startOpacity = 0,
+  endOpacity = 1,
+  duration = 0.5,
+  ease = 'easeInOut',
 }: SlideFadeTransitionProps) => {
   const { ref: visibleRef, inView } = useInView({
     triggerOnce: true,
-    threshold: 1,
+    threshold: threshold,
   });
   const slideInRef = useRef<HTMLElement>(null);
   return (
@@ -55,10 +35,10 @@ export const SlideFadeTransition = ({
       {inView && (
         <Box ref={slideInRef}>
           <motion.div
-            key={slideKey}
-            initial={{ opacity: 0, y: '-5%' }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            key={key}
+            initial={{ opacity: startOpacity, y: startY }}
+            animate={{ opacity: endOpacity, y: endY }}
+            transition={{ duration, ease }}
           >
             {children as React.ReactElement}
           </motion.div>

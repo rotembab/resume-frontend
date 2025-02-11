@@ -8,18 +8,7 @@ import { ContactForm } from './contact-form.component';
 export const ContactMe = () => {
   const { t } = useTranslation();
   return (
-    <SlideFadeTransition
-      fadeAppear
-      fadeIn
-      slideAppear
-      slideIn
-      slideKey={'slide'}
-      fadeKey={'fade'}
-      slideTimeout={{ enter: 700 }}
-      fadeStyle={{
-        transitionDuration: '1.5s',
-      }}
-    >
+    <SlideFadeTransition key={'contact-me'}>
       <Grid container>
         <Grid size={12}>
           <Typography variant='h1'>{t('Contact.heading1')}</Typography>

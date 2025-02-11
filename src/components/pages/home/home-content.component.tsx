@@ -7,18 +7,7 @@ import { Statistics } from './statistics/statistics.component';
 export const HomeContent = () => {
   const { t } = useTranslation();
   return (
-    <SlideFadeTransition
-      fadeAppear
-      fadeIn
-      slideAppear
-      slideIn
-      slideKey={location.pathname + '_slide'}
-      fadeKey={location.pathname + '_fade'}
-      slideTimeout={{ enter: 500 }}
-      fadeStyle={{
-        transitionDuration: '1s',
-      }}
-    >
+    <SlideFadeTransition key={location.pathname}>
       <Grid container rowSpacing={5}>
         <Grid size={12}>
           <Typography variant='h1'>{t('Home.heading1')}</Typography>

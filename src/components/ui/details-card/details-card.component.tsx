@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardMedia, Typography } from '@mui/material';
+import { Button, Card, CardMedia, Typography } from '@mui/material';
 import { useLocation } from 'react-router';
 import { SlideFadeTransition } from '../slide-fade-transition/slide-fade-transition-component';
 import Grid from '@mui/material/Grid2';
@@ -10,18 +10,7 @@ export const DetailsCard = () => {
   const { t } = useTranslation();
   const location = useLocation();
   return (
-    <SlideFadeTransition
-      fadeAppear
-      fadeIn
-      slideAppear
-      slideIn
-      slideKey={location.pathname + '_slide'}
-      fadeKey={location.pathname + '_fade'}
-      slideTimeout={{ enter: 700 }}
-      fadeStyle={{
-        transitionDuration: '1.5s',
-      }}
-    >
+    <SlideFadeTransition key={location.pathname}>
       <Card
         sx={{
           backgroundColor: 'secondary.main',
