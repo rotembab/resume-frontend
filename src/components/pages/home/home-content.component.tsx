@@ -1,8 +1,9 @@
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { SlideFadeTransition } from '../../ui/slide-fade-transition/slide-fade-transition-component';
 import { useTranslation } from 'react-i18next';
 import Grid from '@mui/material/Grid2';
 import { Statistics } from './statistics/statistics.component';
+import { HomeTabLinks } from './home-tab-links/home-tab-links.component';
 
 export const HomeContent = () => {
   const { t } = useTranslation();
@@ -19,12 +20,16 @@ export const HomeContent = () => {
             sx={{ width: '85%', wordBreak: 'break-word' }}
             color='paragraphColor'
             variant='caption'
+            fontSize={'18px'}
           >
             {t('Home.description')}
           </Typography>
         </Grid>
         <Grid size={12}>
           <Statistics />
+        </Grid>
+        <Grid size={12}>
+          <HomeTabLinks />
         </Grid>
       </Grid>
     </SlideFadeTransition>

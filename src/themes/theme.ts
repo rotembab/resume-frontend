@@ -1,6 +1,7 @@
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { CustomColor, customColors } from './custom-colors';
 import { CSSProperties } from 'react';
+import { customSizes, customSizesMediaQuery } from './custom-sizes-query';
 
 type CustomPaletteColor = {
   main: CSSProperties['color'];
@@ -44,21 +45,27 @@ export const AppTheme = responsiveFontSizes(
         default: '#161312', //background color black
       },
     },
+    breakpoints: {
+      values: {
+        ...customSizes,
+      },
+    },
     typography: {
       fontFamily: "'Inter', sans-serif",
 
       caption: {
         fontWeight: 400,
         fontSize: '20px',
-        '@media (max-width:1200px)': {
+
+        [customSizesMediaQuery.md]: {
           textAlign: 'center',
           margin: 'auto',
         },
-        '@media (max-width:900px)': {
+        [customSizesMediaQuery.sm]: {
           textAlign: 'center',
           margin: 'auto',
         },
-        '@media (max-width:600px)': {
+        [customSizesMediaQuery.xs]: {
           textAlign: 'center',
           margin: 'auto',
         },
