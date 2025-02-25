@@ -1,26 +1,24 @@
 import Grid from '@mui/material/Grid2';
 import { TabLinkCard } from '../../../ui/tab-link-card/tab-link-card.component';
-import { useTranslation } from 'react-i18next';
-import { LayersOutlined } from '@mui/icons-material';
+import { GridViewOutlined, LayersOutlined } from '@mui/icons-material';
+import { customColors } from '../../../../themes/custom-colors';
 export const HomeTabLinks = () => {
-  const { t } = useTranslation();
   return (
     <Grid spacing={4} container size={12}>
       <Grid size={{ xs: 12, md: 5 }}>
         <TabLinkCard
-          link={'/'}
+          link={'/experience'}
           title={'DYNAMIC ANIMATION, MOTION DESIGN'}
-          icon={<LayersOutlined />}
+          Icon={LayersOutlined}
+          color={customColors.tabLinkCard1}
         />
       </Grid>
       <Grid size={{ xs: 12, md: 7 }}>
         <TabLinkCard
-          link={'/'}
-          title={t('Home.tabLinkCard.title')}
-          icon={
-            //put layout like a grid icon here
-            <></>
-          }
+          link={'/projects'}
+          title={'FRAMER, FIGMA, WORDPRESS, REACTJS'}
+          Icon={GridViewOutlined}
+          color={customColors.tabLinkCard2}
         />
       </Grid>
     </Grid>
