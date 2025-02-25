@@ -18,6 +18,7 @@ export const TabLinkCard = ({ link, title, icon }: TabLinkCardProps) => {
         borderRadius: '10px',
         width: isBelowMd ? '50%' : '100%',
         margin: isBelowMd ? 'auto' : '0',
+        height: '100%',
       }}
       onClick={() => navigate(link)}
     >
