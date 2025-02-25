@@ -13,7 +13,7 @@ export const HomeTabLinks = () => {
           color={customColors.tabLinkCard1}
         />
       </Grid>
-      <Grid size={{ xs: 12, md: 7 }}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <TabLinkCard
           link={'/projects'}
           title={'FRAMER, FIGMA, WORDPRESS, REACTJS'}

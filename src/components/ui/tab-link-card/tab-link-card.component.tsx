@@ -38,6 +38,8 @@ export const TabLinkCard = ({ link, title, Icon, color }: TabLinkCardProps) => {
         margin: isBelowMd ? 'auto' : '0',
         height: '100%',
         position: 'relative',
+        backgroundColor: color.main,
+        padding: '10px',
       }}
     >
       <CardContent sx={{ padding: '15px', backgroundColor: color.main }}>
