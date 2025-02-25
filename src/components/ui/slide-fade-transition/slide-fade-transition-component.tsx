@@ -1,10 +1,5 @@
 import { Box } from '@mui/material';
-import {
-  motion,
-  useInView,
-  useMotionValueEvent,
-  useScroll,
-} from 'motion/react';
+import { motion, useInView } from 'framer-motion';
 import React, { useRef } from 'react';
 
 type SlideFadeTransitionProps = {
@@ -17,6 +12,7 @@ type SlideFadeTransitionProps = {
   duration?: number;
   ease?: string;
 };
+
 export const SlideFadeTransition = ({
   children,
   transitionKey,
@@ -27,12 +23,22 @@ export const SlideFadeTransition = ({
   duration = 0.5,
   ease = 'easeInOut',
 }: SlideFadeTransitionProps) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, {
+    once: true,
+    amount: 0.3,
+  });
+
   return (
-    <Box key={transitionKey + 'box'}>
+    <Box key={transitionKey + 'box'} ref={ref}>
       <motion.div
         key={transitionKey}
         initial={{ opacity: startOpacity, y: startY }}
-        animate={{ opacity: endOpacity, y: endY }}
+        animate={
+          isInView
+            ? { opacity: endOpacity, y: endY }
+            : { opacity: startOpacity, y: startY }
+        }
         transition={{ duration, ease }}
       >
         {children as React.ReactElement}
