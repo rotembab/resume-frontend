@@ -20,14 +20,14 @@ export default function App() {
           md: '160px',
         },
       }}
-      maxWidth='lg'
+      maxWidth='md'
     >
       <Grid spacing={12} container>
         <NavMenu />
         <Grid
           size={{
             xs: 12,
-            lg: 4,
+            md: 4,
           }}
         >
           <DetailsCard />
@@ -35,7 +35,7 @@ export default function App() {
         <Grid
           size={{
             xs: 12,
-            lg: 8,
+            md: 8,
           }}
         >
           <Routes>

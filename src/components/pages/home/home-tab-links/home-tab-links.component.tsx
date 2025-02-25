@@ -9,7 +9,7 @@ export const HomeTabLinks = () => {
       <Grid size={{ xs: 12, md: 5 }}>
         <TabLinkCard
           link={'/'}
-          title={t('Home.tabLinkCard.title')}
+          title={'DYNAMIC ANIMATION, MOTION DESIGN'}
           icon={<></>}
         />
       </Grid>

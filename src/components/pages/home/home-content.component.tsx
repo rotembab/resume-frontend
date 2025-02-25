@@ -9,7 +9,7 @@ export const HomeContent = () => {
   const { t } = useTranslation();
   return (
     <SlideFadeTransition transitionKey={location.pathname}>
-      <Grid container rowSpacing={5}>
+      <Grid container rowSpacing={6}>
         <Grid size={12}>
           <Typography variant='h1'>{t('Home.heading1')}</Typography>
           <Typography color='headingDarkColor' variant='h1'>

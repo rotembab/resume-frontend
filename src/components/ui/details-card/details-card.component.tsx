@@ -5,17 +5,21 @@ import Grid from '@mui/material/Grid2';
 import { detailsCardLinks } from './details-card-links.config';
 import { useTranslation } from 'react-i18next';
 import TempProfilePic from '../../../assets/TempProfilePic.jpeg';
+import { customSizesMediaQuery } from '../../../themes/custom-sizes-query';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export const DetailsCard = () => {
   const { t } = useTranslation();
   const location = useLocation();
+  const isBelowMd = useMediaQuery(customSizesMediaQuery.md);
   return (
-    <SlideFadeTransition key={location.pathname}>
+    <SlideFadeTransition transitionKey={location.pathname}>
       <Card
         sx={{
           backgroundColor: 'secondary.main',
           color: 'secondary.contrastText',
-          width: '100%',
+          width: isBelowMd ? '75%' : '100%',
+          margin: isBelowMd ? 'auto' : '0',
           borderRadius: '1rem',
           textAlign: 'center',
           padding: '1rem',
