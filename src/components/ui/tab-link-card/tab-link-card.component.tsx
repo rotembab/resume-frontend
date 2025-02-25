@@ -1,7 +1,7 @@
 import { Card, Typography, CardContent, Box } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { useMediaQuery } from '@mui/material';
+import { customSizesMediaQuery } from '../../../themes/custom-sizes-query';
 
 type TabLinkCardProps = {
   link: string;
@@ -10,13 +10,14 @@ type TabLinkCardProps = {
 };
 
 export const TabLinkCard = ({ link, title, icon }: TabLinkCardProps) => {
-  const { t } = useTranslation();
   const navigate = useNavigate();
-  const isMobile = useMediaQuery('(max-width:900px)');
+  const isBelowMd = useMediaQuery(customSizesMediaQuery.md);
   return (
     <Card
       sx={{
         borderRadius: '10px',
+        width: isBelowMd ? '50%' : '100%',
+        margin: isBelowMd ? 'auto' : '0',
       }}
       onClick={() => navigate(link)}
     >
