@@ -23,6 +23,9 @@ declare module '@mui/material/AppBar' {
 declare module '@mui/material/Box' {
   interface BoxPropsColorOverrides extends Record<CustomColor, true> {}
 }
+declare module '@mui/material/TextField' {
+  interface TextFieldPropsColorOverrides extends Record<CustomColor, true> {}
+}
 
 export const AppTheme = responsiveFontSizes(
   createTheme({
@@ -41,7 +44,6 @@ export const AppTheme = responsiveFontSizes(
         default: '#161312', //background color black
       },
     },
-
     typography: {
       fontFamily: "'Inter', sans-serif",
 
@@ -105,6 +107,15 @@ export const AppTheme = responsiveFontSizes(
         fontWeight: 700,
         fontFamily: "'Inter', sans-serif",
         textTransform: 'none',
+      },
+    },
+    components: {
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            backgroundColor: customColors.inputColor.main,
+          },
+        },
       },
     },
   })

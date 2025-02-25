@@ -1,4 +1,3 @@
-import { MultilineChart } from '@mui/icons-material';
 import { Box, Select, TextField } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
@@ -7,7 +6,11 @@ export const ContactForm = () => {
     <Box component={'form'}>
       <Grid spacing={4} container>
         <Grid size={6}>
-          <TextField sx={{ width: '100%' }} />
+          <TextField
+            sx={{
+              width: '100%',
+            }}
+          />
         </Grid>
         <Grid size={6}>
           <TextField sx={{ width: '100%' }} />
