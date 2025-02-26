@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   CardContent,
   CardMedia,
@@ -10,14 +9,11 @@ import { CallMadeOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import { customColors } from '../../../themes/custom-colors';
-import {
-  customSizes,
-  customSizesMediaQuery,
-} from '../../../themes/custom-sizes-query';
+import { customSizesMediaQuery } from '../../../themes/custom-sizes-query';
 interface ViewItemCardProps {
   title: string;
   description: string;
-  thumbnail: string;
+  thumbnail?: string;
   link: string;
   footer?: React.ReactNode;
 }
@@ -53,17 +49,19 @@ export const ViewItemCard = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <CardMedia
-        component={'img'}
-        image={thumbnail}
-        sx={{
-          borderRadius: '16px',
+      {thumbnail && (
+        <CardMedia
+          component={'img'}
+          image={thumbnail}
+          sx={{
+            borderRadius: '16px',
 
-          padding: '4px',
-          height: isBelowSm ? '90px' : '135px',
-          width: isBelowSm ? '90px' : '135px',
-        }}
-      />
+            padding: '4px',
+            height: isBelowSm ? '90px' : '135px',
+            width: isBelowSm ? '90px' : '135px',
+          }}
+        />
+      )}
       <CardContent>
         <Typography variant='h6'>{title}</Typography>
         <Typography variant='body1'>{description}</Typography>

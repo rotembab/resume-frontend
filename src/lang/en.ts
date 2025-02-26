@@ -15,6 +15,8 @@ export const enTranslations = {
   Experience: {
     title: 'Experience',
     description: 'Here are some of the companies I have worked for.',
+    heading1: '2 Years of',
+    heading2: 'Experience',
   },
   Tools: {
     title: 'Tools',
