@@ -4,10 +4,16 @@ import {
   CardContent,
   CardMedia,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { CallMadeOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
+import { customColors } from '../../../themes/custom-colors';
+import {
+  customSizes,
+  customSizesMediaQuery,
+} from '../../../themes/custom-sizes-query';
 interface ViewItemCardProps {
   title: string;
   description: string;
@@ -25,13 +31,19 @@ export const ViewItemCard = ({
 }: ViewItemCardProps) => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
+
+  const isBelowSm = useMediaQuery(customSizesMediaQuery.sm);
   return (
     <Card
       onClick={() => navigate(link)}
+      elevation={0}
       sx={{
+        transition: 'background-color 0.7s',
         position: 'relative',
         cursor: 'pointer',
-        backgroundColor: isHovered ? 'hoverColor.main' : 'background.main',
+        backgroundColor: isHovered
+          ? customColors.hoverColor.main
+          : 'transparent',
         borderRadius: '16px',
         height: 'min-content',
         padding: '20px 8px',
@@ -46,25 +58,29 @@ export const ViewItemCard = ({
         image={thumbnail}
         sx={{
           borderRadius: '16px',
-          width: '135px',
-          height: '135px',
+
           padding: '4px',
+          height: isBelowSm ? '90px' : '135px',
+          width: isBelowSm ? '90px' : '135px',
         }}
       />
       <CardContent>
         <Typography variant='h6'>{title}</Typography>
         <Typography variant='body1'>{description}</Typography>
       </CardContent>
-      <Button
-        onClick={() => navigate(link)}
-        sx={{
-          position: 'absolute',
-          top: '10px',
-          right: '10px',
-        }}
-      >
-        <CallMadeOutlined />
-      </Button>
+
+      {!isBelowSm && (
+        <CallMadeOutlined
+          color='primary'
+          sx={{
+            position: 'absolute',
+            top: isHovered ? '10px' : '20px',
+            right: isHovered ? '10px' : '20px',
+            transition: 'top 0.3s ease-in-out, right 0.3s ease-in-out',
+          }}
+        />
+      )}
+
       {footer && footer}
     </Card>
   );
