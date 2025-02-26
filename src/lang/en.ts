@@ -21,6 +21,8 @@ export const enTranslations = {
   Tools: {
     title: 'Tools',
     description: 'Here are some of the tools I have worked with.',
+    heading1: 'Premium',
+    heading2: 'Tools',
   },
   Card: {
     name: 'Rotem Babani',

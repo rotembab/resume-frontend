@@ -2,15 +2,16 @@ import { SlideFadeTransition } from '../../ui/slide-fade-transition/slide-fade-t
 import { useTranslation } from 'react-i18next';
 import Grid from '@mui/material/Grid2';
 import { Stack, Typography } from '@mui/material';
-import { projectsConfig } from './projects-config';
-import { ViewItemCard } from '../../ui/view-item-card/view-item-card.component';
 
+import { ViewItemCard } from '../../ui/view-item-card/view-item-card.component';
+import { useGithubReposFetchAPI } from '../../../hooks/github-fetchAPI.hook';
 type ProjectsContentProps = {
   limit?: number;
 };
 
 export const ProjectsContent = ({ limit }: ProjectsContentProps) => {
   const { t } = useTranslation();
+  const getGithubReposQuery = useGithubReposFetchAPI();
   return (
     <SlideFadeTransition transitionKey={location.pathname}>
       <Grid container rowSpacing={6}>
@@ -23,13 +24,13 @@ export const ProjectsContent = ({ limit }: ProjectsContentProps) => {
 
         <Grid size={12}>
           <Stack>
-            {projectsConfig.slice(0, limit).map((project) => (
+            {getGithubReposQuery.data?.slice(0, limit).map((project) => (
               <ViewItemCard
-                key={project.title}
-                title={project.title}
+                key={project.id}
+                title={project.name}
                 description={project.description}
-                thumbnail={project.thumbnail}
-                link={project.link}
+                link={project.html_url}
+                isExternal={true}
               />
             ))}
           </Stack>

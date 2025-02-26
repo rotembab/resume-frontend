@@ -1,7 +1,8 @@
+import { useGithubReposFetchAPI } from '../../../../hooks/github-fetchAPI.hook';
 import { SingleStatistic } from '../../../ui/single-statistic/single-statistic.component';
 import Grid from '@mui/material/Grid2';
-
 export const Statistics = () => {
+  const getGithubReposQuery = useGithubReposFetchAPI();
   return (
     <Grid
       spacing={2}
@@ -37,7 +38,7 @@ export const Statistics = () => {
       >
         <SingleStatistic
           description={'Years of experience in  game development'}
-          number={1.5}
+          number={2}
         />
       </Grid>
       <Grid
@@ -49,7 +50,10 @@ export const Statistics = () => {
           xl: 4,
         }}
       >
-        <SingleStatistic description={'Git repositories'} number={14} />
+        <SingleStatistic
+          description={'Git repositories'}
+          number={getGithubReposQuery.data?.length ?? 8}
+        />
       </Grid>
     </Grid>
   );

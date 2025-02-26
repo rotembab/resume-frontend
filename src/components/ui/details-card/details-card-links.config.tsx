@@ -1,10 +1,5 @@
-import { GitHub, LinkedIn, Mail, MailOutline } from '@mui/icons-material';
-
-export interface DetailsCardLink {
-  icon: React.ReactNode;
-  link: string;
-}
-
+import { GitHub, LinkedIn, MailOutline } from '@mui/icons-material';
+import { DetailsCardLink } from '../../../interfaces/ui/details-card/details-card-link.interface';
 export const detailsCardLinks = [
   {
     icon: <LinkedIn color='primary' />,

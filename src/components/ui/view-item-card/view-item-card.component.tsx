@@ -10,13 +10,7 @@ import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import { customColors } from '../../../themes/custom-colors';
 import { customSizesMediaQuery } from '../../../themes/custom-sizes-query';
-interface ViewItemCardProps {
-  title: string;
-  description: string;
-  thumbnail?: string;
-  link: string;
-  footer?: React.ReactNode;
-}
+import { ViewCardItemProps } from '../../../interfaces/ui/view-card-item/view-card-item-props.interface';
 
 export const ViewItemCard = ({
   title,
@@ -24,14 +18,17 @@ export const ViewItemCard = ({
   thumbnail,
   link,
   footer,
-}: ViewItemCardProps) => {
+  isExternal = false,
+}: ViewCardItemProps) => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
 
   const isBelowSm = useMediaQuery(customSizesMediaQuery.sm);
   return (
     <Card
-      onClick={() => navigate(link)}
+      onClick={() =>
+        isExternal ? window.open(link, '_blank') : navigate(link)
+      }
       elevation={0}
       sx={{
         transition: 'background-color 0.7s',
