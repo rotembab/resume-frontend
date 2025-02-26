@@ -4,7 +4,7 @@ import { ProjectsContent } from './projects-content.component';
 
 export const ProjectsPage = () => {
   return (
-    <Grid container spacing={24}>
+    <Grid container spacing={12}>
       <Grid size={12}>
         <ProjectsContent />
       </Grid>

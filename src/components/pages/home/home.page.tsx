@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid2';
 
 export const HomePage = () => {
   return (
-    <Grid container spacing={24}>
+    <Grid container spacing={12}>
       <Grid size={12}>
         <HomeContent />
       </Grid>

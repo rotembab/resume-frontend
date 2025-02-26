@@ -22,7 +22,7 @@ export const ProjectsContent = ({ limit }: ProjectsContentProps) => {
         </Grid>
 
         <Grid size={12}>
-          <Stack spacing={5}>
+          <Stack>
             {projectsConfig.slice(0, limit).map((project) => (
               <ViewItemCard
                 key={project.title}
