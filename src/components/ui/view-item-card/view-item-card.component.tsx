@@ -12,6 +12,7 @@ interface ViewItemCardProps {
   description: string;
   thumbnail: string;
   link: string;
+  footer?: React.ReactNode;
 }
 
 export const ViewItemCard = ({
@@ -19,6 +20,7 @@ export const ViewItemCard = ({
   description,
   thumbnail,
   link,
+  footer,
 }: ViewItemCardProps) => {
   const navigate = useNavigate();
   return (
@@ -38,6 +40,7 @@ export const ViewItemCard = ({
       >
         <CallMadeOutlined />
       </Button>
+      {footer && footer}
     </Card>
   );
 };
