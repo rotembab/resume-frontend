@@ -4,11 +4,13 @@ export const heTranslations = {
     heading1: 'מפתח פול סטאק',
     heading2: 'מפתח משחקים',
     description:
-      'אני מפתח פול סטאק ומפתח משחקים. אני מתמקד ביצירת אפליקציות ומשחקים אינטראקטיביים ומרתקים.',
+      'I am a Full Stack Developer and Game Developer. I am passionate about creating interactive and engaging web applications and games.',
   },
   Projects: {
     title: 'פרויקטים',
     description: 'כאן תוכלו למצוא חלק מהפרויקטים שעבדתי עליהם.',
+    heading1: 'אחרונים',
+    heading2: 'פרויקטים',
   },
   Experience: {
     title: 'ניסיון',
@@ -24,6 +26,7 @@ export const heTranslations = {
   },
   Contact: {
     title: 'צור קשר',
-    heading: 'בואו נעבוד ביחד',
+    heading1: 'בואו נעבוד',
+    heading2: 'ביחד',
   },
 };

@@ -9,6 +9,8 @@ export const enTranslations = {
   Projects: {
     title: 'Projects',
     description: 'Here are some of the projects I have worked on.',
+    heading1: 'Recent',
+    heading2: 'Projects',
   },
   Experience: {
     title: 'Experience',

@@ -9,6 +9,8 @@ export const jpTranslations = {
   Projects: {
     title: 'プロジェクト',
     description: '私が取り組んだプロジェクトの一部です。',
+    heading1: '最近の',
+    heading2: 'プロジェクト',
   },
   Experience: {
     title: '経験',
@@ -25,6 +27,7 @@ export const jpTranslations = {
   },
   Contact: {
     title: 'コンタクト',
-    heading: '一緒に働きましょう',
+    heading1: '一緒に働きましょう',
+    heading2: '一緒に働きましょう',
   },
 };
