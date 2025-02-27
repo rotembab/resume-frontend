@@ -24,7 +24,7 @@ export const HomePage = () => {
         <ContactMe />
       </Grid>
       <Grid size={12}>
-        <ScrollVideoDisplay />
+        <ScrollVideoDisplay videoSrc={'/videos/blaster-video.mp4'} />
       </Grid>
     </Grid>
   );

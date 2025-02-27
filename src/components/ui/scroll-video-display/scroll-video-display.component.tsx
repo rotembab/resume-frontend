@@ -2,7 +2,11 @@ import { Box } from '@mui/material';
 import { useRef, useEffect, useMemo } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
-export const ScrollVideoDisplay = () => {
+type ScrollVideoDisplayProps = {
+  videoSrc: string;
+};
+
+export const ScrollVideoDisplay = ({ videoSrc }: ScrollVideoDisplayProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -46,7 +50,7 @@ export const ScrollVideoDisplay = () => {
         }}
       >
         <motion.video
-          src='/videos/blaster-video.mp4'
+          src={videoSrc}
           muted
           loop
           ref={videoRef}
@@ -56,6 +60,11 @@ export const ScrollVideoDisplay = () => {
             top: '50vh',
             width: '100%',
             height: 'auto',
+            scale: useTransform(
+              scrollYProgress,
+              [0, 0.25, 0.75, 1],
+              [3, 1, 1, 0.1]
+            ),
             opacity: useTransform(
               scrollYProgress,
               [0, 0.25, 0.75, 1],
@@ -64,7 +73,7 @@ export const ScrollVideoDisplay = () => {
             y: useTransform(
               scrollYProgress,
               [0, 0.25, 0.75, 1],
-              ['100%', '-50%', '-50%', '-200%']
+              ['300%', '-50%', '-50%', '-200%']
             ),
             transform: 'translateY(-50%)',
           }}
