@@ -33,5 +33,11 @@ export const enTranslations = {
     title: 'Contact',
     heading1: "Let's Work",
     heading2: 'Together',
+    Form: {
+      name: 'Name',
+      email: 'Email',
+      message: 'Message',
+      submit: 'Submit',
+    },
   },
 };

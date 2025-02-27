@@ -28,5 +28,11 @@ export const heTranslations = {
     title: 'צור קשר',
     heading1: 'בואו נעבוד',
     heading2: 'ביחד',
+    form: {
+      name: 'שם',
+      email: 'אימייל',
+      message: 'הודעה',
+      submit: 'שלח',
+    },
   },
 };

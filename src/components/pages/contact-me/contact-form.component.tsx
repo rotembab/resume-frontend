@@ -1,25 +1,57 @@
-import { Box, Button, Select, TextField } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
 import Grid from '@mui/material/Grid2';
+import { useTranslation } from 'react-i18next';
 
 export const ContactForm = () => {
+  const { t } = useTranslation();
   return (
     <Box component={'form'}>
       <Grid spacing={4} container>
         <Grid size={6}>
           <TextField
+            type='text'
+            size='small'
+            required
+            label={t('Contact.Form.name')}
             sx={{
+              borderRadius: '10px',
               width: '100%',
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderRadius: '10px',
+              },
             }}
           />
         </Grid>
         <Grid size={6}>
-          <TextField sx={{ width: '100%' }} />
+          <TextField
+            size='small'
+            type='email'
+            required
+            label={t('Contact.Form.email')}
+            sx={{
+              borderRadius: '10px',
+              width: '100%',
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderRadius: '10px',
+              },
+            }}
+          />
         </Grid>
+
         <Grid size={12}>
-          <Select sx={{ width: '100%' }} />
-        </Grid>
-        <Grid size={12}>
-          <TextField rows={4} multiline sx={{ width: '100%' }} />
+          <TextField
+            required
+            label={t('Contact.Form.message')}
+            rows={4}
+            multiline
+            sx={{
+              borderRadius: '10px',
+              width: '100%',
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderRadius: '10px',
+              },
+            }}
+          />
         </Grid>
         <Grid size={12}>
           <Button
@@ -29,7 +61,7 @@ export const ContactForm = () => {
             variant='contained'
             color='primary'
           >
-            submit
+            {t('Contact.Form.submit')}
           </Button>
         </Grid>
       </Grid>

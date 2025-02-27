@@ -29,5 +29,11 @@ export const jpTranslations = {
     title: 'コンタクト',
     heading1: '一緒に働きましょう',
     heading2: '一緒に働きましょう',
+    form: {
+      name: '名前',
+      email: 'メール',
+      message: 'メッセージ',
+      submit: '送信',
+    },
   },
 };
