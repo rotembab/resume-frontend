@@ -3,8 +3,8 @@ import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 import { SlideFadeTransition } from '../../ui/slide-fade-transition/slide-fade-transition-component';
 import { ViewItemCard } from '../../ui/view-item-card/view-item-card.component';
-import { Stack } from '@mui/material';
 import { toolsConfig } from './tools-config';
+import { ToolItemViewCard } from '../../ui/tool-item-view-card/tool-item-view-card.component';
 
 type ToolsContentProps = {
   limit?: number;
@@ -22,17 +22,18 @@ export const ToolsContent = ({ limit }: ToolsContentProps) => {
           </Typography>
         </Grid>
         <Grid size={12}>
-          <Stack>
+          <Grid container>
             {toolsConfig.slice(0, limit).map((tool) => (
-              <ViewItemCard
-                key={tool.title}
-                title={tool.title}
-                description={tool.description}
-                link={tool.link ?? ''}
-                thumbnail={tool.thumbnail}
-              />
+              <Grid size={6} key={tool.title}>
+                <ToolItemViewCard
+                  title={tool.title}
+                  description={tool.description}
+                  link={tool.link ?? ''}
+                  thumbnail={tool.thumbnail}
+                />
+              </Grid>
             ))}
-          </Stack>
+          </Grid>
         </Grid>
       </Grid>
     </SlideFadeTransition>

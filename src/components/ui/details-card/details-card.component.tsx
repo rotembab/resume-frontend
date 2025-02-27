@@ -4,7 +4,6 @@ import { SlideFadeTransition } from '../slide-fade-transition/slide-fade-transit
 import Grid from '@mui/material/Grid2';
 import { detailsCardLinks } from './details-card-links.config';
 import { useTranslation } from 'react-i18next';
-import TempProfilePic from '../../../assets/TempProfilePic.jpeg';
 import { customSizesMediaQuery } from '../../../themes/custom-sizes-query';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -30,7 +29,7 @@ export const DetailsCard = () => {
             <Grid size={12}>
               <CardMedia
                 component='img'
-                image={TempProfilePic}
+                image={'public/images/TempProfilePic.jpeg'}
                 style={{ borderRadius: '1rem' }}
                 alt='Profile'
                 width={'200px'}

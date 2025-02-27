@@ -1,100 +1,110 @@
-import { title } from 'process';
-
 export const toolsConfig = [
   {
     title: 'React',
-    description: 'A JavaScript library for building user interfaces',
+
+    description: 'UI Component Library',
     thumbnail: '/images/tools/react.png',
     link: 'https://react.dev/',
   },
   {
     title: 'Next.js',
-    description:
-      'A React framework for building server-side rendered (SSR) web applications',
+    description: 'React Framework',
     thumbnail: '/images/tools/nextjs.png',
     link: 'https://nextjs.org/',
   },
   {
     title: 'Tailwind CSS',
-    description:
-      'A utility-first CSS framework for rapidly building custom designs',
+    description: 'CSS Framework',
     thumbnail: '/images/tools/tailwind.png',
     link: 'https://tailwindcss.com/',
   },
   {
     title: 'TypeScript',
-    description:
-      'A statically typed programming language that builds on JavaScript, giving you better tooling at any scale',
+    description: 'Programming Language',
     thumbnail: '/images/tools/typescript.png',
     link: 'https://www.typescriptlang.org/',
   },
   {
     title: 'Node.js',
-    description:
-      'A runtime environment for building server-side and network applications',
+    description: 'Runtime Environment',
     thumbnail: '/images/tools/nodejs.png',
     link: 'https://nodejs.org/',
   },
   {
     title: 'Express',
-    description: 'A fast, unopinionated, minimalist web framework for Node.js',
+    description: 'Web Framework',
     thumbnail: '/images/tools/express.png',
     link: 'https://expressjs.com/',
   },
   {
     title: 'MongoDB',
-    description:
-      'A NoSQL database that provides a flexible, scalable, and efficient data storage solution',
+    description: 'NoSQL Database',
     thumbnail: '/images/tools/mongodb.png',
     link: 'https://www.mongodb.com/',
   },
   {
     title: 'php',
-    description:
-      'A server-side scripting language for creating dynamic web pages',
+    description: 'Server-Side Scripting Language',
     thumbnail: '/images/tools/php.png',
     link: 'https://www.php.net/',
   },
   {
     title: 'Laravel',
-    description: 'A web application framework with expressive, elegant syntax',
+    description: 'Web Application Framework',
     thumbnail: '/images/tools/laravel.png',
     link: 'https://laravel.com/',
   },
   {
     title: 'MySQL',
-    description: 'A relational database management system',
-    thumbnail: '/images/tools/mysql.png',
+    description: 'Relational Database Management System',
+    thumbnail: '/images/tools/mysql.svg',
   },
   {
     title: 'Git',
-    description: 'A distributed version control system',
+    description: 'Distributed Version Control System',
     thumbnail: '/images/tools/git.png',
     link: 'https://git-scm.com/',
   },
   {
     title: 'GitHub',
-    description: 'A web-based Git repository hosting service',
+    description: 'Web-Based Git Repository Hosting Service',
     thumbnail: '/images/tools/github.png',
     link: 'https://github.com/',
   },
   {
     title: 'Docker',
-    description:
-      'A software platform for building, shipping, and running applications',
+    description: 'Software Platform',
     thumbnail: '/images/tools/docker.png',
     link: 'https://www.docker.com/',
   },
   {
     title: 'ChatGPT',
-    description: 'A web-based AI chatbot',
+    description: 'AI Chatbot',
     thumbnail: '/images/tools/chatgpt.png',
     link: 'https://chatgpt.com/',
   },
   {
     title: 'Framer Motion',
-    description: 'A motion library for React',
-    thumbnail: '/images/tools/framer-motion.png',
+    description: 'Motion Library',
+    thumbnail: '/images/tools/framer-motion.svg',
     link: 'https://www.framer.com/motion/',
+  },
+  {
+    title: 'Vite',
+    description: 'Build Tool',
+    thumbnail: 'vite.svg',
+    link: 'https://vitejs.dev/',
+  },
+  {
+    title: 'Unity',
+    description: 'Game Engine',
+    thumbnail: '/images/tools/unity.png',
+    link: 'https://unity.com/',
+  },
+  {
+    title: 'Unreal Engine',
+    description: 'Game Engine',
+    thumbnail: '/images/tools/unreal-engine.png',
+    link: 'https://www.unrealengine.com/',
   },
 ];
