@@ -22,8 +22,6 @@ export const ViewItemCard = ({
   isExternal = false,
 }: ViewCardItemProps) => {
   const navigate = useNavigate();
-  const [isHovered, setIsHovered] = useState(false);
-
   const isBelowSm = useMediaQuery(customSizesMediaQuery.sm);
   return (
     <BaseViewCard
@@ -39,6 +37,8 @@ export const ViewItemCard = ({
       imgWidth={isBelowSm ? '90px' : '135px'}
       isShowArrow={!isBelowSm}
       footer={footer}
+      objectFitOverride='contain'
+      imgBackground={customColors.hoverColor.main}
     />
   );
 };

@@ -26,6 +26,7 @@ type BaseViewCardProps = {
   imgBackground?: string;
   cardContentStyle?: SxProps;
   cardPadding?: string;
+  objectFitOverride?: 'contain' | 'cover' | 'fill' | 'none';
 };
 export const BaseViewCard = ({
   title,
@@ -41,6 +42,7 @@ export const BaseViewCard = ({
   imgBackground,
   cardContentStyle,
   cardPadding = '20px 8px',
+  objectFitOverride = 'contain',
 }: BaseViewCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   return (
@@ -66,15 +68,15 @@ export const BaseViewCard = ({
     >
       {thumbnail && (
         <CardMedia
-          component={'img'}
+          component='img'
           image={thumbnail}
           sx={{
-            borderRadius: '16px',
             padding: '4px',
             height: imgHeight,
             width: imgWidth,
             backgroundColor: imgBackground,
-            objectFit: 'contain',
+            objectFit: objectFitOverride,
+            borderRadius: '16px',
           }}
         />
       )}
