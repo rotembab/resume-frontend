@@ -30,6 +30,7 @@ export const ProjectsContent = ({ limit }: ProjectsContentProps) => {
                 title={project.name}
                 description={project.description}
                 link={project.html_url}
+                thumbnail={`https://raw.githubusercontent.com/rotembab/${project.name}/main/preview.png`}
                 isExternal={true}
               />
             ))}
