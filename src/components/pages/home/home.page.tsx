@@ -4,6 +4,7 @@ import { HomeContent } from './home-content.component';
 import Grid from '@mui/material/Grid2';
 import { ExperienceContent } from '../experience/experience-content.component';
 import { ToolsContent } from '../tools/tools-content.component';
+import { ScrollVideoDisplay } from '../../ui/scroll-video-display/scroll-video-display.component';
 export const HomePage = () => {
   return (
     <Grid container spacing={12}>
@@ -21,6 +22,9 @@ export const HomePage = () => {
       </Grid>
       <Grid size={12}>
         <ContactMe />
+      </Grid>
+      <Grid size={12}>
+        <ScrollVideoDisplay />
       </Grid>
     </Grid>
   );
