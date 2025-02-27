@@ -3,7 +3,6 @@ export const experienceConfig = [
     title: 'Full Stack Developer -  iZer',
     description: 'iZer is a platform that allows to  manage your own business',
     link: '/experience1',
-
     footer: 'Nov 2023 - Present',
   },
   {
