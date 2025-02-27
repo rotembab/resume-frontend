@@ -9,6 +9,7 @@ import { DetailsCard } from './components/ui/details-card/details-card.component
 import Grid from '@mui/material/Grid2';
 import { Container, Box } from '@mui/material';
 import { ContactMe } from './components/pages/contact-me/contact-me.component';
+import { ChangeLanguageButton } from './components/ui/change-language-button/change-language-button.component';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
     >
       <Grid spacing={12} container>
         <NavMenu />
+
         <Grid
           size={{
             xs: 12,

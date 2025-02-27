@@ -4,9 +4,12 @@ import { enTranslations } from './en';
 import { heTranslations } from './he';
 import { jpTranslations } from './jp';
 
+export const availableLanguages = ['en', 'he', 'jp'];
+
 i18n.use(initReactI18next).init({
   lng: 'en',
   fallbackLng: 'en',
+
   interpolation: {
     escapeValue: false,
   },

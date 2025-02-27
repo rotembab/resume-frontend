@@ -1,7 +1,9 @@
 import { useGithubReposFetchAPI } from '../../../../hooks/github-fetchAPI.hook';
 import { SingleStatistic } from '../../../ui/single-statistic/single-statistic.component';
 import Grid from '@mui/material/Grid2';
+import { useTranslation } from 'react-i18next';
 export const Statistics = () => {
+  const { t } = useTranslation();
   const getGithubReposQuery = useGithubReposFetchAPI();
   return (
     <Grid
@@ -23,7 +25,9 @@ export const Statistics = () => {
         }}
       >
         <SingleStatistic
-          description={'Years of experience in Full stack development'}
+          description={t(
+            'Home.statistics.yearsOfExperienceInFullStackDevelopment'
+          )}
           number={2}
         />
       </Grid>
@@ -37,7 +41,7 @@ export const Statistics = () => {
         }}
       >
         <SingleStatistic
-          description={'Years of experience in  game development'}
+          description={t('Home.statistics.yearsOfExperienceInGameDevelopment')}
           number={2}
         />
       </Grid>
@@ -51,7 +55,7 @@ export const Statistics = () => {
         }}
       >
         <SingleStatistic
-          description={'Git repositories'}
+          description={t('Home.statistics.gitProjects')}
           number={getGithubReposQuery.data?.length ?? 8}
         />
       </Grid>

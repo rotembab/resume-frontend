@@ -22,9 +22,9 @@ export const ToolsContent = ({ limit }: ToolsContentProps) => {
           </Typography>
         </Grid>
         <Grid size={12}>
-          <Grid container>
+          <Grid container spacing={2}>
             {toolsConfig.slice(0, limit).map((tool) => (
-              <Grid size={6} spacing={2} key={tool.title}>
+              <Grid size={6} key={tool.title}>
                 <ToolItemViewCard
                   title={tool.title}
                   description={tool.description}

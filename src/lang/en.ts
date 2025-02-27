@@ -5,6 +5,13 @@ export const enTranslations = {
     heading2: 'Game Developer',
     description:
       'I am a Full Stack Developer and Game Developer. I am passionate about creating interactive and engaging web applications and games.',
+    statistics: {
+      yearsOfExperienceInFullStackDevelopment:
+        'Years of experience in Full stack development',
+      yearsOfExperienceInGameDevelopment:
+        'Years of experience in Game development',
+      gitProjects: 'Git repositories',
+    },
   },
   Projects: {
     title: 'Projects',

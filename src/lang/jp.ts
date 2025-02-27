@@ -5,6 +5,11 @@ export const jpTranslations = {
     heading2: 'ゲーム開発者',
     description:
       '私はフルスタック開発者であり、ゲーム開発者です。インタラクティブで魅力的なWebアプリケーションやゲームを作成することに情熱を注いでいます。',
+    statistics: {
+      yearsOfExperienceInFullStackDevelopment: 'フルスタック開発の経験',
+      yearsOfExperienceInGameDevelopment: 'ゲーム開発の経験',
+      gitProjects: 'GitHubプロジェクト',
+    },
   },
   Projects: {
     title: 'プロジェクト',
@@ -15,10 +20,14 @@ export const jpTranslations = {
   Experience: {
     title: '経験',
     description: '私が勤務したいくつかの会社です。',
+    heading1: '最近の',
+    heading2: 'プロジェクト',
   },
   Tools: {
     title: 'ツール',
     description: '私が使用したツールの一部です。',
+    heading1: '最近の',
+    heading2: 'プロジェクト',
   },
   Card: {
     name: 'ローテム・ババニ',

@@ -3,6 +3,7 @@ import { customColors } from '../../../themes/custom-colors';
 import { NavMenuConfig } from './nav-menu-config';
 import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
+import { ChangeLanguageButton } from '../change-language-button/change-language-button.component';
 
 export const NavMenu = () => {
   let navigate = useNavigate();
@@ -52,6 +53,7 @@ export const NavMenu = () => {
             </Tooltip>
           );
         })}
+        <ChangeLanguageButton />
       </Box>
     </AppBar>
   );

@@ -61,7 +61,7 @@ export const DetailsCard = () => {
             <Grid size={12}>
               <Grid container>
                 {detailsCardLinks.map((item) => (
-                  <Grid size={4}>
+                  <Grid key={item.link + '_grid'} size={4}>
                     <Button key={item.link} href={item.link} target='_blank'>
                       {item.icon}
                     </Button>
