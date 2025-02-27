@@ -1,10 +1,8 @@
 // Adjust the import path as necessary
 
 import {
-  Build,
   BuildOutlined,
   BusinessCenterOutlined,
-  ColorizeOutlined,
   FolderOutlined,
   HomeOutlined,
   Phone,

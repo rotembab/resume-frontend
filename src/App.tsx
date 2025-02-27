@@ -7,9 +7,8 @@ import { ExperiencePage } from './components/pages/experience/experience.page';
 import { ToolsPage } from './components/pages/tools/tools.page';
 import { DetailsCard } from './components/ui/details-card/details-card.component';
 import Grid from '@mui/material/Grid2';
-import { Container, Box } from '@mui/material';
+import { Container } from '@mui/material';
 import { ContactMe } from './components/pages/contact-me/contact-me.component';
-import { ChangeLanguageButton } from './components/ui/change-language-button/change-language-button.component';
 
 export default function App() {
   return (

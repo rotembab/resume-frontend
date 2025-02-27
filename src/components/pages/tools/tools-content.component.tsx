@@ -2,7 +2,6 @@ import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 import { SlideFadeTransition } from '../../ui/slide-fade-transition/slide-fade-transition-component';
-import { ViewItemCard } from '../../ui/view-item-card/view-item-card.component';
 import { toolsConfig } from './tools-config';
 import { ToolItemViewCard } from '../../ui/tool-item-view-card/tool-item-view-card.component';
 

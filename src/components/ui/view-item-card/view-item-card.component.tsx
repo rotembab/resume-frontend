@@ -1,13 +1,5 @@
-import {
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
-import { CallMadeOutlined } from '@mui/icons-material';
+import { useMediaQuery } from '@mui/material';
 import { useNavigate } from 'react-router';
-import { useState } from 'react';
 import { customColors } from '../../../themes/custom-colors';
 import { customSizesMediaQuery } from '../../../themes/custom-sizes-query';
 import { ViewCardItemProps } from '../../../interfaces/ui/view-card-item/view-card-item-props.interface';

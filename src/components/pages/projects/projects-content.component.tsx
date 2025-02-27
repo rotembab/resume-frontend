@@ -7,10 +7,6 @@ import { ViewItemCard } from '../../ui/view-item-card/view-item-card.component';
 import { useGithubReposFetchAPI } from '../../../hooks/github-fetchAPI.hook';
 import { useEffect, useState } from 'react';
 
-interface ThumbnailMap {
-  [key: number]: string | undefined;
-}
-
 type ProjectsContentProps = {
   limit?: number;
 };

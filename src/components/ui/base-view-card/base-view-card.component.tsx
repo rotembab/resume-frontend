@@ -7,9 +7,6 @@ import {
   SxProps,
 } from '@mui/material';
 import { useState } from 'react';
-import { link } from 'fs';
-import { title } from 'process';
-import { isExternal } from 'util/types';
 import { customColors } from '../../../themes/custom-colors';
 
 type BaseViewCardProps = {
