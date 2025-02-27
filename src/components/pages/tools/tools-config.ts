@@ -1,7 +1,6 @@
 export const toolsConfig = [
   {
     title: 'React',
-
     description: 'UI Component Library',
     thumbnail: '/images/tools/react.png',
     link: 'https://react.dev/',
@@ -23,6 +22,30 @@ export const toolsConfig = [
     description: 'Programming Language',
     thumbnail: '/images/tools/typescript.png',
     link: 'https://www.typescriptlang.org/',
+  },
+  {
+    title: 'Laravel',
+    description: 'Web Application Framework',
+    thumbnail: '/images/tools/laravel.png',
+    link: 'https://laravel.com/',
+  },
+  {
+    title: 'Docker',
+    description: 'Software Platform',
+    thumbnail: '/images/tools/docker.png',
+    link: 'https://www.docker.com/',
+  },
+  {
+    title: 'Unity',
+    description: 'Game Engine',
+    thumbnail: '/images/tools/unity.png',
+    link: 'https://unity.com/',
+  },
+  {
+    title: 'Unreal Engine',
+    description: 'Game Engine',
+    thumbnail: '/images/tools/unreal-engine.png',
+    link: 'https://www.unrealengine.com/',
   },
   {
     title: 'Node.js',
@@ -48,12 +71,7 @@ export const toolsConfig = [
     thumbnail: '/images/tools/php.png',
     link: 'https://www.php.net/',
   },
-  {
-    title: 'Laravel',
-    description: 'Web Application Framework',
-    thumbnail: '/images/tools/laravel.png',
-    link: 'https://laravel.com/',
-  },
+
   {
     title: 'MySQL',
     description: 'Relational Database Management System',
@@ -71,12 +89,7 @@ export const toolsConfig = [
     thumbnail: '/images/tools/github.png',
     link: 'https://github.com/',
   },
-  {
-    title: 'Docker',
-    description: 'Software Platform',
-    thumbnail: '/images/tools/docker.png',
-    link: 'https://www.docker.com/',
-  },
+
   {
     title: 'ChatGPT',
     description: 'AI Chatbot',
@@ -94,17 +107,5 @@ export const toolsConfig = [
     description: 'Build Tool',
     thumbnail: 'vite.svg',
     link: 'https://vitejs.dev/',
-  },
-  {
-    title: 'Unity',
-    description: 'Game Engine',
-    thumbnail: '/images/tools/unity.png',
-    link: 'https://unity.com/',
-  },
-  {
-    title: 'Unreal Engine',
-    description: 'Game Engine',
-    thumbnail: '/images/tools/unreal-engine.png',
-    link: 'https://www.unrealengine.com/',
   },
 ];

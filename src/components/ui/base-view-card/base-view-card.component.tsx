@@ -1,5 +1,11 @@
 import { CallMadeOutlined } from '@mui/icons-material';
-import { Card, CardMedia, CardContent, Typography } from '@mui/material';
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  SxProps,
+} from '@mui/material';
 import { useState } from 'react';
 import { link } from 'fs';
 import { title } from 'process';
@@ -10,7 +16,6 @@ type BaseViewCardProps = {
   title: string;
   description: string;
   thumbnail?: string;
-
   onClick: () => void;
   height: string;
   width: string;
@@ -19,6 +24,8 @@ type BaseViewCardProps = {
   isShowArrow: boolean;
   footer: React.ReactNode;
   imgBackground?: string;
+  cardContentStyle?: SxProps;
+  cardPadding?: string;
 };
 export const BaseViewCard = ({
   title,
@@ -32,6 +39,8 @@ export const BaseViewCard = ({
   isShowArrow = true,
   footer,
   imgBackground,
+  cardContentStyle,
+  cardPadding = '20px 8px',
 }: BaseViewCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   return (
@@ -48,7 +57,7 @@ export const BaseViewCard = ({
         borderRadius: '16px',
         height: height,
         width: width,
-        padding: '20px 8px',
+        padding: cardPadding,
         display: 'flex',
       }}
       title={title}
@@ -69,7 +78,7 @@ export const BaseViewCard = ({
           }}
         />
       )}
-      <CardContent>
+      <CardContent sx={cardContentStyle}>
         <Typography variant='h6'>{title}</Typography>
         <Typography variant='body1'>{description}</Typography>
       </CardContent>

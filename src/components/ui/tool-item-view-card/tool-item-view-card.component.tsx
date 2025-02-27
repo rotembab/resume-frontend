@@ -25,6 +25,10 @@ export const ToolItemViewCard = ({
       isShowArrow={false}
       footer={null}
       imgBackground={'white'}
+      cardPadding='0px 8px'
+      cardContentStyle={{
+        paddingY: 0,
+      }}
     />
   );
 };
