@@ -121,6 +121,11 @@ export const AppTheme = responsiveFontSizes(
         styleOverrides: {
           root: {
             backgroundColor: customColors.inputColor.main,
+            borderRadius: '10px',
+            width: '100%',
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderRadius: '10px',
+            },
           },
         },
       },

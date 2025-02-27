@@ -13,13 +13,6 @@ export const ContactForm = () => {
             size='small'
             required
             label={t('Contact.Form.name')}
-            sx={{
-              borderRadius: '10px',
-              width: '100%',
-              '& .MuiOutlinedInput-notchedOutline': {
-                borderRadius: '10px',
-              },
-            }}
           />
         </Grid>
         <Grid size={6}>
@@ -28,13 +21,6 @@ export const ContactForm = () => {
             type='email'
             required
             label={t('Contact.Form.email')}
-            sx={{
-              borderRadius: '10px',
-              width: '100%',
-              '& .MuiOutlinedInput-notchedOutline': {
-                borderRadius: '10px',
-              },
-            }}
           />
         </Grid>
 
@@ -44,13 +30,6 @@ export const ContactForm = () => {
             label={t('Contact.Form.message')}
             rows={4}
             multiline
-            sx={{
-              borderRadius: '10px',
-              width: '100%',
-              '& .MuiOutlinedInput-notchedOutline': {
-                borderRadius: '10px',
-              },
-            }}
           />
         </Grid>
         <Grid size={12}>
