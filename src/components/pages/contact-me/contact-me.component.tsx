@@ -15,7 +15,7 @@ export const ContactMe = () => {
       startY={-100}
       transitionKey={'contact-me' + uuid}
     >
-      <Grid container>
+      <Grid container spacing={2} sx={{ paddingBottom: '20px' }}>
         <Grid size={12}>
           <Typography variant='h1'>{t('Contact.heading1')}</Typography>
           <Typography color='headingDarkColor' variant='h1'>
