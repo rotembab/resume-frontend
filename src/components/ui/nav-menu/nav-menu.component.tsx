@@ -19,6 +19,7 @@ export const NavMenu = () => {
         flexWrap: 'nowrap',
         top: 30,
         left: '50%',
+        position: 'relative',
         transform: 'translateX(-50%)',
         borderRadius: '15px',
         backgroundColor: customColors.hoverColor.main,

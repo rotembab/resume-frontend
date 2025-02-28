@@ -12,19 +12,17 @@ import { ContactMe } from './components/pages/contact-me/contact-me.component';
 
 export default function App() {
   return (
-    <Container
-      sx={{
-        paddingTop: {
+    <Container maxWidth='md'>
+      <NavMenu />
+      <Grid
+        paddingTop={{
           xs: '100px',
           sm: '120px',
           md: '160px',
-        },
-      }}
-      maxWidth='md'
-    >
-      <Grid spacing={12} container>
-        <NavMenu />
-
+        }}
+        spacing={12}
+        container
+      >
         <Grid
           size={{
             xs: 12,

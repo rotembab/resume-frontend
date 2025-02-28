@@ -12,14 +12,14 @@ export const DetailsCard = () => {
   const location = useLocation();
   const isBelowMd = useMediaQuery(customSizesMediaQuery.md);
   return (
-    <Box sx={{ position: 'sticky', top: '50px' }}>
+    <Box sx={{ position: isBelowMd ? 'relative' : 'sticky', top: '50px' }}>
       <SlideFadeTransition transitionKey={location.pathname}>
         <Card
           sx={{
             backgroundColor: 'secondary.main',
             color: 'secondary.contrastText',
-            width: isBelowMd ? '75%' : '100%',
-            margin: isBelowMd ? 'auto' : '0',
+            width: isBelowMd ? '80%' : '100%',
+            marginX: isBelowMd ? 'auto ' : '0',
             borderRadius: '1rem',
             textAlign: 'center',
             padding: '1rem',
