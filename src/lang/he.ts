@@ -42,6 +42,9 @@ export const heTranslations = {
       email: 'אימייל',
       message: 'הודעה',
       submit: 'שלח',
+      sending: 'ההודעה נשלחת...',
+      successMessage: 'הודעה נשלחה בהצלחה',
+      errorMessage: 'שליחת הודעה נכשלה',
     },
   },
 };

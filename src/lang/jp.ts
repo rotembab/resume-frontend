@@ -43,6 +43,9 @@ export const jpTranslations = {
       email: 'メール',
       message: 'メッセージ',
       submit: '送信',
+      sending: 'メッセージを送信中...',
+      successMessage: 'メッセージを送信しました',
+      errorMessage: 'メッセージを送信できませんでした',
     },
   },
 };

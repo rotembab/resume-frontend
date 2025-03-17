@@ -45,6 +45,9 @@ export const enTranslations = {
       email: 'Email',
       message: 'Message',
       submit: 'Submit',
+      sending: 'Sending...',
+      successMessage: 'Message sent successfully',
+      errorMessage: 'Failed to send message',
     },
   },
 };
