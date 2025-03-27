@@ -29,7 +29,7 @@ export const DetailsCard = () => {
             <Grid size={12}>
               <CardMedia
                 component='img'
-                image={'/images/TempProfilePic.jpeg'}
+                image={'/images/profilePic.png'}
                 style={{ borderRadius: '1rem' }}
                 alt='Profile'
                 width={'200px'}
