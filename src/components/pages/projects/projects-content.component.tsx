@@ -2,7 +2,7 @@ import { SlideFadeTransition } from '../../ui/slide-fade-transition/slide-fade-t
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import Grid from '@mui/material/Grid2';
-import { Stack, Typography } from '@mui/material';
+import { Alert, Skeleton, Stack, Typography } from '@mui/material';
 
 import { ViewItemCard } from '../../ui/view-item-card/view-item-card.component';
 import { useGithubReposFetchAPI } from '../../../hooks/github-fetchAPI.hook';
@@ -20,6 +20,9 @@ export const ProjectsContent = ({ limit }: ProjectsContentProps) => {
   const location = useLocation();
   const getGithubReposQuery = useGithubReposFetchAPI();
 
+  const skeletonCount = limit ?? 6;
+  const projects = getGithubReposQuery.data?.slice(0, limit) ?? [];
+
   return (
     <SlideFadeTransition transitionKey={location.pathname}>
       <Grid container rowSpacing={6}>
@@ -31,10 +34,26 @@ export const ProjectsContent = ({ limit }: ProjectsContentProps) => {
         </Grid>
 
         <Grid size={12}>
-          <Stack>
-            {getGithubReposQuery.data
-              ?.slice(0, limit)
-              .map((project) => (
+          {getGithubReposQuery.isError ? (
+            <Alert severity='warning' variant='outlined'>
+              {t('Projects.loadError', {
+                defaultValue: 'Failed to load projects from GitHub.',
+              })}
+            </Alert>
+          ) : getGithubReposQuery.isLoading ? (
+            <Stack spacing={2}>
+              {Array.from({ length: skeletonCount }).map((_, i) => (
+                <Skeleton
+                  key={i}
+                  variant='rounded'
+                  height={160}
+                  sx={{ borderRadius: '16px' }}
+                />
+              ))}
+            </Stack>
+          ) : (
+            <Stack>
+              {projects.map((project) => (
                 <ViewItemCard
                   key={project.id}
                   title={project.name}
@@ -44,7 +63,8 @@ export const ProjectsContent = ({ limit }: ProjectsContentProps) => {
                   isExternal={true}
                 />
               ))}
-          </Stack>
+            </Stack>
+          )}
         </Grid>
       </Grid>
     </SlideFadeTransition>

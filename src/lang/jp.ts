@@ -7,7 +7,6 @@ export const jpTranslations = {
       '私はフルスタック開発者であり、ゲーム開発者です。インタラクティブで魅力的なWebアプリケーションやゲームを作成することに情熱を注いでいます。',
     statistics: {
       yearsOfExperienceInFullStackDevelopment: 'フルスタック開発の経験',
-      yearsOfExperienceInGameDevelopment: 'ゲーム開発の経験',
       gitProjects: 'GitHubプロジェクト',
     },
   },

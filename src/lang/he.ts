@@ -7,7 +7,6 @@ export const heTranslations = {
       'אני מפתח פול סטאק ומפתח משחקים. אני מעוניין ליצור אפליקציות ומשחקים שמסכמים ומשחקים שמסכמים.',
     statistics: {
       yearsOfExperienceInFullStackDevelopment: 'שנים של ניסיון בפיתוח פול סטאק',
-      yearsOfExperienceInGameDevelopment: 'שנים של ניסיון בפיתוח משחקים',
       gitProjects: 'פרויקטים שלי בגיט',
     },
   },

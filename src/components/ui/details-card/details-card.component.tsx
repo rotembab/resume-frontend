@@ -62,7 +62,13 @@ export const DetailsCard = () => {
               <Grid container>
                 {detailsCardLinks.map((item) => (
                   <Grid key={item.link + '_grid'} size={4}>
-                    <Button key={item.link} href={item.link} target='_blank'>
+                    <Button
+                      key={item.link}
+                      href={item.link}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      aria-label={item.label}
+                    >
                       {item.icon}
                     </Button>
                   </Grid>

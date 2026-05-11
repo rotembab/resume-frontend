@@ -7,7 +7,6 @@ export const Statistics = () => {
   const { t } = useTranslation();
   const getGithubReposQuery = useGithubReposFetchAPI();
   const fullStackYears = yearsSince(STAT_ANCHORS.fullStackStart);
-  const gameDevYears = yearsSince(STAT_ANCHORS.gameDevStart);
   return (
     <Grid
       spacing={2}
@@ -22,9 +21,9 @@ export const Statistics = () => {
         size={{
           xs: 12,
           sm: 12,
-          md: 4,
-          lg: 4,
-          xl: 4,
+          md: 6,
+          lg: 6,
+          xl: 6,
         }}
       >
         <SingleStatistic
@@ -38,28 +37,15 @@ export const Statistics = () => {
         size={{
           xs: 12,
           sm: 12,
-          md: 4,
-          lg: 4,
-          xl: 4,
-        }}
-      >
-        <SingleStatistic
-          description={t('Home.statistics.yearsOfExperienceInGameDevelopment')}
-          number={gameDevYears}
-        />
-      </Grid>
-      <Grid
-        size={{
-          xs: 12,
-          sm: 12,
-          md: 4,
-          lg: 4,
-          xl: 4,
+          md: 6,
+          lg: 6,
+          xl: 6,
         }}
       >
         <SingleStatistic
           description={t('Home.statistics.gitProjects')}
-          number={getGithubReposQuery.data?.length ?? 8}
+          number={getGithubReposQuery.data?.length ?? 0}
+          loading={getGithubReposQuery.isLoading}
         />
       </Grid>
     </Grid>

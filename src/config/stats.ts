@@ -3,7 +3,6 @@
 
 export const STAT_ANCHORS = {
   fullStackStart: new Date('2023-11-01'),
-  gameDevStart: new Date('2024-05-01'),
 } as const;
 
 export const yearsSince = (date: Date) => {

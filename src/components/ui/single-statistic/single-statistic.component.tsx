@@ -1,13 +1,15 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Skeleton, Typography } from '@mui/material';
 
 type SingleStatisticProps = {
   number: number;
   description: string;
+  loading?: boolean;
 };
 
 export const SingleStatistic = ({
   number,
   description,
+  loading = false,
 }: SingleStatisticProps) => {
   return (
     <Box
@@ -18,7 +20,17 @@ export const SingleStatistic = ({
         },
       }}
     >
-      <Typography variant='h2'>+{number}</Typography>
+      <Typography variant='h2'>
+        {loading ? (
+          <Skeleton
+            variant='text'
+            width='3.5ch'
+            sx={{ display: 'inline-block' }}
+          />
+        ) : (
+          `+${number}`
+        )}
+      </Typography>
       <Typography
         color='paragraphColor'
         textTransform={'uppercase'}

@@ -8,8 +8,6 @@ export const enTranslations = {
     statistics: {
       yearsOfExperienceInFullStackDevelopment:
         'Years of experience in Full stack development',
-      yearsOfExperienceInGameDevelopment:
-        'Years of experience in Game development',
       gitProjects: 'Git repositories',
     },
   },
@@ -22,7 +20,7 @@ export const enTranslations = {
   Experience: {
     title: 'Experience',
     description: 'Here are some of the companies I have worked for.',
-    heading1: '2 Years of',
+    heading1: '{{years}} Years of',
     heading2: 'Experience',
   },
   Tools: {

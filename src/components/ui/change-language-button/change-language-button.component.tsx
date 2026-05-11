@@ -15,6 +15,7 @@ export const ChangeLanguageButton = () => {
   return (
     <IconButton
       color='secondary'
+      aria-label={`Change language. Current: ${availableLanguages[langIndex].toUpperCase()}`}
       onClick={() => setLangIndex((langIndex + 1) % availableLanguages.length)}
       sx={{
         textAlign: 'center',

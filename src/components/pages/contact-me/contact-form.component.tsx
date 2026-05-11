@@ -5,6 +5,7 @@ import { useFormik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import emailjs from '@emailjs/browser';
 import { useState } from 'react';
+import { useSnackbar } from '../../ui/snackbar/use-snackbar';
 
 type ContactFormValues = {
   name: string;
@@ -14,6 +15,7 @@ type ContactFormValues = {
 
 export const ContactForm = () => {
   const { t } = useTranslation();
+  const { showSnackbar } = useSnackbar();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validationSchema = Yup.object({
@@ -69,9 +71,9 @@ export const ContactForm = () => {
 
       if (autoReplySuccess && messageToMeSuccess) {
         resetForm();
-        alert(t('Contact.Form.successMessage'));
+        showSnackbar(t('Contact.Form.successMessage'), 'success');
       } else {
-        alert(t('Contact.Form.errorMessage'));
+        showSnackbar(t('Contact.Form.errorMessage'), 'error');
       }
     } finally {
       setIsSubmitting(false);

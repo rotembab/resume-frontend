@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { experienceConfig } from './experience-config';
 import { ViewItemCard } from '../../ui/view-item-card/view-item-card.component';
+import { STAT_ANCHORS, yearsSince } from '../../../config/stats';
 
 type ExperienceContentProps = {
   limit?: number;
@@ -14,11 +15,14 @@ type ExperienceContentProps = {
 export const ExperienceContent = ({ limit }: ExperienceContentProps) => {
   const { t } = useTranslation();
   const location = useLocation();
+  const fullStackYears = yearsSince(STAT_ANCHORS.fullStackStart);
   return (
     <SlideFadeTransition transitionKey={location.pathname}>
       <Grid container>
         <Grid size={12}>
-          <Typography variant='h1'>{t('Experience.heading1')}</Typography>
+          <Typography variant='h1'>
+            {t('Experience.heading1', { years: fullStackYears })}
+          </Typography>
           <Typography color='headingDarkColor' variant='h1'>
             {t('Experience.heading2')}
           </Typography>

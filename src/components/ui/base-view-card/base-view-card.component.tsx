@@ -74,6 +74,7 @@ export const BaseViewCard = ({
         <CardMedia
           component='img'
           image={thumbnail}
+          alt={title}
           onError={() => setThumbnailFailed(true)}
           sx={{
             padding: '4px',

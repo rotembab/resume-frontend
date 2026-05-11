@@ -1,4 +1,4 @@
-import { AppBar, Box, Icon, Tooltip } from '@mui/material';
+import { AppBar, Box, IconButton, Tooltip } from '@mui/material';
 import { customColors } from '../../../themes/custom-colors';
 import { NavMenuConfig } from './nav-menu-config';
 import { useNavigate } from 'react-router';
@@ -12,6 +12,8 @@ export const NavMenu = () => {
   return (
     <AppBar
       color='transparent'
+      component='nav'
+      aria-label={t('Nav.primary', { defaultValue: 'Main navigation' })}
       sx={{
         padding: '10px 25px',
         width: 'max-content',
@@ -39,18 +41,23 @@ export const NavMenu = () => {
               title={item.tooltip}
               placement='bottom'
             >
-              <Icon
+              <IconButton
                 key={`${item.tooltip}_icon`}
                 onClick={() => {
                   item.onClick?.();
                 }}
                 color='secondary'
+                aria-label={item.tooltip}
+                disableRipple
                 sx={{
-                  cursor: 'pointer',
+                  padding: 0,
+                  minWidth: 'auto',
+                  borderRadius: 0,
+                  '&:hover': { backgroundColor: 'transparent' },
                 }}
               >
                 {item.icon}
-              </Icon>
+              </IconButton>
             </Tooltip>
           );
         })}
