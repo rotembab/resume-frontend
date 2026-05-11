@@ -1,24 +1,14 @@
-import {
-  Card,
-  Typography,
-  CardContent,
-  Box,
-  Button,
-  SvgIconTypeMap,
-} from '@mui/material';
+import { Card, Typography, CardContent, Box, Button } from '@mui/material';
 import { useNavigate } from 'react-router';
 import { useMediaQuery } from '@mui/material';
 import { customSizesMediaQuery } from '../../../themes/custom-sizes-query';
-import { ArrowRightAlt } from '@mui/icons-material';
+import { ArrowRightAlt, SvgIconComponent } from '@mui/icons-material';
 import { useState } from 'react';
-import { OverridableComponent } from '@mui/material/OverridableComponent';
 
 type TabLinkCardProps = {
   link: string;
   title: string;
-  Icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
-    muiName: string;
-  };
+  Icon: SvgIconComponent;
   color: {
     main: string;
     contrastText: string;

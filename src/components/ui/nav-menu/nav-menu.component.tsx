@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { ChangeLanguageButton } from '../change-language-button/change-language-button.component';
 
 export const NavMenu = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const config = NavMenuConfig(navigate, t);
   return (

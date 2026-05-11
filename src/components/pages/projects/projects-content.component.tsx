@@ -5,6 +5,7 @@ import { Stack, Typography } from '@mui/material';
 
 import { ViewItemCard } from '../../ui/view-item-card/view-item-card.component';
 import { useGithubReposFetchAPI } from '../../../hooks/github-fetchAPI.hook';
+import { GITHUB_USERNAME } from '../../../config/env';
 import { useEffect, useState } from 'react';
 
 type ProjectsContentProps = {
@@ -19,7 +20,7 @@ export const ProjectsContent = ({ limit }: ProjectsContentProps) => {
     try {
       const response = await fetch(url, { method: 'HEAD' });
       return response.ok;
-    } catch (error) {
+    } catch {
       return false;
     }
   };
@@ -32,7 +33,7 @@ export const ProjectsContent = ({ limit }: ProjectsContentProps) => {
     const validateImages = async () => {
       const checks = await Promise.all(
         getGithubReposQuery.data?.map(async (project) => {
-          const url = `https://raw.githubusercontent.com/rotembab/${project.name}/main/preview.webp`;
+          const url = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${project.name}/main/preview.webp`;
           const exists = await checkImageExists(url);
           return { [project.id]: exists ? url : undefined };
         }) ?? []
@@ -57,16 +58,18 @@ export const ProjectsContent = ({ limit }: ProjectsContentProps) => {
 
         <Grid size={12}>
           <Stack>
-            {getGithubReposQuery.data?.slice(0, limit).map((project) => (
-              <ViewItemCard
-                key={project.id}
-                title={project.name}
-                description={project.description}
-                link={project.html_url}
-                thumbnail={validThumbnails[project.id]}
-                isExternal={true}
-              />
-            ))}
+            {getGithubReposQuery.data
+              ?.slice(0, limit)
+              .map((project) => (
+                <ViewItemCard
+                  key={project.id}
+                  title={project.name}
+                  description={project.description}
+                  link={project.html_url}
+                  thumbnail={validThumbnails[project.id]}
+                  isExternal={true}
+                />
+              ))}
           </Stack>
         </Grid>
       </Grid>

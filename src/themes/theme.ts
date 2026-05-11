@@ -11,21 +11,33 @@ type CustomPaletteColor = {
 };
 
 declare module '@mui/material/styles' {
-  interface Palette extends Record<CustomColor, CustomPaletteColor> {}
+  interface Palette extends Record<CustomColor, CustomPaletteColor> {
+    _customPaletteBrand?: never;
+  }
   interface PaletteOptions
-    extends Partial<Record<CustomColor, CustomPaletteColor>> {}
+    extends Partial<Record<CustomColor, CustomPaletteColor>> {
+    _customPaletteOptionsBrand?: never;
+  }
 }
 declare module '@mui/material/Button' {
-  interface ButtonPropsColorOverrides extends Record<CustomColor, true> {}
+  interface ButtonPropsColorOverrides extends Record<CustomColor, true> {
+    _customButtonBrand?: never;
+  }
 }
 declare module '@mui/material/AppBar' {
-  interface AppBarPropsColorOverrides extends Record<CustomColor, true> {}
+  interface AppBarPropsColorOverrides extends Record<CustomColor, true> {
+    _customAppBarBrand?: never;
+  }
 }
 declare module '@mui/material/Box' {
-  interface BoxPropsColorOverrides extends Record<CustomColor, true> {}
+  interface BoxPropsColorOverrides extends Record<CustomColor, true> {
+    _customBoxBrand?: never;
+  }
 }
 declare module '@mui/material/TextField' {
-  interface TextFieldPropsColorOverrides extends Record<CustomColor, true> {}
+  interface TextFieldPropsColorOverrides extends Record<CustomColor, true> {
+    _customTextFieldBrand?: never;
+  }
 }
 
 export const AppTheme = responsiveFontSizes(

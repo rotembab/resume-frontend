@@ -1,10 +1,16 @@
 import { Box, Button, TextField } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { useTranslation } from 'react-i18next';
-import { useFormik } from 'formik';
+import { useFormik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import emailjs from '@emailjs/browser';
 import { useState } from 'react';
+
+type ContactFormValues = {
+  name: string;
+  email: string;
+  message: string;
+};
 
 export const ContactForm = () => {
   const { t } = useTranslation();
@@ -18,7 +24,10 @@ export const ContactForm = () => {
     message: Yup.string().required(t('Contact.Form.messageRequired')),
   });
 
-  const handleSubmit = async (values: any, { resetForm }: any) => {
+  const handleSubmit = async (
+    values: ContactFormValues,
+    { resetForm }: FormikHelpers<ContactFormValues>
+  ) => {
     setIsSubmitting(true);
     let autoReplySuccess = false;
     let messageToMeSuccess = false;
