@@ -6,7 +6,7 @@ import {
   Typography,
   SxProps,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { customColors } from '../../../themes/custom-colors';
 
 type BaseViewCardProps = {
@@ -42,6 +42,13 @@ export const BaseViewCard = ({
   objectFitOverride = 'contain',
 }: BaseViewCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [thumbnailFailed, setThumbnailFailed] = useState(false);
+
+  useEffect(() => {
+    setThumbnailFailed(false);
+  }, [thumbnail]);
+
+  const showThumbnail = Boolean(thumbnail) && !thumbnailFailed;
   return (
     <Card
       onClick={onClick}
@@ -63,10 +70,11 @@ export const BaseViewCard = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {thumbnail && (
+      {showThumbnail && (
         <CardMedia
           component='img'
           image={thumbnail}
+          onError={() => setThumbnailFailed(true)}
           sx={{
             padding: '4px',
             height: imgHeight,

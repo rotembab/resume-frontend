@@ -1,10 +1,32 @@
+import { lazy } from 'react';
 import { Route, Routes } from 'react-router';
 import { Layout } from './components/ui/layout/layout.component';
-import { HomePage } from './components/pages/home/home.page';
-import { ProjectsPage } from './components/pages/projects/projects.page';
-import { ExperiencePage } from './components/pages/experience/experience.page';
-import { ToolsPage } from './components/pages/tools/tools.page';
-import { ContactMe } from './components/pages/contact-me/contact-me.component';
+
+const HomePage = lazy(() =>
+  import('./components/pages/home/home.page').then((m) => ({
+    default: m.HomePage,
+  }))
+);
+const ProjectsPage = lazy(() =>
+  import('./components/pages/projects/projects.page').then((m) => ({
+    default: m.ProjectsPage,
+  }))
+);
+const ExperiencePage = lazy(() =>
+  import('./components/pages/experience/experience.page').then((m) => ({
+    default: m.ExperiencePage,
+  }))
+);
+const ToolsPage = lazy(() =>
+  import('./components/pages/tools/tools.page').then((m) => ({
+    default: m.ToolsPage,
+  }))
+);
+const ContactMe = lazy(() =>
+  import('./components/pages/contact-me/contact-me.component').then((m) => ({
+    default: m.ContactMe,
+  }))
+);
 
 export const App = () => (
   <Routes>

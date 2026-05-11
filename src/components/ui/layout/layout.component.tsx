@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { Container } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { Outlet } from 'react-router';
@@ -21,7 +22,9 @@ export const Layout = () => {
           <DetailsCard />
         </Grid>
         <Grid size={{ xs: 12, md: 8 }}>
-          <Outlet />
+          <Suspense fallback={null}>
+            <Outlet />
+          </Suspense>
         </Grid>
       </Grid>
     </Container>

@@ -7,47 +7,18 @@ import { Stack, Typography } from '@mui/material';
 import { ViewItemCard } from '../../ui/view-item-card/view-item-card.component';
 import { useGithubReposFetchAPI } from '../../../hooks/github-fetchAPI.hook';
 import { GITHUB_USERNAME } from '../../../config/env';
-import { useEffect, useState } from 'react';
 
 type ProjectsContentProps = {
   limit?: number;
 };
 
+const buildPreviewUrl = (repoName: string) =>
+  `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${repoName}/main/preview.webp`;
+
 export const ProjectsContent = ({ limit }: ProjectsContentProps) => {
   const { t } = useTranslation();
   const location = useLocation();
   const getGithubReposQuery = useGithubReposFetchAPI();
-
-  const [validThumbnails, setValidThumbnails] = useState<
-    Record<number, string | undefined>
-  >({});
-
-  useEffect(() => {
-    if (!getGithubReposQuery.data) return;
-
-    const controller = new AbortController();
-    const { signal } = controller;
-
-    const validateImages = async () => {
-      const checks = await Promise.all(
-        getGithubReposQuery.data.map(async (project) => {
-          const url = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${project.name}/main/preview.webp`;
-          try {
-            const response = await fetch(url, { method: 'HEAD', signal });
-            return { [project.id]: response.ok ? url : undefined };
-          } catch {
-            return { [project.id]: undefined };
-          }
-        })
-      );
-      if (signal.aborted) return;
-      setValidThumbnails(Object.assign({}, ...checks));
-    };
-
-    validateImages();
-
-    return () => controller.abort();
-  }, [getGithubReposQuery.data]);
 
   return (
     <SlideFadeTransition transitionKey={location.pathname}>
@@ -69,7 +40,7 @@ export const ProjectsContent = ({ limit }: ProjectsContentProps) => {
                   title={project.name}
                   description={project.description}
                   link={project.html_url}
-                  thumbnail={validThumbnails[project.id]}
+                  thumbnail={buildPreviewUrl(project.name)}
                   isExternal={true}
                 />
               ))}
