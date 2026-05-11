@@ -105,7 +105,7 @@ export const toolsConfig = [
   {
     title: 'Vite',
     description: 'Build Tool',
-    thumbnail: 'vite.svg',
+    thumbnail: '/images/tools/vite.svg',
     link: 'https://vitejs.dev/',
   },
 ];

@@ -1,5 +1,6 @@
 import { SlideFadeTransition } from '../../ui/slide-fade-transition/slide-fade-transition-component';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router';
 import Grid from '@mui/material/Grid2';
 import { Stack, Typography } from '@mui/material';
 
@@ -14,36 +15,38 @@ type ProjectsContentProps = {
 
 export const ProjectsContent = ({ limit }: ProjectsContentProps) => {
   const { t } = useTranslation();
+  const location = useLocation();
   const getGithubReposQuery = useGithubReposFetchAPI();
-
-  const checkImageExists = async (url: string) => {
-    try {
-      const response = await fetch(url, { method: 'HEAD' });
-      return response.ok;
-    } catch {
-      return false;
-    }
-  };
 
   const [validThumbnails, setValidThumbnails] = useState<
     Record<number, string | undefined>
   >({});
 
   useEffect(() => {
+    if (!getGithubReposQuery.data) return;
+
+    const controller = new AbortController();
+    const { signal } = controller;
+
     const validateImages = async () => {
       const checks = await Promise.all(
-        getGithubReposQuery.data?.map(async (project) => {
+        getGithubReposQuery.data.map(async (project) => {
           const url = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${project.name}/main/preview.webp`;
-          const exists = await checkImageExists(url);
-          return { [project.id]: exists ? url : undefined };
-        }) ?? []
+          try {
+            const response = await fetch(url, { method: 'HEAD', signal });
+            return { [project.id]: response.ok ? url : undefined };
+          } catch {
+            return { [project.id]: undefined };
+          }
+        })
       );
+      if (signal.aborted) return;
       setValidThumbnails(Object.assign({}, ...checks));
     };
 
-    if (getGithubReposQuery.data) {
-      validateImages();
-    }
+    validateImages();
+
+    return () => controller.abort();
   }, [getGithubReposQuery.data]);
 
   return (

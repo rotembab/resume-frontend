@@ -1,12 +1,14 @@
 import { Typography } from '@mui/material';
 import { SlideFadeTransition } from '../../ui/slide-fade-transition/slide-fade-transition-component';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router';
 import Grid from '@mui/material/Grid2';
 import { Statistics } from './statistics/statistics.component';
 import { HomeTabLinks } from './home-tab-links/home-tab-links.component';
 
 export const HomeContent = () => {
   const { t } = useTranslation();
+  const location = useLocation();
   return (
     <SlideFadeTransition transitionKey={location.pathname}>
       <Grid container rowSpacing={6}>

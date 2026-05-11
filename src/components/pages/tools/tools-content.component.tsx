@@ -1,6 +1,7 @@
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router';
 import { SlideFadeTransition } from '../../ui/slide-fade-transition/slide-fade-transition-component';
 import { toolsConfig } from './tools-config';
 import { ToolItemViewCard } from '../../ui/tool-item-view-card/tool-item-view-card.component';
@@ -11,6 +12,7 @@ type ToolsContentProps = {
 
 export const ToolsContent = ({ limit }: ToolsContentProps) => {
   const { t } = useTranslation();
+  const location = useLocation();
   return (
     <SlideFadeTransition transitionKey={location.pathname}>
       <Grid container spacing={12}>

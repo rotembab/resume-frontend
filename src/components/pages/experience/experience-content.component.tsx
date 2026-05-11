@@ -3,6 +3,7 @@ import Grid from '@mui/material/Grid2';
 
 import { SlideFadeTransition } from '../../ui/slide-fade-transition/slide-fade-transition-component';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router';
 import { experienceConfig } from './experience-config';
 import { ViewItemCard } from '../../ui/view-item-card/view-item-card.component';
 
@@ -12,6 +13,7 @@ type ExperienceContentProps = {
 
 export const ExperienceContent = ({ limit }: ExperienceContentProps) => {
   const { t } = useTranslation();
+  const location = useLocation();
   return (
     <SlideFadeTransition transitionKey={location.pathname}>
       <Grid container>
