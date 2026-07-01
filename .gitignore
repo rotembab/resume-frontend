@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 
 .env
+
+# Private resume PDF — never commit
+/private/
+*.pdf

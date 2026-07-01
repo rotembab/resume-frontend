@@ -3,8 +3,9 @@ import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { SlideFadeTransition } from '../../ui/slide-fade-transition/slide-fade-transition-component';
-import { toolsConfig } from './tools-config';
 import { ToolItemViewCard } from '../../ui/tool-item-view-card/tool-item-view-card.component';
+import { useResume } from '../../../data/use-resume';
+import { getSkillIcon } from './skill-icons';
 
 type ToolsContentProps = {
   limit?: number;
@@ -13,6 +14,8 @@ type ToolsContentProps = {
 export const ToolsContent = ({ limit }: ToolsContentProps) => {
   const { t } = useTranslation();
   const location = useLocation();
+  const resume = useResume();
+  const skills = resume.skills.slice(0, limit);
   return (
     <SlideFadeTransition transitionKey={location.pathname}>
       <Grid container spacing={12}>
@@ -24,13 +27,13 @@ export const ToolsContent = ({ limit }: ToolsContentProps) => {
         </Grid>
         <Grid size={12}>
           <Grid container spacing={2}>
-            {toolsConfig.slice(0, limit).map((tool) => (
-              <Grid size={6} key={tool.title}>
+            {skills.map((skill) => (
+              <Grid size={6} key={skill.id}>
                 <ToolItemViewCard
-                  title={tool.title}
-                  description={tool.description}
-                  link={tool.link ?? ''}
-                  thumbnail={tool.thumbnail}
+                  title={skill.name}
+                  description={skill.summary ?? ''}
+                  link={skill.link ?? ''}
+                  thumbnail={getSkillIcon(skill.iconKey) ?? ''}
                 />
               </Grid>
             ))}

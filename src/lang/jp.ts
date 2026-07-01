@@ -28,11 +28,6 @@ export const jpTranslations = {
     heading1: '最近の',
     heading2: 'プロジェクト',
   },
-  Card: {
-    name: 'ローテム・ババニ',
-    description:
-      'Webアプリケーションとゲームを作成することが大好きなフルスタック開発者。',
-  },
   Contact: {
     title: 'コンタクト',
     heading1: '一緒に働きましょう',

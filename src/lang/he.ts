@@ -28,10 +28,6 @@ export const heTranslations = {
     heading1: 'הכלים',
     heading2: 'שלי',
   },
-  Card: {
-    name: 'רותם בבאני',
-    description: 'מפתח פול סטאק שאוהב ליצור אפליקציות ומשחקים.',
-  },
   Contact: {
     title: 'צור קשר',
     heading1: 'בואו נעבוד',

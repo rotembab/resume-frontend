@@ -29,11 +29,6 @@ export const enTranslations = {
     heading1: 'Premium',
     heading2: 'Tools',
   },
-  Card: {
-    name: 'Rotem Babani',
-    description:
-      'A Full Stack Developer that loves to create web applications and games.',
-  },
   Contact: {
     title: 'Contact',
     heading1: "Let's Work",

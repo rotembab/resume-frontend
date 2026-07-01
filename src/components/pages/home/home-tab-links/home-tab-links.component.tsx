@@ -2,9 +2,14 @@ import Grid from '@mui/material/Grid2';
 import { TabLinkCard } from '../../../ui/tab-link-card/tab-link-card.component';
 import { GridViewOutlined, LayersOutlined } from '@mui/icons-material';
 import { customColors } from '../../../../themes/custom-colors';
-import { toolsConfig } from '../../tools/tools-config';
+import { useResume } from '../../../../data/use-resume';
 
 export const HomeTabLinks = () => {
+  const resume = useResume();
+  const topSkills = resume.skills
+    .slice(0, 4)
+    .map((skill) => skill.name.toUpperCase())
+    .join(', ');
   return (
     <Grid spacing={4} container size={12}>
       <Grid size={{ xs: 12, md: 5 }}>
@@ -18,10 +23,7 @@ export const HomeTabLinks = () => {
       <Grid size={{ xs: 12, md: 6 }}>
         <TabLinkCard
           link={'/projects'}
-          title={toolsConfig
-            .slice(0, 4)
-            .map((tool) => tool.title.toUpperCase())
-            .join(',')}
+          title={topSkills}
           Icon={GridViewOutlined}
           color={customColors.tabLinkCard2}
         />

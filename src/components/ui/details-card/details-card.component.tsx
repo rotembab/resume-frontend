@@ -2,15 +2,16 @@ import { Box, Button, Card, CardMedia, Typography } from '@mui/material';
 import { useLocation } from 'react-router';
 import { SlideFadeTransition } from '../slide-fade-transition/slide-fade-transition-component';
 import Grid from '@mui/material/Grid2';
-import { detailsCardLinks } from './details-card-links.config';
-import { useTranslation } from 'react-i18next';
+import { buildDetailsCardLinks } from './details-card-links.config';
+import { useResume } from '../../../data/use-resume';
 import { customSizesMediaQuery } from '../../../themes/custom-sizes-query';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 export const DetailsCard = () => {
-  const { t } = useTranslation();
   const location = useLocation();
   const isBelowMd = useMediaQuery(customSizesMediaQuery.md);
+  const resume = useResume();
+  const links = buildDetailsCardLinks(resume.profile.social);
   return (
     <Box sx={{ position: isBelowMd ? 'relative' : 'sticky', top: '50px' }}>
       <SlideFadeTransition transitionKey={location.pathname}>
@@ -31,7 +32,7 @@ export const DetailsCard = () => {
                 component='img'
                 image={'/images/profilePic.png'}
                 style={{ borderRadius: '1rem' }}
-                alt='Profile'
+                alt={resume.profile.name}
                 width={'200px'}
                 height={'300px'}
                 sx={{
@@ -42,7 +43,7 @@ export const DetailsCard = () => {
               />
             </Grid>
             <Grid size={12}>
-              <Typography variant='h3'>{t('Card.name')}</Typography>
+              <Typography variant='h3'>{resume.profile.name}</Typography>
             </Grid>
             <Grid size={12}>
               <Typography
@@ -55,12 +56,12 @@ export const DetailsCard = () => {
                   },
                 }}
               >
-                {t('Card.description')}
+                {resume.profile.description}
               </Typography>
             </Grid>
             <Grid size={12}>
               <Grid container>
-                {detailsCardLinks.map((item) => (
+                {links.map((item) => (
                   <Grid key={item.link + '_grid'} size={4}>
                     <Button
                       key={item.link}

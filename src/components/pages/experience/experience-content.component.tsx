@@ -4,8 +4,8 @@ import Grid from '@mui/material/Grid2';
 import { SlideFadeTransition } from '../../ui/slide-fade-transition/slide-fade-transition-component';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
-import { experienceConfig } from './experience-config';
 import { ViewItemCard } from '../../ui/view-item-card/view-item-card.component';
+import { useResume } from '../../../data/use-resume';
 import { STAT_ANCHORS, yearsSince } from '../../../config/stats';
 
 type ExperienceContentProps = {
@@ -15,7 +15,9 @@ type ExperienceContentProps = {
 export const ExperienceContent = ({ limit }: ExperienceContentProps) => {
   const { t } = useTranslation();
   const location = useLocation();
+  const resume = useResume();
   const fullStackYears = yearsSince(STAT_ANCHORS.fullStackStart);
+  const entries = resume.experience.slice(0, limit);
   return (
     <SlideFadeTransition transitionKey={location.pathname}>
       <Grid container>
@@ -30,12 +32,12 @@ export const ExperienceContent = ({ limit }: ExperienceContentProps) => {
 
         <Grid size={12}>
           <Stack>
-            {experienceConfig.slice(0, limit).map((experience) => (
+            {entries.map((entry) => (
               <ViewItemCard
-                key={experience.title}
-                title={experience.title}
-                description={experience.description}
-                link={experience.link}
+                key={entry.id}
+                title={`${entry.role} - ${entry.organization}`}
+                description={entry.summary}
+                link=''
               />
             ))}
           </Stack>

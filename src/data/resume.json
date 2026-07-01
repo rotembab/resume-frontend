@@ -1,0 +1,278 @@
+{
+  "profile": {
+    "name": "Rotem Babani",
+    "headline": "Full Stack Developer",
+    "description": "Full-stack developer building production applications with React, TypeScript, TanStack Router, and Vite on the frontend, and Kotlin/Java services on the backend. Comfortable across the stack — PostgreSQL, Apache Solr, Kubernetes/Helm environments, and CI/CD workflows.",
+    "location": "Ganei Tikva, Israel",
+    "social": {
+      "linkedin": "https://linkedin.com/in/rotem-babani-971930200",
+      "email": "rotembabmen@gmail.com"
+    }
+  },
+  "experience": [
+    {
+      "id": "voyager-labs",
+      "role": "Full Stack Developer",
+      "organization": "Voyager Labs",
+      "period": {
+        "start": "2025-08",
+        "durationLabel": "Aug 2025 - Present"
+      },
+      "summary": "Frontend developer on a social media intelligence platform, building features end-to-end with React 19, TypeScript, TanStack Router/Query, Vite, and Mantine.",
+      "highlights": [
+        "Regularly take on backend bug-fixing in Kotlin/Java services for cross-stack issues.",
+        "Use AI-assisted tooling (Claude Code) day-to-day for prototyping, codebase navigation, and rapid iteration; verify outputs against existing patterns and steer toward production-quality code.",
+        "Active code reviewer with structured feedback on type safety and code reuse; comfortable debugging local Kubernetes/Helm environment issues; collaborate with product and design on feature scoping."
+      ]
+    },
+    {
+      "id": "izer",
+      "role": "Full Stack Developer",
+      "organization": "IZer",
+      "period": {
+        "start": "2023-11",
+        "end": "2025-07",
+        "durationLabel": "Nov 2023 - Jul 2025 · 1 yr 8 months"
+      },
+      "summary": "Built core features end-to-end for a B2B web tool serving local store operations — order management, inter-store order forwarding, attendance tracking, salary calculations, a dynamic calendar, and real-time chat and notifications via WebSockets.",
+      "highlights": [
+        "Frontend in Next.js, TypeScript, React, and Ant Design; backend in PHP/Laravel with Sail Docker for local development. Owned features end-to-end from design through deployment.",
+        "Worked on a two-person development team — direct ownership of features, fast iteration, and close collaboration with the client on requirements."
+      ]
+    },
+    {
+      "id": "omek-startup",
+      "role": "Full Stack Developer",
+      "organization": "OMEK - Startup",
+      "period": {
+        "start": "2021-06",
+        "end": "2021-12",
+        "durationLabel": "Jun 2021 - Dec 2021 · 7 months"
+      },
+      "summary": "Designed and implemented a component library for a proof of concept, advancing the company's smart reading system powered by NLP.",
+      "highlights": [
+        "Collaborated on a shared Git project with 2 team members."
+      ]
+    },
+    {
+      "id": "israel-defense-forces",
+      "role": "QA Automation Engineer",
+      "organization": "Israel Defense Forces",
+      "period": {
+        "start": "2018-11",
+        "end": "2020-03",
+        "durationLabel": "Nov 2018 - Mar 2020 · 1 yr 4 months"
+      },
+      "summary": "Developed and executed end-to-end automation scripts for React-based web applications using JavaScript and TestCafe.",
+      "highlights": [
+        "Advocated and implemented advanced testing processes, enhancing automation coverage and reliability."
+      ]
+    },
+    {
+      "id": "ono-bsc",
+      "role": "Bachelor's Degree in Computer Science",
+      "organization": "Ono Academic College",
+      "type": "education",
+      "period": {
+        "start": "2022-02",
+        "end": "2025-04",
+        "durationLabel": "Feb 2022 - Apr 2025 · 3 yrs 2 months"
+      },
+      "summary": "Bachelor's Degree in Computer Science at Ono Academic College, Qiryat Ono, Israel."
+    },
+    {
+      "id": "kernelios",
+      "role": "Full Stack Web Development Course",
+      "organization": "Kernelios",
+      "type": "course",
+      "period": {
+        "start": "2021-01",
+        "end": "2021-05",
+        "durationLabel": "Jan 2021 - May 2021 · 5 months"
+      },
+      "summary": "Completed 447 hours mastering JavaScript, React, Node.js, MongoDB, HTML, and CSS."
+    },
+    {
+      "id": "ben-zvi-high-school",
+      "role": "Computer Science Diploma",
+      "organization": "Ben Zvi High School",
+      "type": "education",
+      "period": {
+        "start": "2014-09",
+        "end": "2017-06",
+        "durationLabel": "Sep 2014 - Jun 2017 · 2 yrs 9 months"
+      },
+      "summary": "Computer Science Diploma focused on Java and data systems."
+    }
+  ],
+  "skills": [
+    {
+      "id": "css",
+      "name": "CSS",
+      "category": "language",
+      "summary": "Styling Language",
+      "link": "https://developer.mozilla.org/en-US/docs/Web/CSS",
+      "iconKey": "css"
+    },
+    {
+      "id": "docker",
+      "name": "Docker",
+      "category": "tool",
+      "summary": "Containerization Platform",
+      "link": "https://www.docker.com",
+      "iconKey": "docker"
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "category": "tool",
+      "summary": "Version Control System",
+      "link": "https://git-scm.com",
+      "iconKey": "git"
+    },
+    {
+      "id": "github",
+      "name": "GitHub",
+      "category": "platform",
+      "summary": "Code Hosting Platform",
+      "link": "https://github.com",
+      "iconKey": "github"
+    },
+    {
+      "id": "html",
+      "name": "HTML",
+      "category": "language",
+      "summary": "Markup Language",
+      "link": "https://developer.mozilla.org/en-US/docs/Web/HTML",
+      "iconKey": "html"
+    },
+    {
+      "id": "java",
+      "name": "Java",
+      "category": "language",
+      "summary": "Programming Language",
+      "link": "https://www.java.com",
+      "iconKey": "java"
+    },
+    {
+      "id": "javascript",
+      "name": "JavaScript",
+      "category": "language",
+      "summary": "Programming Language",
+      "link": "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+      "iconKey": "javascript"
+    },
+    {
+      "id": "laravel",
+      "name": "Laravel",
+      "category": "framework",
+      "summary": "PHP Web Framework",
+      "link": "https://laravel.com",
+      "iconKey": "laravel"
+    },
+    {
+      "id": "mongodb",
+      "name": "MongoDB",
+      "category": "database",
+      "summary": "NoSQL Database",
+      "link": "https://www.mongodb.com",
+      "iconKey": "mongodb"
+    },
+    {
+      "id": "nextjs",
+      "name": "Next.js",
+      "category": "framework",
+      "summary": "React Framework",
+      "link": "https://nextjs.org",
+      "iconKey": "nextjs"
+    },
+    {
+      "id": "nodejs",
+      "name": "Node.js",
+      "category": "platform",
+      "summary": "JavaScript Runtime",
+      "link": "https://nodejs.org",
+      "iconKey": "nodejs"
+    },
+    {
+      "id": "php",
+      "name": "PHP",
+      "category": "language",
+      "summary": "Programming Language",
+      "link": "https://www.php.net",
+      "iconKey": "php"
+    },
+    {
+      "id": "react",
+      "name": "React",
+      "category": "library",
+      "summary": "UI Component Library",
+      "link": "https://react.dev",
+      "iconKey": "react"
+    },
+    {
+      "id": "testcafe",
+      "name": "TestCafe",
+      "category": "tool",
+      "summary": "E2E Testing Tool",
+      "link": "https://testcafe.io",
+      "iconKey": "testcafe"
+    },
+    {
+      "id": "typescript",
+      "name": "TypeScript",
+      "category": "language",
+      "summary": "Typed JavaScript Language",
+      "link": "https://www.typescriptlang.org",
+      "iconKey": "typescript"
+    },
+    {
+      "id": "kubernetes",
+      "name": "Kubernetes",
+      "category": "platform",
+      "summary": "Container Orchestration",
+      "link": "https://kubernetes.io",
+      "iconKey": "kubernetes"
+    },
+    {
+      "id": "helm",
+      "name": "Helm",
+      "category": "tool",
+      "summary": "Kubernetes Package Manager",
+      "link": "https://helm.sh",
+      "iconKey": "helm"
+    },
+    {
+      "id": "vuex",
+      "name": "Vuex",
+      "category": "library",
+      "summary": "Vue State Management",
+      "link": "https://vuex.vuejs.org",
+      "iconKey": "vuex"
+    },
+    {
+      "id": "websockets",
+      "name": "WebSockets",
+      "category": "tool",
+      "summary": "Real-time Communication Protocol",
+      "link": "https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API",
+      "iconKey": "websockets"
+    },
+    {
+      "id": "mantine",
+      "name": "Mantine",
+      "category": "library",
+      "summary": "React Component Library",
+      "link": "https://mantine.dev",
+      "iconKey": "mantine"
+    },
+    {
+      "id": "tanstack-query",
+      "name": "TanStack Query",
+      "category": "library",
+      "summary": "Data Fetching Library",
+      "link": "https://tanstack.com/query",
+      "iconKey": "tanstack-query"
+    }
+  ]
+}

@@ -1,0 +1,278 @@
+{
+  "profile": {
+    "name": "רותם בבני",
+    "headline": "מפתח Full Stack",
+    "description": "מפתח Full Stack שבונה אפליקציות פרודקשן עם React, TypeScript, TanStack Router ו-Vite בצד ה-Frontend, ו-Kotlin/Java services בצד ה-Backend. נוח לאורך כל ה-Stack — PostgreSQL, Apache Solr, סביבות Kubernetes/Helm ו-CI/CD workflows.",
+    "location": "גני תקווה, ישראל",
+    "social": {
+      "linkedin": "https://linkedin.com/in/rotem-babani-971930200",
+      "email": "rotembabmen@gmail.com"
+    }
+  },
+  "experience": [
+    {
+      "id": "voyager-labs",
+      "role": "מפתח Full Stack",
+      "organization": "Voyager Labs",
+      "period": {
+        "start": "2025-08",
+        "durationLabel": "אוג׳ 2025 - היום"
+      },
+      "summary": "מפתח Frontend בפלטפורמת אינטליג׳נס לרשתות חברתיות, בונה פיצ'רים end-to-end עם React 19, TypeScript, TanStack Router/Query, Vite ו-Mantine.",
+      "highlights": [
+        "לוקח על עצמו באופן קבוע bug fixing בצד ה-Backend ב-Kotlin/Java services עבור בעיות cross-stack.",
+        "משתמש בכלי AI (Claude Code) לעבודה יומיומית — פרוטייפינג, ניווט בקוד ואיטרציה מהירה; מוודא outputs מול patterns קיימים ומכוון לקוד ברמת פרודקשן.",
+        "Code reviewer פעיל עם פידבק מובנה על type safety ו-code reuse; נוח ב-debug של סביבות Kubernetes/Helm מקומיות; עובד בשיתוף פעולה עם Product ו-Design על scoping של פיצ'רים."
+      ]
+    },
+    {
+      "id": "izer",
+      "role": "מפתח Full Stack",
+      "organization": "IZer",
+      "period": {
+        "start": "2023-11",
+        "end": "2025-07",
+        "durationLabel": "נוב׳ 2023 - יול׳ 2025 · שנה ו-8 חודשים"
+      },
+      "summary": "פיתוח פיצ'רים ליבה end-to-end לכלי B2B לניהול חנויות מקומיות — ניהול הזמנות, העברת הזמנות בין חנויות, מעקב נוכחות, חישובי שכר, לוח שנה דינמי, ו-chat ו-notifications בזמן אמת דרך WebSockets.",
+      "highlights": [
+        "Frontend ב-Next.js, TypeScript, React ו-Ant Design; Backend ב-PHP/Laravel עם Sail Docker לפיתוח מקומי. אחריות end-to-end על פיצ'רים — מ-Design ועד Deploy.",
+        "עבדתי בצוות פיתוח של שניים — בעלות ישירה על פיצ'רים, איטרציה מהירה ושיתוף פעולה צמוד עם הלקוח על דרישות."
+      ]
+    },
+    {
+      "id": "omek-startup",
+      "role": "מפתח Full Stack",
+      "organization": "OMEK - Startup",
+      "period": {
+        "start": "2021-06",
+        "end": "2021-12",
+        "durationLabel": "יוני 2021 - דצמבר 2021 · 7 חודשים"
+      },
+      "summary": "עיצוב ופיתוח ספריית קומפוננטות לפרוף-אוף-קונספט, לקידום מערכת הקריאה החכמה של החברה המבוססת על NLP.",
+      "highlights": [
+        "עבדתי בשיתוף פעולה על פרויקט Git משותף עם 2 חברי צוות."
+      ]
+    },
+    {
+      "id": "israel-defense-forces",
+      "role": "מהנדס QA Automation",
+      "organization": "צבא הגנה לישראל",
+      "period": {
+        "start": "2018-11",
+        "end": "2020-03",
+        "durationLabel": "נוב׳ 2018 - מרץ 2020 · שנה ו-4 חודשים"
+      },
+      "summary": "פיתוח והרצה של סקריפטים אוטומציה end-to-end לאפליקציות Web מבוססות React, בעזרת JavaScript ו-TestCafe.",
+      "highlights": [
+        "יזמתי ויישמתי תהליכי בדיקות מתקדמים, שיפרתי את כיסוי האוטומציה ואמינותה."
+      ]
+    },
+    {
+      "id": "ono-bsc",
+      "role": "תואר ראשון במדעי המחשב",
+      "organization": "המכללה האקדמית אונו",
+      "type": "education",
+      "period": {
+        "start": "2022-02",
+        "end": "2025-04",
+        "durationLabel": "פבר׳ 2022 - אפר׳ 2025 · 3 שנים ו-2 חודשים"
+      },
+      "summary": "תואר ראשון במדעי המחשב במכללה האקדמית אונו, קרית אונו, ישראל."
+    },
+    {
+      "id": "kernelios",
+      "role": "קורס פיתוח Full Stack Web",
+      "organization": "Kernelios",
+      "type": "course",
+      "period": {
+        "start": "2021-01",
+        "end": "2021-05",
+        "durationLabel": "ינואר 2021 - מאי 2021 · 5 חודשים"
+      },
+      "summary": "השלמת 447 שעות של JavaScript, React, Node.js, MongoDB, HTML ו-CSS."
+    },
+    {
+      "id": "ben-zvi-high-school",
+      "role": "תעודת בגרות במדעי המחשב",
+      "organization": "תיכון בן צבי",
+      "type": "education",
+      "period": {
+        "start": "2014-09",
+        "end": "2017-06",
+        "durationLabel": "ספט׳ 2014 - יוני 2017 · 2 שנים ו-9 חודשים"
+      },
+      "summary": "תעודת בגרות במדעי המחשב עם דגש על Java ומערכות נתונים."
+    }
+  ],
+  "skills": [
+    {
+      "id": "css",
+      "name": "CSS",
+      "category": "language",
+      "summary": "שפת עיצוב",
+      "link": "https://developer.mozilla.org/en-US/docs/Web/CSS",
+      "iconKey": "css"
+    },
+    {
+      "id": "docker",
+      "name": "Docker",
+      "category": "tool",
+      "summary": "פלטפורמת קונטיינריזציה",
+      "link": "https://www.docker.com",
+      "iconKey": "docker"
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "category": "tool",
+      "summary": "מערכת ניהול גרסאות",
+      "link": "https://git-scm.com",
+      "iconKey": "git"
+    },
+    {
+      "id": "github",
+      "name": "GitHub",
+      "category": "platform",
+      "summary": "פלטפורמת אחסון קוד",
+      "link": "https://github.com",
+      "iconKey": "github"
+    },
+    {
+      "id": "html",
+      "name": "HTML",
+      "category": "language",
+      "summary": "שפת סימון",
+      "link": "https://developer.mozilla.org/en-US/docs/Web/HTML",
+      "iconKey": "html"
+    },
+    {
+      "id": "java",
+      "name": "Java",
+      "category": "language",
+      "summary": "שפת תכנות",
+      "link": "https://www.java.com",
+      "iconKey": "java"
+    },
+    {
+      "id": "javascript",
+      "name": "JavaScript",
+      "category": "language",
+      "summary": "שפת תכנות",
+      "link": "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+      "iconKey": "javascript"
+    },
+    {
+      "id": "laravel",
+      "name": "Laravel",
+      "category": "framework",
+      "summary": "PHP Web Framework",
+      "link": "https://laravel.com",
+      "iconKey": "laravel"
+    },
+    {
+      "id": "mongodb",
+      "name": "MongoDB",
+      "category": "database",
+      "summary": "מסד נתונים NoSQL",
+      "link": "https://www.mongodb.com",
+      "iconKey": "mongodb"
+    },
+    {
+      "id": "nextjs",
+      "name": "Next.js",
+      "category": "framework",
+      "summary": "React Framework",
+      "link": "https://nextjs.org",
+      "iconKey": "nextjs"
+    },
+    {
+      "id": "nodejs",
+      "name": "Node.js",
+      "category": "platform",
+      "summary": "סביבת ריצה JavaScript",
+      "link": "https://nodejs.org",
+      "iconKey": "nodejs"
+    },
+    {
+      "id": "php",
+      "name": "PHP",
+      "category": "language",
+      "summary": "שפת תכנות",
+      "link": "https://www.php.net",
+      "iconKey": "php"
+    },
+    {
+      "id": "react",
+      "name": "React",
+      "category": "library",
+      "summary": "ספריית קומפוננטות UI",
+      "link": "https://react.dev",
+      "iconKey": "react"
+    },
+    {
+      "id": "testcafe",
+      "name": "TestCafe",
+      "category": "tool",
+      "summary": "כלי בדיקות E2E",
+      "link": "https://testcafe.io",
+      "iconKey": "testcafe"
+    },
+    {
+      "id": "typescript",
+      "name": "TypeScript",
+      "category": "language",
+      "summary": "JavaScript עם טיפוסים",
+      "link": "https://www.typescriptlang.org",
+      "iconKey": "typescript"
+    },
+    {
+      "id": "kubernetes",
+      "name": "Kubernetes",
+      "category": "platform",
+      "summary": "תזמור קונטיינרים",
+      "link": "https://kubernetes.io",
+      "iconKey": "kubernetes"
+    },
+    {
+      "id": "helm",
+      "name": "Helm",
+      "category": "tool",
+      "summary": "Package Manager של Kubernetes",
+      "link": "https://helm.sh",
+      "iconKey": "helm"
+    },
+    {
+      "id": "vuex",
+      "name": "Vuex",
+      "category": "library",
+      "summary": "ניהול State ב-Vue",
+      "link": "https://vuex.vuejs.org",
+      "iconKey": "vuex"
+    },
+    {
+      "id": "websockets",
+      "name": "WebSockets",
+      "category": "tool",
+      "summary": "פרוטוקול תקשורת Real-time",
+      "link": "https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API",
+      "iconKey": "websockets"
+    },
+    {
+      "id": "mantine",
+      "name": "Mantine",
+      "category": "library",
+      "summary": "ספריית קומפוננטות React",
+      "link": "https://mantine.dev",
+      "iconKey": "mantine"
+    },
+    {
+      "id": "tanstack-query",
+      "name": "TanStack Query",
+      "category": "library",
+      "summary": "ספריית Data Fetching",
+      "link": "https://tanstack.com/query",
+      "iconKey": "tanstack-query"
+    }
+  ]
+}
