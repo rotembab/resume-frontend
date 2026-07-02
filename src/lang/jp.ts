@@ -19,14 +19,15 @@ export const jpTranslations = {
   Experience: {
     title: '経験',
     description: '私が勤務したいくつかの会社です。',
-    heading1: '最近の',
-    heading2: 'プロジェクト',
+    heading1: '{{years}}年の',
+    heading2: '経験',
+    educationHeading: '学歴',
   },
   Tools: {
     title: 'ツール',
     description: '私が使用したツールの一部です。',
-    heading1: '最近の',
-    heading2: 'プロジェクト',
+    heading1: 'プレミアム',
+    heading2: 'ツール',
   },
   Contact: {
     title: 'コンタクト',
@@ -41,5 +42,8 @@ export const jpTranslations = {
       successMessage: 'メッセージを送信しました',
       errorMessage: 'メッセージを送信できませんでした',
     },
+  },
+  DetailsCard: {
+    downloadCv: '履歴書をダウンロード',
   },
 };

@@ -21,6 +21,7 @@ export const heTranslations = {
     description: 'כאן תוכלו למצוא חלק מהחברות שעבדתי בהן.',
     heading1: 'הניסיון',
     heading2: 'שלי',
+    educationHeading: 'השכלה',
   },
   Tools: {
     title: 'כלים',
@@ -41,5 +42,8 @@ export const heTranslations = {
       successMessage: 'הודעה נשלחה בהצלחה',
       errorMessage: 'שליחת הודעה נכשלה',
     },
+  },
+  DetailsCard: {
+    downloadCv: 'הורדת קורות חיים',
   },
 };

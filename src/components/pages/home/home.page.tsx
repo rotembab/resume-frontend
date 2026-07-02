@@ -14,7 +14,7 @@ export const HomePage = () => {
         <ProjectsContent limit={3} />
       </Grid>
       <Grid size={12}>
-        <ExperienceContent limit={3} />
+        <ExperienceContent limit={3} variant='preview' />
       </Grid>
       <Grid size={12}>
         <ToolsContent limit={8} />

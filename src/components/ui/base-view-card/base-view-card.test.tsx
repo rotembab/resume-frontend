@@ -28,4 +28,23 @@ describe('BaseViewCard', () => {
     await userEvent.click(screen.getByText('Test title'));
     expect(onClick).toHaveBeenCalledTimes(1);
   });
+
+  it('renders the subtitle when provided', () => {
+    render(<BaseViewCard {...baseProps} subtitle='Nov 2023 - Jul 2025' />);
+    expect(screen.getByText('Nov 2023 - Jul 2025')).toBeInTheDocument();
+  });
+
+  it('renders bullets as list items', () => {
+    const bullets = ['First highlight', 'Second highlight'];
+    render(<BaseViewCard {...baseProps} bullets={bullets} />);
+    const items = screen.getAllByRole('listitem');
+    expect(items).toHaveLength(2);
+    expect(items[0]).toHaveTextContent('First highlight');
+    expect(items[1]).toHaveTextContent('Second highlight');
+  });
+
+  it('renders no list when bullets are omitted', () => {
+    render(<BaseViewCard {...baseProps} />);
+    expect(screen.queryByRole('list')).not.toBeInTheDocument();
+  });
 });

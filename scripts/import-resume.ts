@@ -4,6 +4,7 @@ import pdfParse from 'pdf-parse/lib/pdf-parse.js';
 import { ZodError } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 import { resumeSchema } from '../src/data/resume.schema';
+import { CV_FILE_NAME } from '../src/config/cv';
 import { runClaude } from './_claude-cli';
 
 const PRIVATE_DIR = 'private';
@@ -149,7 +150,11 @@ ${resumeText}`;
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify(resume, null, 2) + '\n');
   fs.rmSync(DEBUG_PATH, { force: true });
 
+  const cvOutputPath = path.join('public', CV_FILE_NAME);
+  fs.copyFileSync(pdfPath, cvOutputPath);
+
   console.log(`Wrote ${OUTPUT_PATH}`);
+  console.log(`Copied ${pdfPath} -> ${cvOutputPath}`);
   console.log(
     `  ${resume.experience.length} experience entries, ${resume.skills.length} skills`
   );

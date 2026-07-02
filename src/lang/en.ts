@@ -22,6 +22,7 @@ export const enTranslations = {
     description: 'Here are some of the companies I have worked for.',
     heading1: '{{years}} Years of',
     heading2: 'Experience',
+    educationHeading: 'Education',
   },
   Tools: {
     title: 'Tools',
@@ -42,5 +43,8 @@ export const enTranslations = {
       successMessage: 'Message sent successfully',
       errorMessage: 'Failed to send message',
     },
+  },
+  DetailsCard: {
+    downloadCv: 'Download CV',
   },
 };

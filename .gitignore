@@ -28,3 +28,5 @@ dist-ssr
 # Private resume PDF — never commit
 /private/
 *.pdf
+# ...except the published CV copy served by the site
+!public/rotem-babani-cv.pdf

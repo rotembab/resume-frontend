@@ -1,5 +1,6 @@
 import { CallMadeOutlined } from '@mui/icons-material';
 import {
+  Box,
   Card,
   CardMedia,
   CardContent,
@@ -11,7 +12,10 @@ import { customColors } from '../../../themes/custom-colors';
 
 type BaseViewCardProps = {
   title: string;
+  subtitle?: string;
   description: string;
+  bullets?: string[];
+  isInteractive?: boolean;
   thumbnail?: string;
   onClick: () => void;
   height: string;
@@ -27,7 +31,10 @@ type BaseViewCardProps = {
 };
 export const BaseViewCard = ({
   title,
+  subtitle,
   description,
+  bullets,
+  isInteractive = true,
   thumbnail,
   onClick,
   height = 'min-content',
@@ -56,10 +63,11 @@ export const BaseViewCard = ({
       sx={{
         transition: 'background-color 0.7s',
         position: 'relative',
-        cursor: 'pointer',
-        backgroundColor: isHovered
-          ? customColors.hoverColor.main
-          : 'transparent',
+        cursor: isInteractive ? 'pointer' : 'default',
+        backgroundColor:
+          isInteractive && isHovered
+            ? customColors.hoverColor.main
+            : 'transparent',
         borderRadius: '16px',
         height: height,
         width: width,
@@ -88,7 +96,34 @@ export const BaseViewCard = ({
       )}
       <CardContent sx={cardContentStyle}>
         <Typography variant='h6'>{title}</Typography>
+        {subtitle && (
+          <Typography
+            variant='body2'
+            color='descriptionColor'
+            sx={{ marginBottom: '4px' }}
+          >
+            {subtitle}
+          </Typography>
+        )}
         <Typography variant='body1'>{description}</Typography>
+        {bullets && bullets.length > 0 && (
+          <Box
+            component='ul'
+            sx={{ margin: '8px 0 0', paddingInlineStart: '20px' }}
+          >
+            {bullets.map((bullet) => (
+              <Typography
+                key={bullet}
+                component='li'
+                variant='body2'
+                color='paragraphColor'
+                sx={{ marginBottom: '4px' }}
+              >
+                {bullet}
+              </Typography>
+            ))}
+          </Box>
+        )}
       </CardContent>
 
       {isShowArrow && (
