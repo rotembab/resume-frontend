@@ -10,12 +10,17 @@ import { GITHUB_USERNAME } from '../../../config/env';
 
 type ProjectsContentProps = {
   limit?: number;
+  variant?: 'preview' | 'full';
 };
 
 const buildPreviewUrl = (repoName: string) =>
   `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${repoName}/main/preview.webp`;
 
-export const ProjectsContent = ({ limit }: ProjectsContentProps) => {
+export const ProjectsContent = ({
+  limit,
+  variant = 'full',
+}: ProjectsContentProps) => {
+  const isPreview = variant === 'preview';
   const { t } = useTranslation();
   const location = useLocation();
   const getGithubReposQuery = useGithubReposFetchAPI();
@@ -58,9 +63,9 @@ export const ProjectsContent = ({ limit }: ProjectsContentProps) => {
                   key={project.id}
                   title={project.name}
                   description={project.description}
-                  link={project.html_url}
+                  link={isPreview ? '/projects' : project.html_url}
                   thumbnail={buildPreviewUrl(project.name)}
-                  isExternal={true}
+                  isExternal={!isPreview}
                 />
               ))}
             </Stack>

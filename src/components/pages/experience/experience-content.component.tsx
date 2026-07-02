@@ -45,6 +45,7 @@ export const ExperienceContent = ({
                 subtitle={entry.period.durationLabel}
                 description={entry.summary}
                 bullets={isPreview ? undefined : entry.highlights}
+                link={isPreview ? '/experience' : undefined}
               />
             ))}
           </Stack>

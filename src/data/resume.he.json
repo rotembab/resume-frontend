@@ -5,6 +5,7 @@
     "description": "מפתח Full Stack שבונה אפליקציות פרודקשן עם React, TypeScript, TanStack Router ו-Vite בצד ה-Frontend, ו-Kotlin/Java services בצד ה-Backend. נוח לאורך כל ה-Stack — PostgreSQL, Apache Solr, סביבות Kubernetes/Helm ו-CI/CD workflows.",
     "location": "גני תקווה, ישראל",
     "social": {
+      "github": "https://github.com/rotembab",
       "linkedin": "https://linkedin.com/in/rotem-babani-971930200",
       "email": "rotembabmen@gmail.com"
     }

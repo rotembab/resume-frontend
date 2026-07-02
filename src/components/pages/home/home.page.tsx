@@ -11,7 +11,7 @@ export const HomePage = () => {
         <HomeContent />
       </Grid>
       <Grid size={12}>
-        <ProjectsContent limit={3} />
+        <ProjectsContent limit={3} variant='preview' />
       </Grid>
       <Grid size={12}>
         <ExperienceContent limit={3} variant='preview' />

@@ -5,6 +5,7 @@
     "description": "フロントエンドにReact、TypeScript、TanStack Router、Viteを使用し、バックエンドにKotlin/Javaサービスを用いてプロダクションアプリケーションを構築するフルスタック開発者。PostgreSQL、Apache Solr、Kubernetes/Helm環境、CI/CDワークフローなど、スタック全体に精通しています。",
     "location": "ガネイ・ティクバ、イスラエル",
     "social": {
+      "github": "https://github.com/rotembab",
       "linkedin": "https://linkedin.com/in/rotem-babani-971930200",
       "email": "rotembabmen@gmail.com"
     }

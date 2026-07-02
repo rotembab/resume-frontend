@@ -5,6 +5,7 @@
     "description": "Full-stack developer building production applications with React, TypeScript, TanStack Router, and Vite on the frontend, and Kotlin/Java services on the backend. Comfortable across the stack — PostgreSQL, Apache Solr, Kubernetes/Helm environments, and CI/CD workflows.",
     "location": "Ganei Tikva, Israel",
     "social": {
+      "github": "https://github.com/rotembab",
       "linkedin": "https://linkedin.com/in/rotem-babani-971930200",
       "email": "rotembabmen@gmail.com"
     }
