@@ -3,7 +3,7 @@ import path from 'node:path';
 import pdfParse from 'pdf-parse/lib/pdf-parse.js';
 import { ZodError } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
-import { resumeSchema } from '../src/data/resume.schema';
+import { profileSchema, resumeSchema } from '../src/data/resume.schema';
 import { CV_FILE_NAME } from '../src/config/cv';
 import { runClaude } from './_claude-cli';
 
@@ -145,6 +145,20 @@ ${resumeText}`;
       process.exit(1);
     }
     throw err;
+  }
+
+  // Social links are maintained by hand (e.g. the GitHub profile URL is not
+  // on the PDF) — a re-import must not overwrite them, so keep whatever the
+  // current resume.json has.
+  if (fs.existsSync(OUTPUT_PATH)) {
+    const existing = JSON.parse(fs.readFileSync(OUTPUT_PATH, 'utf8'));
+    const existingSocial = profileSchema.shape.social.safeParse(
+      existing?.profile?.social
+    );
+    if (existingSocial.success) {
+      resume.profile.social = existingSocial.data;
+      console.log('Kept social links from existing resume.json');
+    }
   }
 
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify(resume, null, 2) + '\n');
