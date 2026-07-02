@@ -1,18 +1,14 @@
 import { Box, Button, Card, CardMedia, Typography } from '@mui/material';
-import { FileDownloadOutlined } from '@mui/icons-material';
 import { useLocation } from 'react-router';
-import { useTranslation } from 'react-i18next';
 import { SlideFadeTransition } from '../slide-fade-transition/slide-fade-transition-component';
 import Grid from '@mui/material/Grid2';
 import { buildDetailsCardLinks } from './details-card-links.config';
 import { useResume } from '../../../data/use-resume';
-import { CV_PUBLIC_PATH } from '../../../config/cv';
 import { customSizesMediaQuery } from '../../../themes/custom-sizes-query';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 export const DetailsCard = () => {
   const location = useLocation();
-  const { t } = useTranslation();
   const isBelowMd = useMediaQuery(customSizesMediaQuery.md);
   const resume = useResume();
   const links = buildDetailsCardLinks(resume.profile.social);
@@ -64,7 +60,7 @@ export const DetailsCard = () => {
               </Typography>
             </Grid>
             <Grid size={12}>
-              <Grid container justifyContent='center'>
+              <Grid container>
                 {links.map((item) => (
                   <Grid key={item.link + '_grid'} size={4}>
                     <Button
@@ -79,18 +75,6 @@ export const DetailsCard = () => {
                   </Grid>
                 ))}
               </Grid>
-            </Grid>
-            <Grid size={12}>
-              <Button
-                variant='outlined'
-                fullWidth
-                startIcon={<FileDownloadOutlined />}
-                href={CV_PUBLIC_PATH}
-                download='Rotem-Babani-CV.pdf'
-                sx={{ borderRadius: '10px' }}
-              >
-                {t('DetailsCard.downloadCv')}
-              </Button>
             </Grid>
           </Grid>
         </Card>
