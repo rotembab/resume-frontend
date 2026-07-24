@@ -1,6 +1,6 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { Experience } from '../../../data/resume.schema';
-import { isJobEntry, splitExperience } from './experience-sections';
+import { isJobEntry, splitExperience, sumJobYears } from './experience-sections';
 
 const entry = (id: string, type?: Experience['type']): Experience => ({
   id,
@@ -8,6 +8,14 @@ const entry = (id: string, type?: Experience['type']): Experience => ({
   organization: 'Org',
   ...(type ? { type } : {}),
   period: { start: '2020-01', durationLabel: 'Jan 2020 - Present' },
+  summary: 'Summary',
+});
+
+const job = (id: string, start: string, end?: string): Experience => ({
+  id,
+  role: 'Role',
+  organization: 'Org',
+  period: { start, ...(end ? { end } : {}), durationLabel: 'label' },
   summary: 'Summary',
 });
 
@@ -42,5 +50,42 @@ describe('splitExperience', () => {
 
   it('handles an empty list', () => {
     expect(splitExperience([])).toEqual({ jobs: [], education: [] });
+  });
+});
+
+describe('sumJobYears', () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it('sums a single closed period', () => {
+    expect(sumJobYears([job('a', '2020-01', '2022-01')])).toBe(2);
+  });
+
+  it('sums multiple periods independently', () => {
+    const total = sumJobYears([
+      job('a', '2020-01', '2022-01'), // 2 yrs
+      job('b', '2022-01', '2022-07'), // ~0.5 yr
+    ]);
+    expect(total).toBeCloseTo(2.5, 1);
+  });
+
+  it('excludes education and course entries', () => {
+    const entries = [
+      job('a', '2020-01', '2022-01'),
+      entry('edu', 'education'),
+      entry('course', 'course'),
+    ];
+    expect(sumJobYears(entries)).toBe(2);
+  });
+
+  it('counts open-ended periods up to today', () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2024-01-01'));
+    expect(sumJobYears([job('a', '2022-01')])).toBe(2);
+  });
+
+  it('returns 0 for no job entries', () => {
+    expect(sumJobYears([entry('edu', 'education')])).toBe(0);
   });
 });

@@ -2,11 +2,13 @@ import { useGithubReposFetchAPI } from '../../../../hooks/github-fetchAPI.hook';
 import { SingleStatistic } from '../../../ui/single-statistic/single-statistic.component';
 import Grid from '@mui/material/Grid2';
 import { useTranslation } from 'react-i18next';
-import { STAT_ANCHORS, yearsSince } from '../../../../config/stats';
+import { useResume } from '../../../../data/use-resume';
+import { sumJobYears } from '../../experience/experience-sections';
 export const Statistics = () => {
   const { t } = useTranslation();
   const getGithubReposQuery = useGithubReposFetchAPI();
-  const fullStackYears = yearsSince(STAT_ANCHORS.fullStackStart);
+  const resume = useResume();
+  const fullStackYears = sumJobYears(resume.experience);
   return (
     <Grid
       spacing={2}

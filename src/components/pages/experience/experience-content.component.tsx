@@ -6,8 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { ExperienceItemCard } from '../../ui/experience-item-card/experience-item-card.component';
 import { useResume } from '../../../data/use-resume';
-import { STAT_ANCHORS, yearsSince } from '../../../config/stats';
-import { splitExperience } from './experience-sections';
+import { splitExperience, sumJobYears } from './experience-sections';
 
 type ExperienceContentProps = {
   limit?: number;
@@ -21,7 +20,7 @@ export const ExperienceContent = ({
   const { t } = useTranslation();
   const location = useLocation();
   const resume = useResume();
-  const fullStackYears = yearsSince(STAT_ANCHORS.fullStackStart);
+  const fullStackYears = sumJobYears(resume.experience);
   const { jobs, education } = splitExperience(resume.experience);
   const isPreview = variant === 'preview';
   return (
