@@ -4,10 +4,12 @@ import Grid from '@mui/material/Grid2';
 import { Outlet } from 'react-router';
 import { NavMenu } from '../nav-menu/nav-menu.component';
 import { DetailsCard } from '../details-card/details-card.component';
+import { ScrollToTop } from '../scroll-to-top/scroll-to-top.component';
 
 export const Layout = () => {
   return (
     <Container maxWidth='md'>
+      <ScrollToTop />
       <NavMenu />
       <Grid
         paddingTop={{
