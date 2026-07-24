@@ -57,6 +57,7 @@
       "id": "israel-defense-forces",
       "role": "QAオートメーションエンジニア",
       "organization": "イスラエル国防軍",
+      "excludeFromExperienceYears": true,
       "period": {
         "start": "2018-11",
         "end": "2020-03",

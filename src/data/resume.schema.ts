@@ -26,6 +26,10 @@ export const experienceSchema = z.object({
   role: z.string().min(1),
   organization: z.string().min(1),
   type: experienceTypeSchema.optional(),
+  // Hand-maintained: excludes this entry from the full-stack "years of
+  // experience" stat while still showing it in the experience list (e.g. a
+  // QA role that isn't full-stack development). Preserved across re-imports.
+  excludeFromExperienceYears: z.boolean().optional(),
   period: z.object({
     start: isoDate,
     end: isoDate.optional(),

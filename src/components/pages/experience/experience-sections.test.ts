@@ -79,6 +79,14 @@ describe('sumJobYears', () => {
     expect(sumJobYears(entries)).toBe(2);
   });
 
+  it('excludes jobs flagged excludeFromExperienceYears', () => {
+    const entries = [
+      job('a', '2020-01', '2022-01'),
+      { ...job('qa', '2018-01', '2019-01'), excludeFromExperienceYears: true },
+    ];
+    expect(sumJobYears(entries)).toBe(2);
+  });
+
   it('counts open-ended periods up to today', () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date('2024-01-01'));

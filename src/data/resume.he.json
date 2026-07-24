@@ -57,6 +57,7 @@
       "id": "israel-defense-forces",
       "role": "מהנדס QA Automation",
       "organization": "צבא הגנה לישראל",
+      "excludeFromExperienceYears": true,
       "period": {
         "start": "2018-11",
         "end": "2020-03",

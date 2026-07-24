@@ -159,6 +159,22 @@ ${resumeText}`;
       resume.profile.social = existingSocial.data;
       console.log('Kept social links from existing resume.json');
     }
+
+    // The `excludeFromExperienceYears` flag is hand-maintained (the parser
+    // never emits it), so carry it over by id from the existing resume.json.
+    const priorFlags = new Map<string, boolean>();
+    for (const entry of existing?.experience ?? []) {
+      if (entry?.id && typeof entry.excludeFromExperienceYears === 'boolean') {
+        priorFlags.set(entry.id, entry.excludeFromExperienceYears);
+      }
+    }
+    if (priorFlags.size > 0) {
+      for (const entry of resume.experience) {
+        const flag = priorFlags.get(entry.id);
+        if (flag !== undefined) entry.excludeFromExperienceYears = flag;
+      }
+      console.log('Kept excludeFromExperienceYears flags from existing resume.json');
+    }
   }
 
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify(resume, null, 2) + '\n');

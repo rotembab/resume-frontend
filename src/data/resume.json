@@ -59,6 +59,7 @@
       "id": "israel-defense-forces",
       "role": "QA Automation Engineer",
       "organization": "Israel Defense Forces",
+      "excludeFromExperienceYears": true,
       "period": {
         "start": "2018-11",
         "end": "2020-03",
