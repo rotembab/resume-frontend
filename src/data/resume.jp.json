@@ -2,7 +2,7 @@
   "profile": {
     "name": "ロテム・ババニ",
     "headline": "フルスタック開発者",
-    "description": "フロントエンドにReact、TypeScript、TanStack Router、Viteを使用し、バックエンドにKotlin/Javaサービスを用いてプロダクションアプリケーションを構築するフルスタック開発者。PostgreSQL、Apache Solr、Kubernetes/Helm環境、CI/CDワークフローなど、スタック全体に精通しています。",
+    "description": "React、TypeScript、Kotlin/Javaサービスでプロダクションアプリを構築するフルスタック開発者。Claude CodeなどのAIツールを活用して素早くプロトタイプと反復開発を行い、プロダクション品質のコードへと導きます。",
     "location": "ガネイ・ティクバ、イスラエル",
     "social": {
       "github": "https://github.com/rotembab",

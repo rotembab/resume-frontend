@@ -2,7 +2,7 @@
   "profile": {
     "name": "Rotem Babani",
     "headline": "Full Stack Developer",
-    "description": "Full-stack developer building production applications with React, TypeScript, TanStack Router, and Vite on the frontend, and Kotlin/Java services on the backend. Comfortable across the stack — PostgreSQL, Apache Solr, Kubernetes/Helm environments, and CI/CD workflows.",
+    "description": "Full-stack developer shipping production apps with React, TypeScript, and Kotlin/Java services. Uses AI-assisted tooling like Claude Code to prototype and iterate fast, steering outputs toward production-quality code.",
     "location": "Ganei Tikva, Israel",
     "social": {
       "github": "https://github.com/rotembab",

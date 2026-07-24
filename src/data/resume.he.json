@@ -2,7 +2,7 @@
   "profile": {
     "name": "רותם בבני",
     "headline": "מפתח Full Stack",
-    "description": "מפתח Full Stack שבונה אפליקציות פרודקשן עם React, TypeScript, TanStack Router ו-Vite בצד ה-Frontend, ו-Kotlin/Java services בצד ה-Backend. נוח לאורך כל ה-Stack — PostgreSQL, Apache Solr, סביבות Kubernetes/Helm ו-CI/CD workflows.",
+    "description": "מפתח Full Stack שבונה אפליקציות פרודקשן עם React, TypeScript ו-Kotlin/Java services. משתמש בכלי AI כמו Claude Code כדי לתכנת ולתקן במהירות, תוך הכוונת הפלט לקוד ברמת פרודקשן.",
     "location": "גני תקווה, ישראל",
     "social": {
       "github": "https://github.com/rotembab",
