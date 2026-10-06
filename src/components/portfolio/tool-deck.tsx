@@ -5,6 +5,12 @@ import { useEffects } from './effects-context';
 import { usePortfolio } from './use-portfolio';
 import { getToolDeckCopy } from '../../data/tool-deck-copy';
 import { storyViewportHeight } from './story-viewport';
+import {
+  StoryMotion,
+  type StoryEffect,
+  toolMotionFrames,
+  toolPose,
+} from './story-motion';
 
 export interface ToolCard {
   id: string;
@@ -28,10 +34,9 @@ const paintIcons = (
     const offset = index - position;
     const visible = offset > -1 && offset <= 3;
     if (visible) {
-      const depth = Math.max(0, offset);
-      const exit = Math.max(0, -offset);
-      token.style.transform = `translate3d(${direction * (depth * 14 - exit * 90)}px, ${depth * 12 + exit * 6}px, 0) rotate(${direction * (depth * 6 - exit * 18)}deg) scale(${1 - depth * 0.08})`;
-      token.style.opacity = String((1 - depth * 0.2) * (1 - exit));
+      const pose = toolPose(offset, direction);
+      token.style.transform = pose.transform;
+      token.style.opacity = String(pose.opacity);
     }
     if (token.dataset.visible !== String(visible))
       token.setAttribute('data-visible', String(visible));
@@ -85,6 +90,7 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
   const stage = useRef<HTMLDivElement>(null);
   const tokens = useRef<(HTMLSpanElement | null)[]>([]);
   const progressBar = useRef<HTMLSpanElement>(null);
+  const motion = useRef(new StoryMotion());
   const paintedPosition = useRef<string>();
   const position = useRef(initialIndex);
   const selected = useRef(initialIndex);
@@ -159,11 +165,37 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
 
   useEffect(() => {
     if (!story.current || !stage.current || !cards.length) return;
+    const storyMotion = motion.current;
+    const bindMotion = () => {
+      if (!layoutRef.current) {
+        motion.current.clear();
+        story.current!.dataset.animation = 'fallback';
+        paintedPosition.current = undefined;
+        return;
+      }
+      const effects: StoryEffect[] = tokens.current.flatMap((target, index) =>
+        target ? [{ target, ...toolMotionFrames(index, last, direction) }] : []
+      );
+      if (progressBar.current)
+        effects.push({
+          target: progressBar.current,
+          from: 0,
+          to: 1,
+          frames: [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }],
+        });
+      const native = motion.current.bind(
+        geometry.current.start,
+        geometry.current.span,
+        `${cardOrder}|${direction}`,
+        effects
+      );
+      story.current!.dataset.animation = native ? 'native' : 'fallback';
+    };
     const update = (value: number) => {
       const next = Math.max(0, Math.min(last, value));
       position.current = next;
       const paintKey = `${direction}|${next}|${cardOrder}`;
-      if (paintedPosition.current !== paintKey) {
+      if (!motion.current.native && paintedPosition.current !== paintKey) {
         paintedPosition.current = paintKey;
         paintIcons(tokens.current, next, direction);
         if (progressBar.current)
@@ -211,10 +243,11 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
         update(selected.current);
         return;
       }
-      const start =
-        story.current.getBoundingClientRect().top +
-        scrollY -
-        geometry.current.top;
+      const start = motion.current.native
+        ? geometry.current.start
+        : story.current.getBoundingClientRect().top +
+          scrollY -
+          geometry.current.top;
       geometry.current.start = start;
       ownsPosition.current =
         scrollY >= start && scrollY <= start + geometry.current.span;
@@ -278,6 +311,7 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
       setHeight(span + stageHeight);
       layoutRef.current = nextPinned;
       setPinned(nextPinned);
+      bindMotion();
       if (
         nextPinned &&
         (focused ||
@@ -298,6 +332,7 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
             scrollY -
             geometry.current.top;
           geometry.current.start = currentStart;
+          bindMotion();
           window.scrollTo({
             top:
               currentStart +
@@ -380,6 +415,8 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
         cancelAnimationFrame(restoreFrame.current);
       restoring.current = false;
       pendingRestore.current = null;
+      storyMotion.clear();
+      paintedPosition.current = undefined;
     };
   }, [
     cards,
@@ -406,14 +443,14 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
       });
     position.current = next;
     paintedPosition.current = undefined;
-    paintIcons(tokens.current, next, direction);
+    if (!motion.current.native) paintIcons(tokens.current, next, direction);
     selected.current = next;
     selectedId.current = cards[next]?.id;
     ownsPosition.current = true;
     activeEntries.add(historyKey);
     if (selectedId.current) selections.set(historyKey, selectedId.current);
     setActive(next);
-    if (progressBar.current)
+    if (!motion.current.native && progressBar.current)
       progressBar.current.style.transform = `scaleX(${last ? next / last : 0})`;
   };
 

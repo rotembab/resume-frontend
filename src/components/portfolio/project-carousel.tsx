@@ -18,6 +18,11 @@ import { usePortfolio } from './use-portfolio';
 import { ProjectMedia } from './project-media';
 import { CatalogProjectMedia } from './project-catalog';
 import { storyViewportHeight } from './story-viewport';
+import {
+  StoryMotion,
+  type StoryEffect,
+  projectMotionFrames,
+} from './story-motion';
 
 type Layout = 'scroll' | 'manual';
 type Geometry = {
@@ -63,7 +68,7 @@ export const ProjectCarousel = ({
   const chapterButtons = useRef<(HTMLButtonElement | null)[]>([]);
   const slides = useRef<(HTMLElement | null)[]>([]);
   const media = useRef<(HTMLDivElement | null)[]>([]);
-  const featureNodes = useRef<HTMLParagraphElement[][]>([]);
+  const motion = useRef(new StoryMotion());
   const paintedProgress = useRef<string>();
   const geometry = useRef<Geometry>();
   const frame = useRef<number>();
@@ -95,8 +100,14 @@ export const ProjectCarousel = ({
       progress.current = next;
       const position = next * last;
       const index = Math.round(position);
+      const changed = activeRef.current !== index;
+      if (motion.current.native) {
+        // The timeline samples every visual frame. React only changes chapters;
+        // writing styles here would put touch scrolling back on the main thread.
+        if (!changed) return;
+      }
       const paintKey = `${layoutRef.current}|${next}|${projectOrder}`;
-      if (paintedProgress.current !== paintKey) {
+      if (!motion.current.native && paintedProgress.current !== paintKey) {
         paintedProgress.current = paintKey;
         story.current?.setAttribute('data-scroll-progress', next.toFixed(4));
         if (progressBar.current)
@@ -125,17 +136,8 @@ export const ProjectCarousel = ({
             ? `translate3d(0, ${entry * 48 - exit * 24}px, 0) scale(${1 - entry * 0.1 + exit * 0.08})`
             : 'none';
           image.style.opacity = String(scrolling ? 1 - Math.abs(offset) : 1);
-          if (slideIndex === index)
-            featureNodes.current[slideIndex]?.forEach(
-              (feature, featureIndex) => {
-                feature.style.transform = scrolling
-                  ? `translateY(${entry * (featureIndex ? 18 : 12) - exit * (featureIndex ? 12 : 8)}px)`
-                  : 'none';
-              }
-            );
         });
       }
-      const changed = activeRef.current !== index;
       activeRef.current = index;
       activeSlug.current = projects[index]?.slug;
       if (activeSlug.current)
@@ -148,12 +150,13 @@ export const ProjectCarousel = ({
   const syncScroll = useCallback(() => {
     if (!story.current) return;
     if (layoutRef.current === 'scroll' && geometry.current) {
-      // Read the actual document position: upstream image/font changes and
-      // restored browser history can move the section without changing its size.
-      const start =
-        story.current.getBoundingClientRect().top +
-        window.scrollY -
-        geometry.current.stickyTop;
+      // Native ranges use the measured origin, refreshed by layout observers.
+      // The fallback still reads it for browsers without timeline support.
+      const start = motion.current.native
+        ? geometry.current.start
+        : story.current.getBoundingClientRect().top +
+          window.scrollY -
+          geometry.current.stickyTop;
       geometry.current.start = start;
       applyProgress((window.scrollY - start) / geometry.current.span);
     }
@@ -168,6 +171,7 @@ export const ProjectCarousel = ({
         setLayout('manual');
         setStoryHeight(0);
         geometry.current = undefined;
+        motion.current.clear();
         applyProgress(0);
         setSettledIndex(0);
         return;
@@ -248,6 +252,31 @@ export const ProjectCarousel = ({
         span: Math.max(1, height - stageHeight),
         stickyTop,
       };
+      if (nextLayout === 'scroll') {
+        const effects: StoryEffect[] = media.current
+          .slice(0, projects.length)
+          .flatMap((target, index) =>
+            target ? [{ target, ...projectMotionFrames(index, last) }] : []
+          );
+        if (progressBar.current)
+          effects.push({
+            target: progressBar.current,
+            from: 0,
+            to: 1,
+            frames: [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }],
+          });
+        const native = motion.current.bind(
+          start,
+          geometry.current.span,
+          projectOrder,
+          effects
+        );
+        story.current.dataset.animation = native ? 'native' : 'fallback';
+      } else {
+        motion.current.clear();
+        story.current.dataset.animation = 'fallback';
+        paintedProgress.current = undefined;
+      }
       // Collapsing Safari browser bars do not change the small-viewport geometry.
       // Leave native touch momentum alone when no layout has actually changed.
       if (
@@ -362,10 +391,11 @@ export const ProjectCarousel = ({
         syncScroll();
       } else syncScroll();
     },
-    [applyProgress, last, motionAllowed, projects, syncScroll]
+    [applyProgress, last, motionAllowed, projects, projectOrder, syncScroll]
   );
 
   useEffect(() => {
+    const storyMotion = motion.current;
     // Live refreshes can add or reorder repositories. Keep the chosen project
     // by identity while React preserves its keyed slide and focused link.
     if (previousOrder.current !== projectOrder) {
@@ -412,6 +442,8 @@ export const ProjectCarousel = ({
         : new ResizeObserver(() => schedule(true, true));
     if (region.current) observer?.observe(region.current);
     if (viewport.current) observer?.observe(viewport.current);
+    const main = document.querySelector('main');
+    if (main) observer?.observe(main);
     slides.current.forEach((slide) => {
       if (slide) observer?.observe(slide);
     });
@@ -434,6 +466,8 @@ export const ProjectCarousel = ({
         cancelAnimationFrame(fallbackFrame.current);
       frame.current = undefined;
       fallbackFrame.current = undefined;
+      storyMotion.clear();
+      paintedProgress.current = undefined;
     };
   }, [
     remeasure,
@@ -690,13 +724,6 @@ export const ProjectCarousel = ({
                             slide?.querySelector<HTMLDivElement>(
                               '.carousel-media'
                             ) ?? null;
-                          featureNodes.current[index] = slide
-                            ? Array.from(
-                                slide.querySelectorAll<HTMLParagraphElement>(
-                                  '.carousel-story-features > p'
-                                )
-                              )
-                            : [];
                         }}
                       >
                         <div className='carousel-copy'>

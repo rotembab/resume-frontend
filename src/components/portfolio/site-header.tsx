@@ -15,7 +15,14 @@ export const SiteHeader = () => {
   const panel = useRef<HTMLDivElement>(null);
   useEffect(() => setOpen(false), [locationKey, pathname, hash]);
   useEffect(() => {
-    const update = () => setScrolled(window.scrollY > 36);
+    let previous: boolean | undefined;
+    const update = () => {
+      const next = window.scrollY > 36;
+      if (next !== previous) {
+        previous = next;
+        setScrolled(next);
+      }
+    };
     window.addEventListener('scroll', update, { passive: true });
     update();
     return () => window.removeEventListener('scroll', update);
@@ -35,20 +42,71 @@ export const SiteHeader = () => {
       );
       return;
     }
+    let sections: { id: string; top: number }[] = [];
+    let selected: string | undefined;
+    let mounted = true;
+    let pending = false;
+    let frame = 0;
+    const observed = new Set<Element>();
     const update = () => {
       let current = '';
-      for (const id of ['experience', 'work', 'tools', 'about', 'contact']) {
-        const section = document.getElementById(id);
-        if (section && section.getBoundingClientRect().top < innerHeight * 0.55)
-          current = id;
+      const threshold = scrollY + innerHeight * 0.55;
+      for (const section of sections) {
+        if (section.top < threshold) current = section.id;
       }
-      setActiveSection((previous) =>
-        previous === current ? previous : current
-      );
+      if (selected !== current) {
+        selected = current;
+        setActiveSection(current);
+      }
     };
+    const measure = () => {
+      const main = document.querySelector('main');
+      if (main && !observed.has(main)) {
+        observer?.observe(main);
+        observed.add(main);
+      }
+      sections = ['experience', 'work', 'tools', 'about', 'contact'].flatMap(
+        (id) => {
+          const section = document.getElementById(id);
+          if (!section) return [];
+          if (!observed.has(section)) {
+            observer?.observe(section);
+            observed.add(section);
+          }
+          return [{ id, top: section.getBoundingClientRect().top + scrollY }];
+        }
+      );
+      update();
+    };
+    const schedule = () => {
+      if (!mounted || pending) return;
+      pending = true;
+      frame = requestAnimationFrame(() => {
+        pending = false;
+        if (mounted) measure();
+      });
+    };
+    const observer =
+      typeof ResizeObserver === 'undefined'
+        ? undefined
+        : new ResizeObserver(schedule);
+    // Main content can arrive after the lazy homepage mounts. Later image,
+    // locale and story-height changes refresh the cache outside scroll frames.
+    const mutation = new MutationObserver(schedule);
+    const root = document.getElementById('root') ?? document.body;
+    mutation.observe(root, { childList: true, subtree: true });
     window.addEventListener('scroll', update, { passive: true });
-    update();
-    return () => window.removeEventListener('scroll', update);
+    window.addEventListener('resize', schedule);
+    measure();
+    void document.fonts?.ready.then(schedule);
+    return () => {
+      mounted = false;
+      observer?.disconnect();
+      mutation.disconnect();
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', schedule);
+    };
   }, [pathname, hash, i18n.language]);
   useEffect(() => {
     if (!open) return;

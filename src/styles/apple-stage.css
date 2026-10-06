@@ -310,6 +310,14 @@ html[dir='rtl'] .project-carousel .carousel-progress-bar {
   visibility: hidden;
 }
 
+/* Opacity on each native attachment range hides inactive images. Changing
+   visibility or will-change on touch frames would require main-thread commits. */
+.project-carousel-scroll-story[data-animation='native'][data-layout='scroll']
+  .carousel-media {
+  visibility: visible;
+  will-change: auto;
+}
+
 .project-carousel .carousel-media img,
 .project-carousel .carousel-media .project-image-placeholder {
   width: 100%;

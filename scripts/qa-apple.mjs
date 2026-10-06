@@ -162,10 +162,12 @@ async function scenario(browser, engine, name, options, action) {
     serviceWorkers: 'block',
   });
   await context.addInitScript(
-    ({ locale, effects, saveData, performance: measure }) => {
+    ({ locale, effects, saveData, nativeMotion, performance: measure }) => {
       if (!localStorage.getItem('portfolio-language'))
         localStorage.setItem('portfolio-language', locale || 'en');
       if (effects === false) localStorage.setItem('portfolio-effects', 'off');
+      if (nativeMotion === false)
+        Object.defineProperty(window, 'ScrollTimeline', { value: undefined });
       if (saveData)
         Object.defineProperty(navigator, 'connection', {
           value: { saveData: true },
@@ -969,14 +971,15 @@ async function stage(qa) {
             start + span * fractional
           );
           await page.waitForFunction(
-            (expected) =>
+            ({ index }) =>
               Math.abs(
                 Number(
-                  document.querySelector('.project-carousel-scroll-story')
-                    ?.dataset.scrollProgress
-                ) - expected
-              ) < 0.01,
-            fractional
+                  getComputedStyle(
+                    document.querySelectorAll('.carousel-media')[index]
+                  ).opacity
+                ) - 0.75
+              ) < 0.02,
+            { index }
           );
           await page.evaluate(
             () =>
@@ -995,12 +998,12 @@ async function stage(qa) {
             }
           );
           mark(
-            'fractional native scrolling keeps the selected story readable while feature beats move',
+            'fractional native scrolling keeps the selected story and features readable',
             moving.active.captionStyles.every(
               (style) => style.opacity === 1 && style.visibility === 'visible'
             ) &&
-              JSON.stringify(moving.active.featureStyles) !==
-                JSON.stringify(centered.active.featureStyles),
+              moving.active.featureStyles[0].opacity === 1 &&
+              moving.active.featureStyles[0].visibility === 'visible',
             {
               centeredCaption: centered.active.captionStyles,
               movingCaption: moving.active.captionStyles,
@@ -1014,14 +1017,15 @@ async function stage(qa) {
             start + span * midpoint
           );
           await page.waitForFunction(
-            (expected) =>
+            ({ index }) =>
               Math.abs(
                 Number(
-                  document.querySelector('.project-carousel-scroll-story')
-                    ?.dataset.scrollProgress
-                ) - expected
-              ) < 0.005,
-            midpoint
+                  getComputedStyle(
+                    document.querySelectorAll('.carousel-media')[index]
+                  ).opacity
+                ) - 0.5
+              ) < 0.02,
+            { index }
           );
           const transition = await storyVisualState(region);
           mark(
@@ -2233,6 +2237,147 @@ for (const engine of String(args.get('channels') || 'chrome').split(',')) {
       });
       await scenario(browser, engine, 'catalog-filters', {}, catalogs);
       await scenario(browser, engine, 'navigation', {}, navigation);
+      for (const locale of ['en', 'he', 'jp'])
+        for (const nativeMotion of [true, false])
+          await scenario(
+            browser,
+            engine,
+            `scroll-engine-${locale}-${nativeMotion ? 'native' : 'fallback'}`,
+            { viewport: viewports[1], locale, nativeMotion },
+            async ({ page, visit, mark, screenshot }) => {
+              await visit('/');
+              for (const selector of [
+                '.project-carousel-scroll-story',
+                '.tool-deck-story',
+              ]) {
+                const sample = await page.evaluate(
+                  async ({ selector, nativeMotion }) => {
+                    const story = document.querySelector(selector);
+                    const stage = story.firstElementChild;
+                    const start =
+                      story.getBoundingClientRect().top +
+                      scrollY -
+                      parseFloat(getComputedStyle(stage).top);
+                    const span = story.offsetHeight - stage.offsetHeight;
+                    const last =
+                      story.querySelector('select').options.length - 1;
+                    const target = story.querySelector(
+                      selector.includes('project')
+                        ? '.carousel-media'
+                        : '.tool-icon-token'
+                    );
+                    const delay = (ms) =>
+                      new Promise((resolve) => setTimeout(resolve, ms));
+                    scrollTo({ top: start, behavior: 'instant' });
+                    await delay(300);
+                    const originalBounds =
+                      Element.prototype.getBoundingClientRect;
+                    let layoutReads = 0;
+                    Element.prototype.getBoundingClientRect = function () {
+                      layoutReads++;
+                      return originalBounds.call(this);
+                    };
+                    let styleWrites = 0;
+                    const observer = new MutationObserver((records) => {
+                      styleWrites += records.filter(
+                        (record) => record.attributeName === 'style'
+                      ).length;
+                    });
+                    observer.observe(story, {
+                      subtree: true,
+                      attributes: true,
+                    });
+                    const opacity = [];
+                    for (const fraction of [0.1, 0.2, 0.3, 0.4]) {
+                      scrollTo({
+                        top: start + (span * fraction) / last,
+                        behavior: 'instant',
+                      });
+                      await delay(50);
+                      opacity.push(Number(getComputedStyle(target).opacity));
+                    }
+                    observer.disconnect();
+                    Element.prototype.getBoundingClientRect = originalBounds;
+                    // Native motion must continue even when the application's
+                    // scroll handlers receive no events; the timeline owns it.
+                    const freeze = (event) => event.stopImmediatePropagation();
+                    let independent = true;
+                    if (nativeMotion) {
+                      window.addEventListener('scroll', freeze, true);
+                      scrollTo({
+                        top: start + (span * 0.25) / last,
+                        behavior: 'instant',
+                      });
+                      await delay(80);
+                      const quarter = Number(getComputedStyle(target).opacity);
+                      scrollTo({
+                        top: start + (span * 0.45) / last,
+                        behavior: 'instant',
+                      });
+                      await delay(80);
+                      const later = Number(getComputedStyle(target).opacity);
+                      independent =
+                        Math.abs(quarter - 0.75) < 0.02 &&
+                        Math.abs(later - 0.55) < 0.02;
+                      window.removeEventListener('scroll', freeze, true);
+                    }
+                    scrollTo({ top: start + span, behavior: 'instant' });
+                    await delay(80);
+                    const finalIndex = Number(stage.dataset.currentIndex);
+                    const finalTarget = story.querySelector(
+                      selector.includes('project')
+                        ? '.carousel-slide[data-active="true"] .carousel-media'
+                        : '.tool-icon-token[data-state="active"]'
+                    );
+                    const finalOpacity = Number(
+                      getComputedStyle(finalTarget).opacity
+                    );
+                    scrollTo({ top: start, behavior: 'instant' });
+                    await delay(80);
+                    return {
+                      engine: story.dataset.animation,
+                      styleWrites,
+                      layoutReads,
+                      opacity,
+                      independent,
+                      finalIndex,
+                      last,
+                      finalOpacity,
+                      reverseIndex: Number(stage.dataset.currentIndex),
+                    };
+                  },
+                  { selector, nativeMotion }
+                );
+                mark(
+                  'continuous motion uses the intended engine: ' + selector,
+                  sample.engine === (nativeMotion ? 'native' : 'fallback') &&
+                    sample.opacity.every(
+                      (opacity, index) =>
+                        Math.abs(opacity - (0.9 - index * 0.1)) < 0.02
+                    ) &&
+                    (nativeMotion
+                      ? sample.styleWrites === 0 &&
+                        sample.layoutReads === 0 &&
+                        sample.independent
+                      : sample.styleWrites > 0) &&
+                    sample.finalIndex === sample.last &&
+                    sample.finalOpacity > 0.98 &&
+                    sample.reverseIndex === 0,
+                  sample
+                );
+              }
+              mark(
+                'phone header avoids backdrop filtering',
+                await page
+                  .locator('.site-header')
+                  .evaluate(
+                    (header) =>
+                      getComputedStyle(header).backdropFilter === 'none'
+                  )
+              );
+              await screenshot('mobile-scroll-engine');
+            }
+          );
       for (const viewport of [viewports[1], { width: 1440, height: 900 }])
         await scenario(
           browser,
@@ -2293,8 +2438,14 @@ for (const engine of String(args.get('channels') || 'chrome').split(',')) {
                     });
                     maxProjectLayers = Math.max(
                       maxProjectLayers,
-                      document.querySelectorAll(
-                        '.carousel-slide[data-rendered="true"]'
+                      [...document.querySelectorAll('.carousel-media')].filter(
+                        (media) => {
+                          const style = getComputedStyle(media);
+                          return (
+                            style.visibility === 'visible' &&
+                            Number(style.opacity) > 0.001
+                          );
+                        }
                       ).length
                     );
                     if (phase < 1) requestAnimationFrame(tick);

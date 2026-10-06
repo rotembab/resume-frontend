@@ -112,6 +112,12 @@ html[dir='rtl'] .tool-deck-field::after {
 .tool-icon-token:not([data-visible='true']) {
   visibility: hidden;
 }
+.tool-deck-story[data-animation='native'][data-layout='scroll']
+  .tool-icon-token {
+  opacity: 0;
+  visibility: visible;
+  will-change: auto;
+}
 .tool-icon {
   display: grid;
   place-items: center;

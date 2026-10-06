@@ -1,6 +1,7 @@
 import {
   act,
   cleanup,
+  fireEvent,
   render,
   screen,
   waitFor,
@@ -129,6 +130,53 @@ describe('homepage section navigation', () => {
     [copy.navAbout, 'about'],
     [copy.navContact, 'contact'],
   ] as const;
+
+  it('tracks section navigation from cached positions and refreshes after a layout change', () => {
+    pageY = 0;
+    clients.set('experience', 100);
+    clients.set('work', 1000);
+    clients.set('tools', 2500);
+    aboutY = 6000;
+    contactY = 8000;
+    const view = render(
+      <MemoryRouter initialEntries={['/']}>
+        <SiteHeader />
+        <main>
+          {['experience', 'work', 'tools', 'about', 'contact'].map((id) => (
+            <section id={id} key={id}>
+              {id}
+            </section>
+          ))}
+        </main>
+      </MemoryRouter>
+    );
+    const primary = view.container.querySelector('.primary-nav')!;
+    const bounds = vi.mocked(HTMLElement.prototype.getBoundingClientRect);
+    bounds.mockClear();
+    pageY = 1200;
+    fireEvent.scroll(window);
+    expect(primary.querySelector('a[href="/#work"]')).toHaveAttribute(
+      'aria-current',
+      'location'
+    );
+    fireEvent.scroll(window);
+    expect(bounds).not.toHaveBeenCalled();
+    clients.set('work', 2000);
+    fireEvent.resize(window);
+    expect(primary.querySelector('a[href="/#experience"]')).toHaveAttribute(
+      'aria-current',
+      'location'
+    );
+    expect(bounds).toHaveBeenCalledTimes(5);
+    bounds.mockClear();
+    pageY = 3000;
+    fireEvent.scroll(window);
+    expect(primary.querySelector('a[href="/#tools"]')).toHaveAttribute(
+      'aria-current',
+      'location'
+    );
+    expect(bounds).not.toHaveBeenCalled();
+  });
 
   it.each(['primary', 'menu'] as const)(
     'matches the homepage section order in the %s navigation',
