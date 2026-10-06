@@ -4,6 +4,7 @@ import {
   projectMotionFrames,
   toolMotionFrames,
   toolPose,
+  stageMotionFrames,
 } from './story-motion';
 const scrollingDescriptor = Object.getOwnPropertyDescriptor(
   document,
@@ -36,21 +37,55 @@ const setup = () => {
 };
 
 describe('native story motion', () => {
-  it('attaches a single scroll timeline to measured chapter ranges with automatic duration', () => {
+  it('attaches a single scroll timeline to the complete measured stage with automatic duration', () => {
     const { Timeline, source, animate, effects } = setup();
     const motion = new StoryMotion();
     expect(motion.bind(1000, 5000, 'projects', effects)).toBe(true);
     expect(Timeline).toHaveBeenCalledWith({ source, axis: 'block' });
-    expect(animate).toHaveBeenCalledWith(effects[0].frames, {
+    expect(animate).toHaveBeenCalledWith(stageMotionFrames(effects[0]), {
       timeline: expect.any(Object),
       rangeStart: '1000px',
-      rangeEnd: '2000px',
+      rangeEnd: '6000px',
       fill: 'both',
       easing: 'linear',
     });
     // Normal scrolling neither rebuilds ranges nor changes effect timing.
     motion.bind(1000, 5000, 'projects', effects);
     expect(animate).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps the first icon, later icons and progress on exactly the same attachment range', () => {
+    const { target, animate } = setup();
+    const effects = [0, 12, 23].map((index) => ({
+      target,
+      ...toolMotionFrames(index, 23, 1),
+    }));
+    effects.push({
+      target,
+      from: 0,
+      to: 1,
+      frames: [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }],
+    });
+    new StoryMotion().bind(12000, 9000, 'tools', effects);
+    expect(animate).toHaveBeenCalledTimes(4);
+    for (const [, options] of animate.mock.calls as unknown as [
+      Keyframe[],
+      { rangeStart: string; rangeEnd: string },
+    ][]) {
+      expect(options).toMatchObject({
+        rangeStart: '12000px',
+        rangeEnd: '21000px',
+      });
+    }
+    const reactFrames = (animate.mock.calls as unknown as [Keyframe[]][])[0][0];
+    expect(
+      reactFrames.map(({ offset, opacity }) => ({ offset, opacity }))
+    ).toEqual([
+      { offset: 0, opacity: 1 },
+      { offset: 1 / 23, opacity: 0 },
+      { offset: 1, opacity: 0 },
+    ]);
+    expect(reactFrames[1].transform).not.toBe(reactFrames[0].transform);
   });
 
   it('rebinds after layout/identity changes and cancels effects when motion is disabled or the route unmounts', () => {
@@ -63,6 +98,25 @@ describe('native story motion', () => {
     motion.clear();
     expect(cancel).toHaveBeenCalledTimes(2);
     expect(motion.native).toBe(false);
+  });
+
+  it('reattaches when another section extends the root scroll area without moving this stage', () => {
+    const { effects, cancel, animate } = setup();
+    const source = document.createElement('div');
+    let extent = 10000;
+    Object.defineProperty(source, 'scrollHeight', { get: () => extent });
+    Object.defineProperty(document, 'scrollingElement', {
+      configurable: true,
+      get: () => source,
+    });
+    const motion = new StoryMotion();
+    motion.bind(1000, 5000, 'projects', effects);
+    extent = 19000;
+    motion.bind(1000, 5000, 'projects', effects);
+    expect(cancel).toHaveBeenCalledOnce();
+    expect(animate).toHaveBeenCalledTimes(2);
+    motion.bind(1000, 5000, 'projects', effects);
+    expect(animate).toHaveBeenCalledTimes(2);
   });
 
   it('retains the fallback when timelines are unavailable or a partial implementation throws', () => {

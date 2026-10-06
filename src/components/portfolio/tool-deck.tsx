@@ -91,6 +91,7 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
   const tokens = useRef<(HTMLSpanElement | null)[]>([]);
   const progressBar = useRef<HTMLSpanElement>(null);
   const motion = useRef(new StoryMotion());
+  const bindAfterCommit = useRef<(() => void) | null>(null);
   const paintedPosition = useRef<string>();
   const position = useRef(initialIndex);
   const selected = useRef(initialIndex);
@@ -110,6 +111,10 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
   const [pinned, setPinned] = useState(false);
   const [height, setHeight] = useState(0);
   const last = Math.max(0, cards.length - 1);
+
+  useLayoutEffect(() => {
+    bindAfterCommit.current?.();
+  }, [height, pinned]);
 
   useLayoutEffect(() => {
     if (!pendingRestore.current) return;
@@ -173,6 +178,17 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
         paintedPosition.current = undefined;
         return;
       }
+      // The scroll spacer must exist before Safari captures the root timeline.
+      // React commits it after measure(), so finish initial binding in layout.
+      if (
+        story.current!.dataset.layout !== 'scroll' ||
+        Math.abs(
+          story.current!.offsetHeight -
+            geometry.current.span -
+            geometry.current.stageHeight
+        ) > 1
+      )
+        return;
       const effects: StoryEffect[] = tokens.current.flatMap((target, index) =>
         target ? [{ target, ...toolMotionFrames(index, last, direction) }] : []
       );
@@ -191,6 +207,7 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
       );
       story.current!.dataset.animation = native ? 'native' : 'fallback';
     };
+    bindAfterCommit.current = bindMotion;
     const update = (value: number) => {
       const next = Math.max(0, Math.min(last, value));
       position.current = next;
@@ -304,8 +321,12 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
         Math.abs(old.span - span) < 1 &&
         Math.abs(old.stageHeight - stageHeight) < 1 &&
         old.top === top
-      )
+      ) {
+        // A locale/live-data effect can recreate animations without changing
+        // geometry. A no-op resize must not leave a cancelled native effect.
+        bindMotion();
         return;
+      }
       geometry.current = { start, span, top, stageHeight };
       stage.current.style.setProperty('--tool-sticky-top', `${top}px`);
       setHeight(span + stageHeight);
@@ -416,6 +437,8 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
       restoring.current = false;
       pendingRestore.current = null;
       storyMotion.clear();
+      if (bindAfterCommit.current === bindMotion)
+        bindAfterCommit.current = null;
       paintedPosition.current = undefined;
     };
   }, [

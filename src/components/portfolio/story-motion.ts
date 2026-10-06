@@ -16,6 +16,20 @@ type RangeOptions = KeyframeAnimationOptions & {
   rangeEnd: string;
 };
 
+export const stageMotionFrames = ({
+  frames,
+  from,
+  to,
+}: Omit<StoryEffect, 'target'>) => {
+  const result = frames.map((frame, index) => ({
+    ...frame,
+    offset: from + (frame.offset ?? index / (frames.length - 1)) * (to - from),
+  }));
+  if (from > 0) result.unshift({ ...result[0], offset: 0 });
+  if (to < 1) result.push({ ...result[result.length - 1], offset: 1 });
+  return result;
+};
+
 export class StoryMotion {
   private animations: Animation[] = [];
   private binding?: string;
@@ -25,7 +39,11 @@ export class StoryMotion {
   }
 
   bind(start: number, span: number, identity: string, effects: StoryEffect[]) {
-    const key = `${start}|${span}|${identity}`;
+    const source = document.scrollingElement;
+    // Layout can extend another story without moving this one. Reattach after
+    // that change so the compositor receives the final scrollable extent.
+    const extent = source ? source.scrollHeight - source.clientHeight : 0;
+    const key = `${start}|${span}|${identity}|${extent}`;
     if (this.binding === key && this.native) return true;
     this.clear();
     const Timeline = (
@@ -33,26 +51,31 @@ export class StoryMotion {
     ).ScrollTimeline;
     if (
       !Timeline ||
-      !document.scrollingElement ||
+      !source ||
       !window.CSS?.supports?.('animation-range', '0px 100px') ||
       effects.some(({ target }) => typeof target.animate !== 'function')
     )
       return false;
     try {
       const timeline = new Timeline({
-        source: document.scrollingElement,
+        source,
         axis: 'block',
       });
-      for (const { target, frames, from, to } of effects) {
+      for (const { target, ...effect } of effects) {
         const options: RangeOptions = {
           timeline,
-          rangeStart: `${start + from * span}px`,
-          rangeEnd: `${start + to * span}px`,
+          // Every visual shares the progress bar's complete stage range.
+          // Express chapter timing in keyframe offsets, rather than giving
+          // Safari's compositor a different attachment range for each icon.
+          rangeStart: `${start}px`,
+          rangeEnd: `${start + span}px`,
           fill: 'both',
           easing: 'linear',
           // Duration stays 'auto', so the attachment range owns the timing.
         };
-        this.animations.push(target.animate(frames, options));
+        this.animations.push(
+          target.animate(stageMotionFrames(effect), options)
+        );
       }
       this.binding = key;
       return this.native;

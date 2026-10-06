@@ -50,6 +50,10 @@ Supporting browsers use native scroll timelines for image crossfades, the tool i
 
 The navigation caches section origins after resize, font, content and section-size changes, with no layout reads during ordinary scrolling. Safari 26.4 introduced [threaded scroll-driven animations](https://webkit.org/blog/17862/webkit-features-for-safari-26-4/) for compositor-friendly properties. Detect the native APIs rather than the browser name; fall back if they are unavailable or effect creation fails.
 
+Give every icon, project image and progress bar the complete measured stage range. Encode individual chapter timing as offsets within that shared range, padding inactive intervals with zero-opacity keyframes. This keeps the first icon's departure synchronized with the progress bar instead of relying on independently attached short ranges in Safari's compositor.
+
+Create tool timelines after React commits the scroll spacer. Reattach after a root scroll-extent change or effect cleanup, even when the stage's own geometry is unchanged.
+
 Motion concentrates on the initial identity entrance, selected project media, and transitions into detail imagery. Use a soft settling curve, brief control feedback, and no automatic cycling or wheel interception.
 
 ## Complete states and verification

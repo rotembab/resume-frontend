@@ -147,6 +147,86 @@ afterEach(() => {
 });
 
 describe('scroll-driven tool icons', () => {
+  it('binds native icons after the spacer commits and restores them after same-layout data changes', () => {
+    const scrollingDescriptor = Object.getOwnPropertyDescriptor(
+      document,
+      'scrollingElement'
+    );
+    const animateDescriptor = Object.getOwnPropertyDescriptor(
+      HTMLElement.prototype,
+      'animate'
+    );
+    const cancel = vi.fn();
+    const bindings: { layout?: string; height: number; end: string }[] = [];
+    Object.defineProperty(document, 'scrollingElement', {
+      configurable: true,
+      get: () => document.documentElement,
+    });
+    Object.defineProperty(HTMLElement.prototype, 'animate', {
+      configurable: true,
+      value: function (
+        this: HTMLElement,
+        _frames: Keyframe[],
+        options: { rangeEnd: string }
+      ) {
+        const owner = this.closest<HTMLElement>('.tool-deck-story')!;
+        bindings.push({
+          layout: owner.dataset.layout,
+          height: owner.offsetHeight,
+          end: options.rangeEnd,
+        });
+        return { cancel };
+      },
+    });
+    vi.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockImplementation(
+      function (this: HTMLElement) {
+        return Number.parseFloat(this.style.height) || stageHeight;
+      }
+    );
+    vi.stubGlobal(
+      'ScrollTimeline',
+      vi.fn(() => ({}))
+    );
+    vi.stubGlobal('CSS', { supports: () => true });
+    try {
+      const view = renderDeck();
+      expect(story()).toHaveAttribute('data-animation', 'native');
+      expect(bindings).toHaveLength(4);
+      expect(
+        bindings.every(
+          ({ layout, height, end }) =>
+            layout === 'scroll' &&
+            height === stageHeight + span() &&
+            end === `${top - stickyTop + span()}px`
+        )
+      ).toBe(true);
+      state.language = 'jp';
+      view.rerender(
+        <TestRouter>
+          <ToolDeck cards={cards.map((card) => ({ ...card }))} />
+        </TestRouter>
+      );
+      expect(cancel).toHaveBeenCalledTimes(4);
+      expect(bindings).toHaveLength(8);
+      expect(story()).toHaveAttribute('data-animation', 'native');
+    } finally {
+      if (scrollingDescriptor)
+        Object.defineProperty(
+          document,
+          'scrollingElement',
+          scrollingDescriptor
+        );
+      else Reflect.deleteProperty(document, 'scrollingElement');
+      if (animateDescriptor)
+        Object.defineProperty(
+          HTMLElement.prototype,
+          'animate',
+          animateDescriptor
+        );
+      else Reflect.deleteProperty(HTMLElement.prototype, 'animate');
+    }
+  });
+
   it('advances every tool and reverses using ordinary page scrolling', () => {
     renderDeck();
     expect(story()).toHaveAttribute('data-layout', 'scroll');

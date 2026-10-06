@@ -381,7 +381,16 @@ async function scenario(browser, engine, name, options, action) {
       );
     }
     await settleVisibleMedia();
-    await page.screenshot({ path: file, animations: 'disabled', fullPage });
+    // Finishing/cancelling animations for a screenshot would replace the
+    // native scroll pose with its endpoint, hiding the icon being verified.
+    const nativeScroll = await page
+      .locator('[data-animation="native"][data-layout="scroll"]')
+      .count();
+    await page.screenshot({
+      path: file,
+      animations: nativeScroll ? 'allow' : 'disabled',
+      fullPage,
+    });
     result.screenshots.push(file);
   };
   const catalogCheck = async (expected = slugs) => {
@@ -2270,6 +2279,7 @@ for (const engine of String(args.get('channels') || 'chrome').split(',')) {
                       new Promise((resolve) => setTimeout(resolve, ms));
                     scrollTo({ top: start, behavior: 'instant' });
                     await delay(300);
+                    const initialTransform = getComputedStyle(target).transform;
                     const originalBounds =
                       Element.prototype.getBoundingClientRect;
                     let layoutReads = 0;
@@ -2288,6 +2298,7 @@ for (const engine of String(args.get('channels') || 'chrome').split(',')) {
                       attributes: true,
                     });
                     const opacity = [];
+                    const transforms = [];
                     for (const fraction of [0.1, 0.2, 0.3, 0.4]) {
                       scrollTo({
                         top: start + (span * fraction) / last,
@@ -2295,9 +2306,36 @@ for (const engine of String(args.get('channels') || 'chrome').split(',')) {
                       });
                       await delay(50);
                       opacity.push(Number(getComputedStyle(target).opacity));
+                      transforms.push(getComputedStyle(target).transform);
                     }
                     observer.disconnect();
                     Element.prototype.getBoundingClientRect = originalBounds;
+                    const chapters = [];
+                    if (selector.includes('tool')) {
+                      const icons = [
+                        ...story.querySelectorAll('.tool-icon-token'),
+                      ];
+                      for (let index = 1; index <= last; index++) {
+                        scrollTo({
+                          top: start + (span * index) / last,
+                          behavior: 'instant',
+                        });
+                        await delay(50);
+                        chapters.push({
+                          index,
+                          selected: Number(stage.dataset.currentIndex),
+                          activeOpacity: Number(
+                            getComputedStyle(icons[index]).opacity
+                          ),
+                          reactOpacity: Number(
+                            getComputedStyle(target).opacity
+                          ),
+                          reactVisible:
+                            getComputedStyle(target).visibility === 'visible' &&
+                            Number(getComputedStyle(target).opacity) > 0.02,
+                        });
+                      }
+                    }
                     // Native motion must continue even when the application's
                     // scroll handlers receive no events; the timeline owns it.
                     const freeze = (event) => event.stopImmediatePropagation();
@@ -2339,6 +2377,10 @@ for (const engine of String(args.get('channels') || 'chrome').split(',')) {
                       styleWrites,
                       layoutReads,
                       opacity,
+                      movesImmediately: transforms.every(
+                        (transform) => transform !== initialTransform
+                      ),
+                      chapters,
                       independent,
                       finalIndex,
                       last,
@@ -2355,6 +2397,13 @@ for (const engine of String(args.get('channels') || 'chrome').split(',')) {
                       (opacity, index) =>
                         Math.abs(opacity - (0.9 - index * 0.1)) < 0.02
                     ) &&
+                    sample.movesImmediately &&
+                    sample.chapters.every(
+                      (chapter) =>
+                        chapter.selected === chapter.index &&
+                        chapter.activeOpacity > 0.98 &&
+                        !chapter.reactVisible
+                    ) &&
                     (nativeMotion
                       ? sample.styleWrites === 0 &&
                         sample.layoutReads === 0 &&
@@ -2365,6 +2414,30 @@ for (const engine of String(args.get('channels') || 'chrome').split(',')) {
                     sample.reverseIndex === 0,
                   sample
                 );
+              }
+              for (const [label, position] of [
+                ['react-first-quarter', 0.25],
+                ['typescript-takes-over', 1],
+                ['tools-midpoint', 12],
+              ]) {
+                await page.evaluate((position) => {
+                  const story = document.querySelector('.tool-deck-story');
+                  const stage = story.firstElementChild;
+                  const start =
+                    story.getBoundingClientRect().top +
+                    scrollY -
+                    parseFloat(getComputedStyle(stage).top);
+                  const last = story.querySelector('select').options.length - 1;
+                  scrollTo({
+                    top:
+                      start +
+                      ((story.offsetHeight - stage.offsetHeight) * position) /
+                        last,
+                    behavior: 'instant',
+                  });
+                }, position);
+                await pause(100);
+                await screenshot(label);
               }
               mark(
                 'phone header avoids backdrop filtering',
