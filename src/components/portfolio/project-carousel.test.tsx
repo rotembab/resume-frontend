@@ -195,8 +195,8 @@ afterEach(() => {
 });
 
 describe('Page-scroll project carousel', () => {
-  it.each([768, 775, 1023])(
-    'advances all eleven projects with page scrolling in a fitting %spx desktop pane',
+  it.each([360, 390, 768, 775, 1023])(
+    'advances all eleven projects with page scrolling in a fitting %spx viewport',
     (width) => {
       vi.stubGlobal('innerWidth', width);
       vi.stubGlobal('innerHeight', 846);
@@ -220,6 +220,7 @@ describe('Page-scroll project carousel', () => {
   );
 
   it('restores separate manual selections and link focus with Back and Forward between homepage anchors', async () => {
+    state.motionAllowed = false;
     vi.stubGlobal('innerWidth', 390);
     const projects = getProjectCatalog('en');
     const chosenAtWork = projects.find(
@@ -274,6 +275,7 @@ describe('Page-scroll project carousel', () => {
   });
 
   it('restores a nonfirst manually selected project and its link focus after detail navigation and Back', async () => {
+    state.motionAllowed = false;
     vi.stubGlobal('innerWidth', 390);
     const projects = getProjectCatalog('en');
     const chosen = projects.find(
@@ -676,7 +678,8 @@ describe('Page-scroll project carousel', () => {
     expect(scrollTo).not.toHaveBeenCalled();
   });
 
-  it('stays manual below 768px and preserves manual selection through language and page scroll changes', () => {
+  it('preserves manual selection through language and page scroll changes with reduced motion', () => {
+    state.motionAllowed = false;
     vi.stubGlobal('innerWidth', 767);
     const view = renderCarousel();
     flushFrames();
@@ -816,10 +819,9 @@ describe('Page-scroll project carousel', () => {
     }
   );
 
-  it.each(['narrow', 'short', 'effects-off'] as const)(
+  it.each(['short', 'effects-off'] as const)(
     'uses a flat manually selected stage for %s screens or preferences',
     (reason) => {
-      if (reason === 'narrow') vi.stubGlobal('innerWidth', 390);
       if (reason === 'short') {
         stageHeight = 820;
         slideHeight = 746;
@@ -891,6 +893,7 @@ describe('Page-scroll project carousel', () => {
     );
     scrollTo.mockClear();
     vi.stubGlobal('innerWidth', 390);
+    vi.stubGlobal('innerHeight', 500);
     fireEvent.resize(window);
     flushFrames();
     expect(current()).toHaveAttribute('data-layout', 'manual');

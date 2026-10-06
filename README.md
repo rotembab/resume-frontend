@@ -69,15 +69,17 @@ short headlines, large uncropped imagery and factual technical highlights.
 Normal page scrolling brings the media forward and reveals each story in one
 shared stage. A compact native project picker follows the same sequence, with
 crossfades and red progress feedback; taller screens also show chapter buttons.
-At widths of at least 768px it pins only when the complete stage fits below the
-header, including the 775×846 in-app pane and common desktop sizes. Headings and
+It pins on phones, tablets and desktops when the complete stage fits below the
+header. Mobile chapters use compact copy and viewport-sized imagery. Headings and
 actions remain readable while media crossfades. A direct “View all
 projects” link skips to the ordinary catalog. Live updates preserve the selected
 project by its stable slug when the repository order changes.
 
-Mobile, short viewports, reduced motion, effects-off and save-data use manual
+Short viewports, reduced motion, effects-off and save-data use manual
 selection without a long scroll spacer. There is no automatic cycling or wheel
-interception. The site uses HTML/CSS and Motion. Unused WebGL scenes, earlier
+interception. Stable small-viewport geometry prevents Safari browser-bar changes
+from restarting touch scrolling. Tool icons move continuously across chapter
+boundaries using GPU transforms. The site uses HTML/CSS and Motion. Unused WebGL scenes, earlier
 homepage components, legacy styles, scene assets and their dependencies have been
 removed.
 

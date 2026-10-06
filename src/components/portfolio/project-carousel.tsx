@@ -18,6 +18,7 @@ import { useEffects } from './effects-context';
 import { usePortfolio } from './use-portfolio';
 import { ProjectMedia } from './project-media';
 import { CatalogProjectMedia } from './project-catalog';
+import { storyViewportHeight } from './story-viewport';
 
 type Layout = 'scroll' | 'manual';
 type Geometry = {
@@ -28,7 +29,6 @@ type Geometry = {
 const clamp = (value: number, maximum = 1) =>
   Math.max(0, Math.min(maximum, value));
 const historySelections = new Map<string, string>();
-const minimumStoryWidth = 768;
 
 export const ProjectCarousel = ({
   projects,
@@ -75,11 +75,7 @@ export const ProjectCarousel = ({
   const previousOrder = useRef(projectOrder);
   const last = Math.max(0, projects.length - 1);
   const [layout, setLayout] = useState<Layout>(() =>
-    motionAllowed &&
-    window.innerWidth >= minimumStoryWidth &&
-    projects.length > 1
-      ? 'scroll'
-      : 'manual'
+    motionAllowed && projects.length > 1 ? 'scroll' : 'manual'
   );
   const layoutRef = useRef(layout);
   const [storyHeight, setStoryHeight] = useState(
@@ -149,6 +145,8 @@ export const ProjectCarousel = ({
         return;
       }
       if (!story.current || !region.current || !viewport.current) return;
+      const viewportHeight = storyViewportHeight();
+      region.current.setAttribute('data-compact', String(viewportHeight < 760));
       const old = geometry.current;
       const wasWithin =
         old &&
@@ -204,20 +202,15 @@ export const ProjectCarousel = ({
         region.current.scrollHeight,
         region.current.getBoundingClientRect().height
       );
-      const fits = stageHeight <= window.innerHeight - stickyTop - 16;
+      const fits = stageHeight <= viewportHeight - stickyTop - 16;
       const nextLayout: Layout =
-        motionAllowed &&
-        window.innerWidth >= minimumStoryWidth &&
-        fits &&
-        projects.length > 1
-          ? 'scroll'
-          : 'manual';
+        motionAllowed && fits && projects.length > 1 ? 'scroll' : 'manual';
       const previousLayout = layoutRef.current;
       layoutRef.current = nextLayout;
       setLayout(nextLayout);
       const height = Math.ceil(
         Math.max(1, projects.length) *
-          Math.max(window.innerHeight, stageHeight + stickyTop + 24)
+          Math.max(viewportHeight, stageHeight + stickyTop + 24)
       );
       setStoryHeight(height);
       const start =
@@ -227,6 +220,18 @@ export const ProjectCarousel = ({
         span: Math.max(1, height - stageHeight),
         stickyTop,
       };
+      // Collapsing Safari browser bars do not change the small-viewport geometry.
+      // Leave native touch momentum alone when no layout has actually changed.
+      if (
+        preservePosition &&
+        old &&
+        previousLayout === nextLayout &&
+        Math.abs(old.start - start) < 1 &&
+        Math.abs(old.span - geometry.current.span) < 1 &&
+        old.stickyTop === stickyTop &&
+        !pendingHistorySelection.current
+      )
+        return;
       const cachedIndex = pendingHistorySelection.current
         ? projects.findIndex(
             (project) => project.slug === pendingHistorySelection.current

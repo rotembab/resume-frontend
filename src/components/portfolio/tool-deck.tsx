@@ -1,16 +1,10 @@
-import {
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-  type CSSProperties,
-} from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useNavigationType } from 'react-router';
 import { getSkillIcon } from '../pages/tools/skill-icons';
 import { useEffects } from './effects-context';
 import { usePortfolio } from './use-portfolio';
 import { getToolDeckCopy } from '../../data/tool-deck-copy';
+import { storyViewportHeight } from './story-viewport';
 
 export interface ToolCard {
   id: string;
@@ -24,6 +18,16 @@ export interface ToolCard {
 
 const selections = new Map<string, string>();
 const activeEntries = new Set<string>();
+const paintIcons = (tokens: (HTMLSpanElement | null)[], position: number) => {
+  tokens.forEach((token, index) => {
+    if (!token) return;
+    const offset = index - position;
+    const visible = offset > -1 && offset <= 3;
+    if (visible) token.style.setProperty('--tool-offset', String(offset));
+    if (token.dataset.visible !== String(visible))
+      token.setAttribute('data-visible', String(visible));
+  });
+};
 const ToolIcon = ({ card }: { card: ToolCard }) => {
   const [failed, setFailed] = useState(false);
   const source = getSkillIcon(card.iconKey);
@@ -68,12 +72,13 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
   );
   const story = useRef<HTMLDivElement>(null);
   const stage = useRef<HTMLDivElement>(null);
+  const tokens = useRef<(HTMLSpanElement | null)[]>([]);
   const position = useRef(initialIndex);
   const selected = useRef(initialIndex);
   const selectedId = useRef(cards[initialIndex]?.id);
   const layoutRef = useRef(false);
   const initialized = useRef(false);
-  const geometry = useRef({ start: 0, span: 1, top: 88 });
+  const geometry = useRef({ start: 0, span: 1, top: 88, stageHeight: 0 });
   const frame = useRef<number>();
   const restoreFrame = useRef<number>();
   const pendingRestore = useRef<(() => void) | null>(null);
@@ -144,6 +149,7 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
     const update = (value: number) => {
       const next = Math.max(0, Math.min(last, value));
       position.current = next;
+      paintIcons(tokens.current, next);
       selected.current = Math.round(next);
       selectedId.current = cards[selected.current].id;
       selections.set(historyKey, selectedId.current);
@@ -158,10 +164,6 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
       story.current?.style.setProperty(
         '--tool-progress',
         String(last ? next / last : 0)
-      );
-      story.current?.style.setProperty(
-        '--tool-phase',
-        String(next - selected.current)
       );
     };
     // Retain repository-independent tool identity across localized data changes.
@@ -237,13 +239,24 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
         stage.current.getBoundingClientRect().height,
         stage.current.scrollHeight
       );
+      const viewportHeight = storyViewportHeight();
       const nextPinned =
         motionAllowed &&
         cards.length > 1 &&
-        stageHeight <= innerHeight - top - 20;
-      const span = Math.max(1, last * Math.max(300, innerHeight * 0.45));
+        stageHeight <= viewportHeight - top - 20;
+      const span = Math.max(1, last * Math.max(300, viewportHeight * 0.45));
       const start = story.current.getBoundingClientRect().top + scrollY - top;
-      geometry.current = { start, span, top };
+      if (
+        preserve &&
+        initialized.current &&
+        wasPinned === nextPinned &&
+        Math.abs(old.start - start) < 1 &&
+        Math.abs(old.span - span) < 1 &&
+        Math.abs(old.stageHeight - stageHeight) < 1 &&
+        old.top === top
+      )
+        return;
+      geometry.current = { start, span, top, stageHeight };
       stage.current.style.setProperty('--tool-sticky-top', `${top}px`);
       setHeight(span + stageHeight);
       layoutRef.current = nextPinned;
@@ -370,6 +383,7 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
         behavior: 'instant',
       });
     position.current = next;
+    paintIcons(tokens.current, next);
     selected.current = next;
     selectedId.current = cards[next]?.id;
     ownsPosition.current = true;
@@ -380,7 +394,6 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
       '--tool-progress',
       String(last ? next / last : 0)
     );
-    story.current?.style.setProperty('--tool-phase', '0');
   };
 
   if (!cards.length) return null;
@@ -438,7 +451,9 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
                     ? 'stacked'
                     : 'hidden'
               }
-              style={{ '--tool-depth': index - active } as CSSProperties}
+              ref={(token) => {
+                tokens.current[index] = token;
+              }}
             >
               <ToolIcon card={card} />
             </span>

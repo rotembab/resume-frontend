@@ -200,6 +200,25 @@ describe('scroll-driven tool icons', () => {
     scroll(top - stickyTop + span());
     expect(picker()).toHaveValue('python');
   });
+  it('does not restart native scrolling when Safari browser bars change height', () => {
+    document.documentElement.style.setProperty(
+      '--story-viewport-height',
+      '664px'
+    );
+    vi.stubGlobal('innerHeight', 664);
+    renderDeck();
+    flush();
+    fireEvent.change(picker(), { target: { value: 'typescript' } });
+    const chosenY = pageY;
+    scrollTo.mockClear();
+    vi.stubGlobal('innerHeight', 844);
+    fireEvent.resize(window);
+    flush();
+    expect(picker()).toHaveValue('typescript');
+    expect(pageY).toBe(chosenY);
+    expect(scrollTo).not.toHaveBeenCalled();
+    document.documentElement.style.removeProperty('--story-viewport-height');
+  });
   it('retains selected identity and keyboard focus through RTL, resizing and effects changes', () => {
     const view = renderDeck();
     fireEvent.change(picker(), { target: { value: 'typescript' } });

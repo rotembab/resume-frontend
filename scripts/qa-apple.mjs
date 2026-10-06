@@ -433,6 +433,18 @@ async function scenario(browser, engine, name, options, action) {
       return {
         width: innerWidth,
         scrollWidth: document.documentElement.scrollWidth,
+        overflowing: [...document.querySelectorAll('main *, .site-header *')]
+          .filter(
+            (element) =>
+              visible(element) &&
+              element.getBoundingClientRect().right > innerWidth + 1
+          )
+          .slice(0, 10)
+          .map((element) => ({
+            tag: element.tagName,
+            class: element.className,
+            right: element.getBoundingClientRect().right,
+          })),
         headings: document.querySelectorAll('main h1').length,
         nestedLinks: document.querySelectorAll('a a').length,
         language: document.documentElement.lang,
@@ -736,16 +748,17 @@ async function stage(qa) {
     viewportWidth: innerWidth,
   }));
   mark(
-    'desktop pins only when the entire stage fits',
+    'scroll story pins only when the entire stage fits',
     layout !== 'scroll' ||
-      (stageGeometry.viewportWidth >= 768 &&
-        stageGeometry.height <=
-          stageGeometry.viewportHeight - stageGeometry.top - 16),
+      stageGeometry.height <=
+        stageGeometry.viewportHeight - stageGeometry.top - 16,
     stageGeometry
   );
   const requiredPinnedViewport =
     [
       [775, 846],
+      [360, 800],
+      [390, 844],
       [1280, 720],
       [1024, 768],
       [1440, 900],
@@ -2025,6 +2038,7 @@ for (const engine of String(args.get('channels') || 'chrome').split(',')) {
           );
       for (const viewport of [
         viewports[0],
+        viewports[1],
         { width: 775, height: 846 },
         { width: 1280, height: 720 },
         { width: 1024, height: 768 },
@@ -2041,6 +2055,8 @@ for (const engine of String(args.get('channels') || 'chrome').split(',')) {
         );
       for (const locale of ['he', 'jp'])
         for (const viewport of [
+          viewports[0],
+          viewports[1],
           { width: 775, height: 846 },
           { width: 1280, height: 720 },
           { width: 1024, height: 768 },
@@ -2054,7 +2070,7 @@ for (const engine of String(args.get('channels') || 'chrome').split(',')) {
             stage
           );
       for (const [name, viewport] of [
-        ['manual-mobile', viewports[0]],
+        ['native-mobile', viewports[0]],
         ['native-wide', { width: 1280, height: 720 }],
       ])
         await scenario(
@@ -2128,7 +2144,7 @@ for (const engine of String(args.get('channels') || 'chrome').split(',')) {
           await qa.page.setViewportSize({ width: 390, height: 844 });
           await pause(200);
           qa.mark(
-            'tool survives upstream project spacer collapsing on mobile',
+            'tool survives viewport width changes on mobile',
             (await picker.inputValue()) === 'node-js'
           );
           await qa.page.setViewportSize({ width: 775, height: 846 });
@@ -2218,6 +2234,98 @@ for (const engine of String(args.get('channels') || 'chrome').split(',')) {
       });
       await scenario(browser, engine, 'catalog-filters', {}, catalogs);
       await scenario(browser, engine, 'navigation', {}, navigation);
+      await scenario(
+        browser,
+        engine,
+        'mobile-toolbar',
+        { viewport: { width: 390, height: 664 } },
+        async (qa) => {
+          const { page, mark } = qa;
+          await qa.visit('/');
+          await page.evaluate(() =>
+            document.documentElement.style.setProperty(
+              '--story-viewport-height',
+              '664px'
+            )
+          );
+          const project = page.locator('.carousel-project-picker select');
+          await project.selectOption('blaster');
+          await pause(200);
+          mark(
+            'projects scroll on a compact Safari viewport',
+            (await page
+              .locator('.project-carousel')
+              .getAttribute('data-layout')) === 'scroll'
+          );
+          const stableProjectY = await page.evaluate(() => scrollY);
+          await page.setViewportSize({ width: 390, height: 844 });
+          await pause(200);
+          mark(
+            'Safari toolbar expansion retains the project and scroll position',
+            (await project.inputValue()) === 'blaster' &&
+              Math.abs((await page.evaluate(() => scrollY)) - stableProjectY) <
+                2
+          );
+          const tool = page.locator('.tool-deck-stage select');
+          await tool.selectOption('node-js');
+          await pause(200);
+          const stableToolY = await page.evaluate(() => scrollY);
+          await page.evaluate(() => {
+            window.__qaResizeScrolls = 0;
+            const original = window.scrollTo.bind(window);
+            window.scrollTo = (...args) => {
+              window.__qaResizeScrolls++;
+              original(...args);
+            };
+          });
+          await page.setViewportSize({ width: 390, height: 744 });
+          await pause(200);
+          mark(
+            'Safari browser-bar resizing leaves native Tools scrolling alone',
+            (await tool.inputValue()) === 'node-js' &&
+              Math.abs((await page.evaluate(() => scrollY)) - stableToolY) <
+                2 &&
+              (await page.evaluate(() => window.__qaResizeScrolls)) === 0
+          );
+          const sample = async (chapter) => {
+            await page.evaluate((position) => {
+              const story = document.querySelector('.tool-deck-story');
+              const stage = story.querySelector('.tool-deck-stage');
+              const start =
+                story.getBoundingClientRect().top +
+                scrollY -
+                parseFloat(getComputedStyle(stage).top);
+              const span =
+                parseFloat(story.style.height) -
+                stage.getBoundingClientRect().height;
+              window.scrollTo({
+                top: start + (position * span) / 23,
+                behavior: 'instant',
+              });
+            }, chapter);
+            await pause(100);
+            return page
+              .locator('.tool-icon-token')
+              .first()
+              .evaluate((element) => ({
+                x: new DOMMatrixReadOnly(getComputedStyle(element).transform)
+                  .m41,
+                opacity: parseFloat(getComputedStyle(element).opacity),
+              }));
+          };
+          const before = await sample(0.49);
+          const after = await sample(0.51);
+          mark(
+            'tool icons move continuously across the chapter boundary',
+            Math.abs(before.x - after.x) < 3 &&
+              before.opacity > 0 &&
+              after.opacity > 0 &&
+              Math.abs(before.opacity - after.opacity) < 0.05,
+            { before, after }
+          );
+          await qa.screenshot('smooth-mobile-tools');
+        }
+      );
       await scenario(browser, engine, 'contacts', {}, contacts);
       await scenario(
         browser,

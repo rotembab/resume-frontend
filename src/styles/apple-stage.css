@@ -17,6 +17,7 @@
 .project-carousel .carousel-toolbar {
   position: relative;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 12px;
   margin-block-end: 16px;
 }
@@ -567,6 +568,9 @@ html[lang='ja'] .project-carousel .carousel-title {
   .project-carousel .carousel-instruction {
     flex-basis: 100%;
   }
+  .project-carousel .carousel-project-picker {
+    width: 100%;
+  }
 
   .project-carousel .carousel-bypass {
     margin-inline-start: 0;
@@ -577,20 +581,24 @@ html[lang='ja'] .project-carousel .carousel-title {
   }
 
   .project-carousel .carousel-slide {
-    gap: 24px;
+    gap: 12px;
   }
 
   .project-carousel .carousel-title {
-    font-size: clamp(28px, 7.2vw, 36px);
+    font-size: clamp(26px, 6.7vw, 32px);
   }
 
   .project-carousel .carousel-summary {
-    font-size: 16px;
-    line-height: 1.5;
+    font-size: 14px;
+    line-height: 1.4;
   }
 
   .project-carousel .carousel-media {
-    height: clamp(230px, 32vh, 360px);
+    height: clamp(
+      120px,
+      calc(var(--story-viewport-height, 100svh) - 620px),
+      260px
+    );
     border-radius: 12px;
   }
 
@@ -600,12 +608,21 @@ html[lang='ja'] .project-carousel .carousel-title {
   }
 
   .project-carousel .carousel-story-features > p {
-    font-size: 15px;
-    line-height: 1.5;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .project-carousel .carousel-story-features > p:nth-child(n + 2) {
+    display: none;
   }
 
   .project-carousel .carousel-story-footer {
-    gap: 24px;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 767px) {
+  .project-carousel[data-compact='true'] .carousel-story-features {
+    display: none;
   }
 }
 

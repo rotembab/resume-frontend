@@ -1,4 +1,10 @@
+@property --story-viewport-height {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
 :root {
+  --story-viewport-height: 100svh;
   color-scheme: dark;
   --color-canvas: #000000;
   --color-surface: #161617;

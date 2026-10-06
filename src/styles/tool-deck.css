@@ -104,31 +104,32 @@ html[dir='rtl'] .tool-deck-field::after {
 .tool-icon-token {
   grid-area: 1 / 1;
   transform-origin: center;
-}
-.tool-icon-token[data-state='active'] {
-  z-index: 4;
-  transform: translateX(calc(var(--tool-phase, 0) * -48px))
-    rotate(calc(var(--tool-phase, 0) * -10deg));
-}
-.tool-icon-token[data-state='stacked'] {
-  z-index: calc(4 - var(--tool-depth));
-  transform: translate(
-      calc(var(--tool-depth) * 14px),
-      calc(var(--tool-depth) * 12px)
+  --tool-stack-depth: clamp(0, var(--tool-offset, 0), 3);
+  --tool-exit: clamp(0, calc(0 - var(--tool-offset, 0)), 1);
+  z-index: calc(6 - var(--tool-stack-depth));
+  transform: translate3d(
+      calc(var(--tool-stack-depth) * 14px - var(--tool-exit) * 90px),
+      calc(var(--tool-stack-depth) * 12px + var(--tool-exit) * 6px),
+      0
     )
-    rotate(calc(var(--tool-depth) * 6deg))
-    scale(calc(1 - var(--tool-depth) * 0.08));
-  opacity: calc(0.65 - var(--tool-depth) * 0.12);
+    rotate(calc(var(--tool-stack-depth) * 6deg - var(--tool-exit) * 18deg))
+    scale(calc(1 - var(--tool-stack-depth) * 0.08));
+  opacity: calc((1 - var(--tool-stack-depth) * 0.2) * (1 - var(--tool-exit)));
+  backface-visibility: hidden;
 }
-html[dir='rtl'] .tool-icon-token[data-state='stacked'] {
-  transform: translate(
-      calc(var(--tool-depth) * -14px),
-      calc(var(--tool-depth) * 12px)
+.tool-icon-token[data-visible='true'] {
+  will-change: transform, opacity;
+}
+html[dir='rtl'] .tool-icon-token {
+  transform: translate3d(
+      calc(var(--tool-stack-depth) * -14px + var(--tool-exit) * 90px),
+      calc(var(--tool-stack-depth) * 12px + var(--tool-exit) * 6px),
+      0
     )
-    rotate(calc(var(--tool-depth) * -6deg))
-    scale(calc(1 - var(--tool-depth) * 0.08));
+    rotate(calc(var(--tool-stack-depth) * -6deg + var(--tool-exit) * 18deg))
+    scale(calc(1 - var(--tool-stack-depth) * 0.08));
 }
-.tool-icon-token[data-state='hidden'] {
+.tool-icon-token:not([data-visible='true']) {
   visibility: hidden;
 }
 .tool-icon {
