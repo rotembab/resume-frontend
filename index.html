@@ -1,10 +1,70 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns#">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rotem Babani</title>
+    <link
+      rel="preload"
+      href="/node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <meta name="description" content="__INTRO_DESCRIPTION__" />
+    <link rel="canonical" href="https://rotembabani.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Rotem Babani" />
+    <meta property="og:title" content="__SOCIAL_TITLE__" />
+    <meta property="og:description" content="__INTRO_DESCRIPTION__" />
+    <meta property="og:url" content="https://rotembabani.com/" />
+    <meta property="og:locale" content="en_US" />
+    <meta
+      property="og:image"
+      content="https://rotembabani.com/__SOCIAL_IMAGE__"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://rotembabani.com/__SOCIAL_IMAGE__"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="__SOCIAL_TITLE__. Homepage introduction with his portrait."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="__SOCIAL_TITLE__" />
+    <meta name="twitter:description" content="__INTRO_DESCRIPTION__" />
+    <meta
+      name="twitter:image"
+      content="https://rotembabani.com/__SOCIAL_IMAGE__"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="__SOCIAL_TITLE__. Homepage introduction with his portrait."
+    />
+    <meta name="theme-color" content="#000000" />
+    <title>Rotem Babani — Full Stack Developer</title>
+    <script>
+      if (location.pathname === '/') {
+        const showcasePreload = document.createElement('link');
+        showcasePreload.rel = 'preload';
+        showcasePreload.as = 'image';
+        showcasePreload.type = 'image/webp';
+        showcasePreload.href = '/images/profile-portrait.webp';
+        showcasePreload.fetchPriority = 'high';
+        document.head.append(showcasePreload);
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

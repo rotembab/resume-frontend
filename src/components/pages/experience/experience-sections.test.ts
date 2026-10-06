@@ -1,6 +1,10 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { Experience } from '../../../data/resume.schema';
-import { isJobEntry, splitExperience, sumJobYears } from './experience-sections';
+import {
+  isJobEntry,
+  splitExperience,
+  sumJobYears,
+} from './experience-sections';
 
 const entry = (id: string, type?: Experience['type']): Experience => ({
   id,

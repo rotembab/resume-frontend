@@ -173,7 +173,9 @@ ${resumeText}`;
         const flag = priorFlags.get(entry.id);
         if (flag !== undefined) entry.excludeFromExperienceYears = flag;
       }
-      console.log('Kept excludeFromExperienceYears flags from existing resume.json');
+      console.log(
+        'Kept excludeFromExperienceYears flags from existing resume.json'
+      );
     }
   }
 

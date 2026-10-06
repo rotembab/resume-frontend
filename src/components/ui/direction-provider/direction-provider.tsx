@@ -27,7 +27,9 @@ export const DirectionProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     document.documentElement.dir = direction;
-    document.documentElement.lang = i18n.language;
+    document.documentElement.lang =
+      i18n.language === 'jp' ? 'ja' : i18n.language;
+    if (i18n.language === 'jp') void import('../../../lang/japanese-font.css');
   }, [direction, i18n.language]);
 
   const theme = useMemo(() => createAppTheme(direction), [direction]);

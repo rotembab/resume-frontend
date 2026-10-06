@@ -1,7 +1,7 @@
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
-import { CustomColor, customColors } from './custom-colors';
+import type { CustomColor } from './custom-colors';
 import { CSSProperties } from 'react';
-import { customSizes, customSizesMediaQuery } from './custom-sizes-query';
+import { customSizes } from './custom-sizes-query';
 
 type CustomPaletteColor = {
   main: CSSProperties['color'];
@@ -40,23 +40,48 @@ declare module '@mui/material/TextField' {
   }
 }
 
+const colors = {
+  canvas: '#000000',
+  surface: '#161617',
+  text: '#f5f5f7',
+  muted: '#a1a1a6',
+  accent: '#b91c1c',
+  border: '#343436',
+};
+const bodyFont =
+  "-apple-system, BlinkMacSystemFont, 'Inter', 'Noto Sans Hebrew', 'Noto Sans JP', sans-serif";
+const displayFont = bodyFont;
+
 export const createAppTheme = (direction: 'ltr' | 'rtl' = 'ltr') =>
   responsiveFontSizes(
     createTheme({
       direction,
       palette: {
         mode: 'dark',
-        ...customColors,
-
+        background: {
+          default: colors.canvas,
+          paper: colors.surface,
+        },
+        hoverColor: { main: colors.surface, contrastText: colors.text },
+        headingDarkColor: { main: colors.text, contrastText: colors.canvas },
+        headingLightColor: { main: colors.text, contrastText: colors.canvas },
+        descriptionColor: { main: colors.muted, contrastText: colors.canvas },
+        paragraphColor: { main: colors.muted, contrastText: colors.canvas },
+        inputColor: { main: colors.surface, contrastText: colors.text },
+        tabLinkCard1: { main: colors.accent, contrastText: '#FFFFFF' },
+        tabLinkCard2: { main: colors.text, contrastText: colors.canvas },
         primary: {
-          main: '#ff0000', //red primary color
+          main: colors.accent,
+          contrastText: '#FFFFFF',
         },
         secondary: {
-          main: '#ffffff',
+          main: colors.text,
+          contrastText: colors.canvas,
         },
-
-        background: {
-          default: '#161312', //background color black
+        divider: colors.border,
+        text: {
+          primary: colors.text,
+          secondary: colors.muted,
         },
       },
       breakpoints: {
@@ -65,80 +90,57 @@ export const createAppTheme = (direction: 'ltr' | 'rtl' = 'ltr') =>
         },
       },
       typography: {
-        fontFamily: "'Inter', sans-serif",
-
-        caption: {
-          fontWeight: 400,
-          fontSize: '20px',
-
-          [customSizesMediaQuery.md]: {
-            textAlign: 'center',
-            margin: 'auto',
-          },
-          [customSizesMediaQuery.sm]: {
-            textAlign: 'center',
-            margin: 'auto',
-          },
-          [customSizesMediaQuery.xs]: {
-            textAlign: 'center',
-            margin: 'auto',
-          },
-        },
+        fontFamily: bodyFont,
+        body1: { fontSize: '1rem', lineHeight: 1.6 },
+        body2: { fontSize: '0.875rem', lineHeight: 1.6 },
+        caption: { fontSize: '0.8125rem', lineHeight: 1.5 },
         h1: {
-          fontWeight: 700,
-          fontFamily: "'Poppins', sans-serif",
-          textTransform: 'uppercase',
-          fontSize: '6.5rem',
-          '@media (max-width:1200px)': {
-            textAlign: 'center',
-            margin: 'auto',
-          },
-          '@media (max-width:900px)': {
-            fontSize: '3rem',
-            textAlign: 'center',
-          },
-          '@media (max-width:600px)': {
-            fontSize: '2rem',
-            textAlign: 'center',
-          },
+          fontWeight: 600,
+          fontFamily: displayFont,
+          fontSize: '4.75rem',
+          lineHeight: 1.05,
+          letterSpacing: '-0.015em',
         },
         h2: {
-          fontWeight: 600,
-          fontFamily: "'Poppins', sans-serif",
-          fontSize: '70px',
-          '@media (max-width:1200px)': {
-            textAlign: 'center',
-            margin: 'auto',
-          },
-          '@media (max-width:900px)': {
-            fontSize: '36px',
-            textAlign: 'center',
-          },
-          '@media (max-width:600px)': {
-            fontSize: '24px',
-            textAlign: 'center',
-          },
+          fontWeight: 500,
+          fontFamily: displayFont,
+          fontSize: '3rem',
+          lineHeight: 1.18,
+          letterSpacing: '-0.01em',
         },
         h3: {
-          fontWeight: 700,
-          fontFamily: "'Poppins', sans-serif",
-          fontSize: '36px',
+          fontWeight: 500,
+          fontFamily: displayFont,
+          fontSize: '1.875rem',
+          lineHeight: 1.3,
+          letterSpacing: '-0.003em',
+        },
+        h4: {
+          fontWeight: 500,
+          fontFamily: displayFont,
+          fontSize: '1.125rem',
+          lineHeight: 1.4,
         },
         button: {
-          fontWeight: 700,
-          fontFamily: "'Inter', sans-serif",
+          fontWeight: 500,
+          fontFamily: bodyFont,
           textTransform: 'none',
         },
       },
+      shape: { borderRadius: 12 },
       components: {
+        MuiButton: {
+          styleOverrides: { root: { minHeight: 44, borderRadius: '999px' } },
+        },
         MuiTextField: {
           styleOverrides: {
             root: {
-              backgroundColor: customColors.inputColor.main,
-              borderRadius: '10px',
+              backgroundColor: colors.surface,
+              borderRadius: '12px',
               width: '100%',
               '& .MuiOutlinedInput-notchedOutline': {
-                borderRadius: '10px',
+                borderRadius: '12px',
+                borderColor: colors.muted,
               },
             },
           },

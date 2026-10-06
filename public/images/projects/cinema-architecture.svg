@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="960" viewBox="0 0 1440 960" role="img" aria-labelledby="title description">
+  <title id="title">Cinema application prototype architecture</title>
+  <desc id="description">A React client fetches movies and news from a separate Express REST API with MongoDB models for movies, news, theaters and screenings. The project is a local prototype; ticket booking is incomplete.</desc>
+  <defs>
+    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M 80 0 L 0 0 0 80" fill="none" stroke="#eee8dc" stroke-opacity=".055"/></pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="#c5bfb0" stroke-width="1.5"/></marker>
+  </defs>
+  <rect width="1440" height="960" fill="#171b18"/>
+  <rect width="1440" height="960" fill="url(#grid)"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="88" y="102" fill="#d6d0c3" font-size="18" letter-spacing="4">ADDITIONAL WORK</text>
+    <text x="88" y="170" fill="#f2ece0" font-size="48" font-weight="700">Cinema</text>
+    <rect x="1174" y="72" width="176" height="42" rx="21" fill="#29342b" stroke="#738477"/>
+    <text x="1262" y="99" fill="#bbcabe" font-size="16" text-anchor="middle" letter-spacing="2">PROTOTYPE</text>
+
+    <path d="M 416 447 H 556" fill="none" stroke="#c5bfb0" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <text x="486" y="421" text-anchor="middle" fill="#c5bfb0" font-size="18">HTTP / JSON</text>
+    <path d="M 884 447 H 1024" fill="none" stroke="#c5bfb0" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <text x="954" y="421" text-anchor="middle" fill="#c5bfb0" font-size="18">Mongoose</text>
+
+    <rect x="88" y="300" width="328" height="330" rx="20" fill="#222923" stroke="#626f62"/>
+    <text x="116" y="346" fill="#a9bda5" font-size="16" letter-spacing="2">BROWSER</text>
+    <text x="116" y="407" fill="#f2ece0" font-size="32" font-weight="700">React client</text>
+    <text x="116" y="470" fill="#c8d2c3" font-size="21">Movies + news</text>
+    <text x="116" y="510" fill="#c8d2c3" font-size="21">Carousel + categories</text>
+    <text x="116" y="582" fill="#96a391" font-size="18">Ticket-search scaffold</text>
+
+    <rect x="556" y="300" width="328" height="330" rx="20" fill="#30332a" stroke="#a3a48a"/>
+    <text x="584" y="346" fill="#cbcbaf" font-size="16" letter-spacing="2">LOCAL SERVER</text>
+    <text x="584" y="407" fill="#f2ece0" font-size="32" font-weight="700">Express API</text>
+    <text x="584" y="470" fill="#d6d2ba" font-size="21">REST routes</text>
+    <text x="584" y="510" fill="#d6d2ba" font-size="21">Create · read · update</text>
+    <text x="584" y="582" fill="#aaa992" font-size="18">Separate backend repository</text>
+
+    <rect x="1024" y="300" width="328" height="330" rx="20" fill="#362b24" stroke="#9e755a"/>
+    <text x="1052" y="346" fill="#cfb197" font-size="16" letter-spacing="2">DATA MODELS</text>
+    <text x="1052" y="407" fill="#f2ece0" font-size="32" font-weight="700">MongoDB</text>
+    <text x="1052" y="470" fill="#d4bfa9" font-size="21">Movies · news</text>
+    <text x="1052" y="510" fill="#d4bfa9" font-size="21">Theaters · screenings</text>
+    <text x="1052" y="582" fill="#ad9580" font-size="18">Schema-backed records</text>
+
+    <path d="M 88 755 H 1350" stroke="#454e42"/>
+    <text x="88" y="814" fill="#a6b09f" font-size="20">Local prototype · no verified hosted booking flow</text>
+    <text x="88" y="857" fill="#758170" font-size="18">rotembab/cinema + rotembab/Cinema_REST_API</text>
+  </g>
+</svg>

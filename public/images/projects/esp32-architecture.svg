@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="960" viewBox="0 0 1440 960" role="img" aria-labelledby="title description">
+  <title id="title">ESP32 Claude Remote prototype architecture</title>
+  <desc id="description">An ESP32 serial firmware prototype and a browser test client connect to a Python WebSocket bridge. The bridge runs a Claude Agent SDK session, streams output and handles permission modes. The finished handheld remains roadmap work.</desc>
+  <defs>
+    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M 80 0 L 0 0 0 80" fill="none" stroke="#eee8dc" stroke-opacity=".055"/></pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="#c5bfb0" stroke-width="1.5"/></marker>
+  </defs>
+  <rect width="1440" height="960" fill="#171b18"/>
+  <rect width="1440" height="960" fill="url(#grid)"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="88" y="102" fill="#d6d0c3" font-size="18" letter-spacing="4">SYSTEMS / 02</text>
+    <text x="88" y="170" fill="#f2ece0" font-size="48" font-weight="700">ESP32 Claude Remote</text>
+    <rect x="1174" y="72" width="176" height="42" rx="21" fill="#29342b" stroke="#738477"/>
+    <text x="1262" y="99" fill="#bbcabe" font-size="16" text-anchor="middle" letter-spacing="2">PROTOTYPE</text>
+
+    <path d="M 416 392 H 550" fill="none" stroke="#c5bfb0" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <text x="482" y="369" text-anchor="middle" fill="#c5bfb0" font-size="16">Serial prototype</text>
+    <path d="M 886 392 H 1020" fill="none" stroke="#c5bfb0" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <text x="953" y="369" text-anchor="middle" fill="#c5bfb0" font-size="16">Session</text>
+    <path d="M 416 674 H 480 V 465 H 550" fill="none" stroke="#b1bfad" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <text x="462" y="705" fill="#b1bfad" font-size="16">WebSocket</text>
+
+    <rect x="88" y="268" width="328" height="246" rx="20" fill="#222923" stroke="#626f62"/>
+    <rect x="116" y="297" width="60" height="60" rx="12" fill="#384739"/>
+    <path d="M 132 312 H 160 V 340 H 132 Z M 137 303 V 312 M 146 303 V 312 M 155 303 V 312 M 137 340 V 349 M 146 340 V 349 M 155 340 V 349 M 123 317 H 132 M 123 326 H 132 M 123 335 H 132 M 160 317 H 169 M 160 326 H 169 M 160 335 H 169" fill="none" stroke="#bdd0ba" stroke-width="2"/>
+    <text x="116" y="408" fill="#f2ece0" font-size="32" font-weight="700">ESP32</text>
+    <text x="116" y="448" fill="#bfc9ba" font-size="20">Serial firmware</text>
+    <text x="116" y="479" fill="#929d91" font-size="17">Serial firmware smoke test</text>
+
+    <rect x="88" y="570" width="328" height="208" rx="20" fill="#222923" stroke="#626f62"/>
+    <path d="M 118 602 H 176 V 641 H 118 Z M 118 613 H 176" fill="none" stroke="#bdd0ba" stroke-width="2"/>
+    <circle cx="125" cy="607" r="1.5" fill="#bdd0ba"/><circle cx="132" cy="607" r="1.5" fill="#bdd0ba"/>
+    <text x="116" y="687" fill="#f2ece0" font-size="29" font-weight="700">Browser client</text>
+    <text x="116" y="728" fill="#bfc9ba" font-size="20">Test before hardware</text>
+    <text x="116" y="757" fill="#929d91" font-size="17">Streams · controls · modes</text>
+
+    <rect x="550" y="268" width="336" height="354" rx="20" fill="#30332a" stroke="#a3a48a"/>
+    <text x="578" y="310" fill="#cbcbaf" font-size="16" letter-spacing="2">HOST COMPUTER</text>
+    <text x="578" y="381" fill="#f2ece0" font-size="31" font-weight="700">Python bridge</text>
+    <text x="578" y="426" fill="#d6d2ba" font-size="22">WebSocket server</text>
+    <path d="M 578 454 H 858" stroke="#72765f"/>
+    <text x="578" y="493" fill="#c8c8b6" font-size="19">Streams session output</text>
+    <text x="578" y="528" fill="#c8c8b6" font-size="19">Handles permission modes</text>
+    <text x="578" y="563" fill="#c8c8b6" font-size="19">Optional speech-to-text</text>
+
+    <rect x="1020" y="268" width="330" height="246" rx="20" fill="#362b24" stroke="#9e755a"/>
+    <text x="1048" y="310" fill="#cfb197" font-size="16" letter-spacing="2">CODING SESSION</text>
+    <text x="1048" y="381" fill="#f2ece0" font-size="28" font-weight="700">Claude Agent SDK</text>
+    <text x="1048" y="427" fill="#d4bfa9" font-size="20">API-backed execution</text>
+    <text x="1048" y="466" fill="#ad9580" font-size="17">Runs on the host, not ESP32</text>
+
+    <path d="M 88 839 H 1350" stroke="#454e42"/>
+    <text x="88" y="887" fill="#a6b09f" font-size="18">DOCUMENTED: serial prototype + browser testing</text>
+    <text x="1350" y="887" text-anchor="end" fill="#a6b09f" font-size="18">ROADMAP: screen · buttons · mic · enclosure</text>
+  </g>
+</svg>

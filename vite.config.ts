@@ -8,7 +8,6 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (!id.includes('node_modules')) return undefined;
-          if (id.includes('@mui/icons-material')) return 'mui-icons';
           if (id.includes('@mui/material') || id.includes('@mui/system'))
             return 'mui';
           if (id.includes('@emotion')) return 'emotion';

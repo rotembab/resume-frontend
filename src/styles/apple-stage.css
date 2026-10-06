@@ -1,0 +1,620 @@
+.project-carousel-scroll-story {
+  overflow-anchor: none;
+  position: relative;
+  min-width: 0;
+  margin-block-start: 28px;
+}
+
+.project-carousel-scroll-story .project-carousel {
+  min-width: 0;
+}
+
+.project-carousel-scroll-story[data-layout='scroll'] .project-carousel {
+  position: sticky;
+  inset-block-start: calc(var(--header-height) + 24px);
+}
+
+.project-carousel .carousel-toolbar {
+  position: relative;
+  display: grid;
+  gap: 12px;
+  margin-block-end: 16px;
+}
+
+.project-carousel .carousel-guidance {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+
+.project-carousel .carousel-instruction {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.project-carousel .carousel-bypass {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-inline-start: auto;
+  color: var(--color-link);
+  font-size: 14px;
+}
+
+.project-carousel .carousel-position {
+  color: var(--color-muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.project-carousel .carousel-project-picker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.project-carousel .carousel-project-picker label {
+  flex-shrink: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.project-carousel .carousel-project-picker select {
+  width: 100%;
+  max-width: 100%;
+  appearance: none;
+  min-width: 0;
+  min-height: 44px;
+  height: 44px;
+  padding-block: 8px;
+  padding-inline: 16px 40px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 14px;
+  text-overflow: ellipsis;
+}
+
+.project-carousel .carousel-picker-field {
+  position: relative;
+  display: inline-grid;
+  flex: 0 1 300px;
+  width: 300px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.project-carousel .carousel-picker-field::after {
+  content: '';
+  position: absolute;
+  inset-inline-end: 17px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-inline-end: 1.5px solid var(--color-muted);
+  border-block-end: 1.5px solid var(--color-muted);
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+}
+
+html[dir='rtl'] .project-carousel .carousel-picker-field::after {
+  transform: translateY(-70%) rotate(-45deg);
+}
+
+.project-carousel .carousel-project-picker select:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.project-carousel .carousel-chapters {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  margin-inline: auto;
+  padding: 6px;
+  overflow-x: auto;
+  border-radius: 999px;
+  background: var(--color-surface);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-focus) var(--color-raised);
+}
+
+.project-carousel
+  .carousel-toolbar:has(.carousel-project-picker)
+  .carousel-chapters {
+  display: none;
+}
+
+.project-carousel .carousel-toolbar::before,
+.project-carousel .carousel-toolbar::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: -8px;
+  height: 2px;
+  border-radius: 2px;
+}
+
+.project-carousel .carousel-toolbar::before {
+  background: var(--color-raised);
+}
+
+.project-carousel .carousel-toolbar::after {
+  background: var(--color-focus);
+  transform: scaleX(var(--carousel-progress, 0));
+  transform-origin: left;
+}
+
+html[dir='rtl'] .project-carousel .carousel-toolbar::after {
+  transform-origin: right;
+}
+
+.project-carousel .carousel-chapters button {
+  position: relative;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-muted);
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.4;
+  transition:
+    color 180ms,
+    background-color 180ms;
+}
+
+.project-carousel .carousel-chapters button:hover {
+  background: var(--color-raised);
+  color: var(--color-text);
+}
+
+.project-carousel .carousel-chapters button[aria-pressed='true'] {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+.project-carousel .carousel-chapters button:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.project-carousel .carousel-window {
+  overflow: hidden;
+  padding: 6px;
+  margin-inline: -6px;
+}
+
+.project-carousel .carousel-track {
+  display: grid;
+  width: 100%;
+  transform: none !important;
+}
+
+.project-carousel .carousel-slide {
+  grid-area: 1 / 1;
+  display: grid;
+  grid-template-areas: 'copy' 'media' 'footer';
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto auto;
+  align-content: start;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.project-carousel-scroll-story[data-layout='scroll'] .carousel-slide {
+  opacity: 1;
+  pointer-events: none;
+}
+
+.project-carousel-scroll-story[data-layout='scroll']
+  .carousel-slide[data-active='true'] {
+  pointer-events: auto;
+}
+
+.project-carousel .carousel-copy {
+  grid-area: copy;
+  width: 100%;
+  max-width: 1040px;
+  min-width: 0;
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* Crossfade the images while keeping the selected project's story readable.
+   Fading both the slide and its copy created a blank heading at chapter midpoints. */
+.project-carousel-scroll-story[data-layout='scroll'] .carousel-copy,
+.project-carousel-scroll-story[data-layout='scroll'] .carousel-story-footer {
+  opacity: 1;
+}
+
+.project-carousel-scroll-story[data-layout='scroll']
+  .carousel-slide[data-active='false']
+  .carousel-copy,
+.project-carousel-scroll-story[data-layout='scroll']
+  .carousel-slide[data-active='false']
+  .carousel-story-footer,
+.project-carousel-scroll-story[data-layout='scroll']
+  .carousel-slide[data-active='false']
+  .catalog-illustration
+  span {
+  visibility: hidden;
+}
+
+.project-carousel .carousel-status {
+  margin: 0 0 6px;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.project-carousel .carousel-title {
+  margin: 0;
+  color: var(--color-text);
+  font-size: clamp(32px, 4vw, 56px);
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.1;
+}
+
+.project-carousel .carousel-summary {
+  max-width: 1000px;
+  margin: 10px auto 0;
+  color: var(--color-muted);
+  font-size: 18px;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.project-carousel .carousel-media {
+  grid-area: media;
+  display: grid;
+  width: min(100%, 1040px);
+  height: clamp(280px, 44vh, 520px);
+  min-width: 0;
+  margin-inline: auto;
+  transform: translateY(
+      calc(var(--carousel-entry, 0) * 48px - var(--carousel-exit, 0) * 24px)
+    )
+    scale(
+      calc(1 - var(--carousel-entry, 0) * 0.1 + var(--carousel-exit, 0) * 0.08)
+    );
+  transform-origin: center;
+}
+
+.project-carousel-scroll-story[data-layout='scroll'] .carousel-media {
+  opacity: clamp(0, calc(1 - var(--carousel-distance, 0)), 1);
+  will-change: transform, opacity;
+}
+
+.project-carousel .carousel-media img,
+.project-carousel .carousel-media .project-image-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: contain;
+  border: 0;
+  border-radius: 16px;
+  background: transparent;
+}
+
+.project-carousel .carousel-media img {
+  display: block;
+}
+
+.project-carousel .carousel-media .project-image-placeholder {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 8px;
+  padding: 24px;
+  background: var(--color-surface);
+  text-align: center;
+}
+
+.project-carousel .carousel-media .catalog-illustration {
+  min-height: 0;
+  height: 100%;
+  background: transparent;
+}
+
+.project-carousel .carousel-media .catalog-illustration svg {
+  flex: 1;
+  min-height: 0;
+  max-height: calc(100% - 32px);
+}
+
+.project-carousel .carousel-story-footer {
+  grid-area: footer;
+  display: grid;
+  gap: 16px;
+  width: min(100%, 940px);
+  min-width: 0;
+  margin-inline: auto;
+}
+
+.project-carousel .carousel-story-features {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 32px;
+  text-align: center;
+}
+
+.project-carousel .carousel-story-features > p {
+  margin: 0;
+  color: var(--color-secondary);
+  font-size: 15px;
+  line-height: 1.45;
+  text-wrap: pretty;
+  opacity: 1;
+  transform: translateY(
+    calc(var(--carousel-entry, 0) * 12px - var(--carousel-exit, 0) * 8px)
+  );
+}
+
+.project-carousel .carousel-story-features > p:nth-child(2) {
+  transform: translateY(
+    calc(var(--carousel-entry, 0) * 18px - var(--carousel-exit, 0) * 12px)
+  );
+}
+
+.project-carousel .carousel-story-features strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.project-carousel .carousel-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0;
+}
+
+.project-carousel .carousel-actions .button {
+  min-height: 44px;
+  padding: 10px 22px;
+  font-size: 14px;
+}
+
+.project-carousel-scroll-story[data-layout='manual'] {
+  height: auto;
+}
+
+.project-carousel-scroll-story[data-layout='manual'] .project-carousel {
+  position: relative;
+  inset-block-start: auto;
+}
+
+.project-carousel-scroll-story[data-layout='manual'] .carousel-slide {
+  visibility: hidden;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.project-carousel-scroll-story[data-layout='manual']
+  .carousel-slide[data-active='true'] {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.project-carousel-scroll-story[data-layout='manual'] .carousel-media,
+.project-carousel-scroll-story[data-layout='manual']
+  .carousel-story-features
+  > p {
+  opacity: 1;
+  transform: none;
+}
+
+.project-carousel-scroll-story[data-layout='manual']
+  .project-carousel[data-motion='full']
+  .carousel-slide[data-active='true']
+  .carousel-media {
+  animation: chapter-media-in 260ms var(--ease-standard) both;
+}
+
+.project-carousel[data-motion='reduced'] .carousel-media,
+.project-carousel[data-motion='reduced'] .carousel-story-features > p {
+  animation: none;
+  transform: none;
+  opacity: 1;
+}
+
+@keyframes chapter-media-in {
+  from {
+    opacity: 0.45;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+html[lang='he'] .project-carousel .carousel-title,
+html[lang='ja'] .project-carousel .carousel-title {
+  letter-spacing: normal;
+}
+
+/* The native picker keeps all project chapters available in ordinary app panes. */
+@media (min-width: 768px) {
+  .project-carousel .carousel-toolbar:has(.carousel-project-picker) {
+    grid-template-columns: minmax(0, 1fr) minmax(230px, 330px);
+    align-items: center;
+    gap: 10px 24px;
+  }
+
+  .project-carousel .carousel-guidance {
+    flex-wrap: nowrap;
+    min-width: 0;
+    gap: 16px;
+  }
+
+  .project-carousel .carousel-instruction {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .project-carousel .carousel-bypass {
+    flex-shrink: 0;
+    margin-inline-start: 0;
+    white-space: nowrap;
+    font-size: 13px;
+  }
+
+  .project-carousel .carousel-position {
+    flex-shrink: 0;
+  }
+
+  .project-carousel .carousel-slide {
+    gap: 12px;
+  }
+
+  .project-carousel .carousel-status {
+    margin-block-end: 6px;
+    font-size: 12px;
+  }
+
+  .project-carousel .carousel-title {
+    font-size: clamp(30px, 3.15vw, 42px);
+  }
+
+  .project-carousel .carousel-summary {
+    margin-block-start: 8px;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .project-carousel .carousel-media {
+    height: clamp(200px, calc(100svh - 430px), 480px);
+  }
+
+  .project-carousel .carousel-story-footer {
+    gap: 12px;
+  }
+
+  .project-carousel .carousel-story-features > p {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+}
+
+@media (min-width: 1024px) and (min-height: 960px) {
+  .project-carousel
+    .carousel-toolbar:has(.carousel-project-picker)
+    .carousel-chapters {
+    grid-column: 1 / -1;
+    display: flex;
+  }
+}
+
+@media (max-width: 1023px) {
+  .project-carousel .carousel-media {
+    height: clamp(260px, 34vh, 420px);
+    max-width: 900px;
+  }
+}
+
+/* The in-app preview is often a tablet-width desktop pane. Reserve room for
+   its two-row controls and wrapped stories before deciding whether to pin. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .project-carousel .carousel-toolbar:has(.carousel-project-picker) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .project-carousel .carousel-title {
+    font-size: 28px;
+  }
+
+  .project-carousel .carousel-media {
+    height: clamp(180px, calc(100svh - 540px), 420px);
+  }
+}
+
+@media (max-width: 767px) {
+  .project-carousel-scroll-story {
+    margin-block-start: 24px;
+  }
+
+  .project-carousel .carousel-chapters button {
+    min-height: 48px;
+    padding-inline: 8px;
+  }
+
+  .project-carousel .carousel-guidance {
+    gap: 4px 16px;
+  }
+
+  .project-carousel .carousel-instruction {
+    flex-basis: 100%;
+  }
+
+  .project-carousel .carousel-bypass {
+    margin-inline-start: 0;
+  }
+
+  .project-carousel .carousel-position {
+    margin-inline-start: auto;
+  }
+
+  .project-carousel .carousel-slide {
+    gap: 24px;
+  }
+
+  .project-carousel .carousel-title {
+    font-size: clamp(28px, 7.2vw, 36px);
+  }
+
+  .project-carousel .carousel-summary {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .project-carousel .carousel-media {
+    height: clamp(230px, 32vh, 360px);
+    border-radius: 12px;
+  }
+
+  .project-carousel .carousel-story-features {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .project-carousel .carousel-story-features > p {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .project-carousel .carousel-story-footer {
+    gap: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-carousel .carousel-media,
+  .project-carousel .carousel-story-features > p,
+  .project-carousel .carousel-chapters button {
+    animation: none !important;
+    transform: none !important;
+    transition: none;
+  }
+}

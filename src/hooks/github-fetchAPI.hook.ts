@@ -6,10 +6,10 @@ export const useGithubReposFetchAPI = () => {
   return useQuery<IGithubRepo[]>({
     queryKey: ['github-repos'],
     queryFn: fetchGithubRepos,
-    staleTime: 1000 * 60 * 60 * 24,
+    staleTime: 1000 * 60 * 60,
+    gcTime: 1000 * 60 * 60,
     refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-    refetchInterval: 1000 * 60 * 60 * 24,
+    refetchOnMount: true,
+    refetchOnReconnect: true,
   });
 };

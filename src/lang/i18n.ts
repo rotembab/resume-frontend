@@ -6,8 +6,17 @@ import { jpTranslations } from './jp';
 
 export const availableLanguages = ['en', 'he', 'jp'];
 
+const initialLanguage = () => {
+  try {
+    const saved = localStorage.getItem('portfolio-language');
+    return saved && availableLanguages.includes(saved) ? saved : 'en';
+  } catch {
+    return 'en';
+  }
+};
+
 i18n.use(initReactI18next).init({
-  lng: 'en',
+  lng: initialLanguage(),
   fallbackLng: 'en',
 
   interpolation: {

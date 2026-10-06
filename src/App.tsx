@@ -1,41 +1,22 @@
 import { lazy } from 'react';
 import { Route, Routes } from 'react-router';
 import { Layout } from './components/ui/layout/layout.component';
-
-const HomePage = lazy(() =>
-  import('./components/pages/home/home.page').then((m) => ({
-    default: m.HomePage,
-  }))
-);
-const ProjectsPage = lazy(() =>
-  import('./components/pages/projects/projects.page').then((m) => ({
-    default: m.ProjectsPage,
-  }))
-);
-const ExperiencePage = lazy(() =>
-  import('./components/pages/experience/experience.page').then((m) => ({
-    default: m.ExperiencePage,
-  }))
-);
-const ToolsPage = lazy(() =>
-  import('./components/pages/tools/tools.page').then((m) => ({
-    default: m.ToolsPage,
-  }))
-);
-const ContactMe = lazy(() =>
-  import('./components/pages/contact-me/contact-me.component').then((m) => ({
-    default: m.ContactMe,
-  }))
-);
-
+import { EffectsProvider } from './components/portfolio/effects-provider';
+import HomePage from './components/portfolio/home-page';
+const Pages = lazy(() => import('./components/portfolio/portfolio-pages'));
 export const App = () => (
-  <Routes>
-    <Route element={<Layout />}>
-      <Route path='/' element={<HomePage />} />
-      <Route path='/projects' element={<ProjectsPage />} />
-      <Route path='/experience' element={<ExperiencePage />} />
-      <Route path='/tools' element={<ToolsPage />} />
-      <Route path='/contact' element={<ContactMe />} />
-    </Route>
-  </Routes>
+  <EffectsProvider>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route path='/projects' element={<Pages page='projects' />} />
+        <Route path='/projects/:slug' element={<Pages page='project' />} />
+        <Route path='/experience' element={<Pages page='experience' />} />
+        <Route path='/tools' element={<Pages page='tools' />} />
+        <Route path='/lab' element={<Pages page='lab' />} />
+        <Route path='/contact' element={<Pages page='contact' />} />
+        <Route path='*' element={<Pages page='not-found' />} />
+      </Route>
+    </Routes>
+  </EffectsProvider>
 );
