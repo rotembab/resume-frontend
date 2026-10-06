@@ -867,8 +867,7 @@ async function stage(qa) {
       );
       const visualProgress = await region.evaluate((element) => {
         const indicator = getComputedStyle(
-          element.querySelector('.carousel-toolbar'),
-          '::after'
+          element.querySelector('.carousel-progress-bar')
         );
         return {
           scale: new DOMMatrix(indicator.transform).a,
@@ -2234,6 +2233,103 @@ for (const engine of String(args.get('channels') || 'chrome').split(',')) {
       });
       await scenario(browser, engine, 'catalog-filters', {}, catalogs);
       await scenario(browser, engine, 'navigation', {}, navigation);
+      for (const viewport of [viewports[1], { width: 1440, height: 900 }])
+        await scenario(
+          browser,
+          engine,
+          'scroll-rendering-' + viewport.width,
+          { viewport },
+          async ({ page, visit, mark, screenshot }) => {
+            await visit('/');
+            for (const selector of [
+              '.project-carousel-scroll-story',
+              '.tool-deck-story',
+            ]) {
+              const sample = await page.evaluate(async (selector) => {
+                const story = document.querySelector(selector);
+                const stage = story.firstElementChild;
+                const start =
+                  story.getBoundingClientRect().top +
+                  scrollY -
+                  parseFloat(getComputedStyle(stage).top);
+                const span = story.offsetHeight - stage.offsetHeight;
+                const inactive = document.querySelector(
+                  selector.includes('project')
+                    ? '.tool-deck-story'
+                    : '.project-carousel-scroll-story'
+                );
+                scrollTo({ top: start, behavior: 'instant' });
+                await new Promise((resolve) =>
+                  requestAnimationFrame(() => requestAnimationFrame(resolve))
+                );
+                // Let the entry chapter's React commit and scroll-settled
+                // announcement finish before observing unrelated offscreen work.
+                await new Promise((resolve) => setTimeout(resolve, 250));
+                let inactiveMutations = 0;
+                const inactiveChanges = {};
+                const observer = new MutationObserver((records) => {
+                  inactiveMutations += records.length;
+                  for (const record of records) {
+                    const key =
+                      record.attributeName + ':' + record.target.className;
+                    inactiveChanges[key] = (inactiveChanges[key] || 0) + 1;
+                  }
+                });
+                observer.observe(inactive, { subtree: true, attributes: true });
+                let maxProjectLayers = 0;
+                const intervals = [];
+                let previous;
+                const began = performance.now();
+                await new Promise((resolve) => {
+                  const tick = (now) => {
+                    if (previous) intervals.push(now - previous);
+                    previous = now;
+                    const phase = Math.min(1, (now - began) / 1600);
+                    scrollTo({
+                      top:
+                        start +
+                        span * (phase <= 0.5 ? phase * 2 : (1 - phase) * 2),
+                      behavior: 'instant',
+                    });
+                    maxProjectLayers = Math.max(
+                      maxProjectLayers,
+                      document.querySelectorAll(
+                        '.carousel-slide[data-rendered="true"]'
+                      ).length
+                    );
+                    if (phase < 1) requestAnimationFrame(tick);
+                    else
+                      requestAnimationFrame(() =>
+                        requestAnimationFrame(resolve)
+                      );
+                  };
+                  requestAnimationFrame(tick);
+                });
+                observer.disconnect();
+                intervals.sort((a, b) => a - b);
+                return {
+                  layout: story.dataset.layout,
+                  inactiveMutations,
+                  inactiveChanges,
+                  maxProjectLayers,
+                  index: stage.dataset.currentIndex,
+                  frames: intervals.length,
+                  p95FrameMs: intervals[Math.floor(intervals.length * 0.95)],
+                };
+              }, selector);
+              mark(
+                'fast scrolling and reversal updates only visible media: ' +
+                  selector,
+                sample.layout === 'scroll' &&
+                  sample.maxProjectLayers <= 2 &&
+                  sample.inactiveMutations === 0 &&
+                  sample.index === '0',
+                sample
+              );
+            }
+            await screenshot('fast-scroll-tools');
+          }
+        );
       await scenario(
         browser,
         engine,

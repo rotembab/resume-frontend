@@ -83,6 +83,11 @@ boundaries using GPU transforms. The site uses HTML/CSS and Motion. Unused WebGL
 homepage components, legacy styles, scene assets and their dependencies have been
 removed.
 
+Scroll frames animate only the visible project image pair and tool icons with
+local transforms and opacity. Hidden project media releases its animation layers,
+and offscreen stages skip unchanged DOM writes. The browser QA includes rapid
+forward/reverse scrolling checks for these rendering limits.
+
 Screenshots retain their contents; illustrations are labeled. Media failures have
 usable fallbacks. Blaster playback is user initiated with native controls.
 Contact forms preserve failed drafts, expose nearby validation and focus the first

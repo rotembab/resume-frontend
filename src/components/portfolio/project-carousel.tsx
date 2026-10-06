@@ -1,5 +1,4 @@
 import {
-  type CSSProperties,
   type FocusEvent,
   type KeyboardEvent,
   useCallback,
@@ -60,8 +59,12 @@ export const ProjectCarousel = ({
   const viewport = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
   const toolbar = useRef<HTMLDivElement>(null);
+  const progressBar = useRef<HTMLSpanElement>(null);
   const chapterButtons = useRef<(HTMLButtonElement | null)[]>([]);
   const slides = useRef<(HTMLElement | null)[]>([]);
+  const media = useRef<(HTMLDivElement | null)[]>([]);
+  const featureNodes = useRef<HTMLParagraphElement[][]>([]);
+  const paintedProgress = useRef<string>();
   const geometry = useRef<Geometry>();
   const frame = useRef<number>();
   const fallbackFrame = useRef<number>();
@@ -92,29 +95,54 @@ export const ProjectCarousel = ({
       progress.current = next;
       const position = next * last;
       const index = Math.round(position);
-      story.current?.setAttribute('data-scroll-progress', next.toFixed(4));
-      story.current?.style.setProperty('--carousel-progress', String(next));
-      slides.current.forEach((slide, slideIndex) => {
-        const signedDistance =
-          layoutRef.current === 'scroll' ? slideIndex - position : 0;
-        const distance = Math.min(1, Math.abs(signedDistance));
-        slide?.style.setProperty('--carousel-distance', String(distance));
-        slide?.style.setProperty(
-          '--carousel-entry',
-          String(clamp(signedDistance))
-        );
-        slide?.style.setProperty(
-          '--carousel-exit',
-          String(clamp(-signedDistance))
-        );
-      });
+      const paintKey = `${layoutRef.current}|${next}|${projectOrder}`;
+      if (paintedProgress.current !== paintKey) {
+        paintedProgress.current = paintKey;
+        story.current?.setAttribute('data-scroll-progress', next.toFixed(4));
+        if (progressBar.current)
+          progressBar.current.style.transform = `scaleX(${next})`;
+        slides.current.forEach((slide, slideIndex) => {
+          if (!slide) return;
+          const scrolling = layoutRef.current === 'scroll';
+          const offset = scrolling ? slideIndex - position : 0;
+          const visible = scrolling
+            ? Math.abs(offset) < 1
+            : slideIndex === index;
+          const image = media.current[slideIndex];
+          if (slide.dataset.rendered !== String(visible)) {
+            slide.dataset.rendered = String(visible);
+            if (!visible && image) {
+              image.style.removeProperty('transform');
+              image.style.removeProperty('opacity');
+            }
+          }
+          if (!visible || !image) return;
+          const entry = clamp(offset);
+          const exit = clamp(-offset);
+          // Local compositor properties avoid inheriting changing variables
+          // through every slide, image, feature and control on each frame.
+          image.style.transform = scrolling
+            ? `translate3d(0, ${entry * 48 - exit * 24}px, 0) scale(${1 - entry * 0.1 + exit * 0.08})`
+            : 'none';
+          image.style.opacity = String(scrolling ? 1 - Math.abs(offset) : 1);
+          if (slideIndex === index)
+            featureNodes.current[slideIndex]?.forEach(
+              (feature, featureIndex) => {
+                feature.style.transform = scrolling
+                  ? `translateY(${entry * (featureIndex ? 18 : 12) - exit * (featureIndex ? 12 : 8)}px)`
+                  : 'none';
+              }
+            );
+        });
+      }
+      const changed = activeRef.current !== index;
       activeRef.current = index;
       activeSlug.current = projects[index]?.slug;
       if (activeSlug.current)
         historySelections.set(currentEntry.current, activeSlug.current);
-      setActiveIndex(index);
+      if (changed) setActiveIndex(index);
     },
-    [last, projects]
+    [last, projects, projectOrder]
   );
 
   const syncScroll = useCallback(() => {
@@ -354,7 +382,7 @@ export const ProjectCarousel = ({
     const schedule = (measure = false, preserve = false) => {
       pendingMeasure ||= measure;
       pendingPreserve ||= preserve;
-      if (frame.current !== undefined) cancelAnimationFrame(frame.current);
+      if (frame.current !== undefined) return;
       frame.current = requestAnimationFrame(() => {
         frame.current = undefined;
         const shouldMeasure = pendingMeasure;
@@ -531,12 +559,7 @@ export const ProjectCarousel = ({
       ref={story}
       data-layout={layout}
       data-current-index={active}
-      style={
-        {
-          '--carousel-count': projects.length,
-          height: layout === 'scroll' ? storyHeight : undefined,
-        } as CSSProperties
-      }
+      style={{ height: layout === 'scroll' ? storyHeight : undefined }}
     >
       <div
         className='project-carousel'
@@ -551,6 +574,11 @@ export const ProjectCarousel = ({
       >
         <div className='carousel-sticky'>
           <div className='carousel-toolbar' ref={toolbar}>
+            <span
+              className='carousel-progress-bar'
+              aria-hidden='true'
+              ref={progressBar}
+            />
             <div className='carousel-guidance'>
               <p id={`${id}-instruction`} className='carousel-instruction'>
                 {layout === 'scroll'
@@ -658,6 +686,17 @@ export const ProjectCarousel = ({
                         }
                         ref={(slide) => {
                           slides.current[index] = slide;
+                          media.current[index] =
+                            slide?.querySelector<HTMLDivElement>(
+                              '.carousel-media'
+                            ) ?? null;
+                          featureNodes.current[index] = slide
+                            ? Array.from(
+                                slide.querySelectorAll<HTMLParagraphElement>(
+                                  '.carousel-story-features > p'
+                                )
+                              )
+                            : [];
                         }}
                       >
                         <div className='carousel-copy'>

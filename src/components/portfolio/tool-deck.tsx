@@ -18,12 +18,21 @@ export interface ToolCard {
 
 const selections = new Map<string, string>();
 const activeEntries = new Set<string>();
-const paintIcons = (tokens: (HTMLSpanElement | null)[], position: number) => {
+const paintIcons = (
+  tokens: (HTMLSpanElement | null)[],
+  position: number,
+  direction: number
+) => {
   tokens.forEach((token, index) => {
     if (!token) return;
     const offset = index - position;
     const visible = offset > -1 && offset <= 3;
-    if (visible) token.style.setProperty('--tool-offset', String(offset));
+    if (visible) {
+      const depth = Math.max(0, offset);
+      const exit = Math.max(0, -offset);
+      token.style.transform = `translate3d(${direction * (depth * 14 - exit * 90)}px, ${depth * 12 + exit * 6}px, 0) rotate(${direction * (depth * 6 - exit * 18)}deg) scale(${1 - depth * 0.08})`;
+      token.style.opacity = String((1 - depth * 0.2) * (1 - exit));
+    }
     if (token.dataset.visible !== String(visible))
       token.setAttribute('data-visible', String(visible));
   });
@@ -53,6 +62,8 @@ const ToolIcon = ({ card }: { card: ToolCard }) => {
 export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
   const { copy, i18n } = usePortfolio();
   const text = getToolDeckCopy(i18n.language);
+  const direction = i18n.dir() === 'rtl' ? -1 : 1;
+  const cardOrder = cards.map((card) => card.id).join('|');
   const { motionAllowed } = useEffects();
   const location = useLocation();
   const navigationType = useNavigationType();
@@ -73,6 +84,8 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
   const story = useRef<HTMLDivElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const tokens = useRef<(HTMLSpanElement | null)[]>([]);
+  const progressBar = useRef<HTMLSpanElement>(null);
+  const paintedPosition = useRef<string>();
   const position = useRef(initialIndex);
   const selected = useRef(initialIndex);
   const selectedId = useRef(cards[initialIndex]?.id);
@@ -149,8 +162,16 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
     const update = (value: number) => {
       const next = Math.max(0, Math.min(last, value));
       position.current = next;
-      paintIcons(tokens.current, next);
-      selected.current = Math.round(next);
+      const paintKey = `${direction}|${next}|${cardOrder}`;
+      if (paintedPosition.current !== paintKey) {
+        paintedPosition.current = paintKey;
+        paintIcons(tokens.current, next, direction);
+        if (progressBar.current)
+          progressBar.current.style.transform = `scaleX(${last ? next / last : 0})`;
+      }
+      const index = Math.round(next);
+      const changed = selected.current !== index;
+      selected.current = index;
       selectedId.current = cards[selected.current].id;
       selections.set(historyKey, selectedId.current);
       if (ownsPosition.current) activeEntries.add(historyKey);
@@ -160,11 +181,7 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
         selections.delete(oldest);
         activeEntries.delete(oldest);
       }
-      setActive(selected.current);
-      story.current?.style.setProperty(
-        '--tool-progress',
-        String(last ? next / last : 0)
-      );
+      if (changed) setActive(index);
     };
     // Retain repository-independent tool identity across localized data changes.
     const retained = cards.findIndex((card) => card.id === selectedId.current);
@@ -302,6 +319,7 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
         if (wasPinned && (wasWithin || focused || ownsPosition.current)) {
           if (frame.current !== undefined) cancelAnimationFrame(frame.current);
           frame.current = requestAnimationFrame(() => {
+            frame.current = undefined;
             if (focused) ensureFocusVisible();
             else if (story.current)
               window.scrollTo({
@@ -319,8 +337,9 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
     let pendingMeasure = false;
     const schedule = (resize: boolean) => {
       pendingMeasure ||= resize;
-      if (frame.current !== undefined) cancelAnimationFrame(frame.current);
+      if (frame.current !== undefined) return;
       frame.current = requestAnimationFrame(() => {
+        frame.current = undefined;
         const shouldMeasure = pendingMeasure;
         pendingMeasure = false;
         if (shouldMeasure) measure(true);
@@ -356,6 +375,7 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
       window.removeEventListener('wheel', userScroll);
       window.removeEventListener('touchmove', userScroll);
       if (frame.current !== undefined) cancelAnimationFrame(frame.current);
+      frame.current = undefined;
       if (restoreFrame.current !== undefined)
         cancelAnimationFrame(restoreFrame.current);
       restoring.current = false;
@@ -363,6 +383,8 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
     };
   }, [
     cards,
+    cardOrder,
+    direction,
     last,
     motionAllowed,
     i18n.language,
@@ -383,17 +405,16 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
         behavior: 'instant',
       });
     position.current = next;
-    paintIcons(tokens.current, next);
+    paintedPosition.current = undefined;
+    paintIcons(tokens.current, next, direction);
     selected.current = next;
     selectedId.current = cards[next]?.id;
     ownsPosition.current = true;
     activeEntries.add(historyKey);
     if (selectedId.current) selections.set(historyKey, selectedId.current);
     setActive(next);
-    story.current?.style.setProperty(
-      '--tool-progress',
-      String(last ? next / last : 0)
-    );
+    if (progressBar.current)
+      progressBar.current.style.transform = `scaleX(${last ? next / last : 0})`;
   };
 
   if (!cards.length) return null;
@@ -412,6 +433,11 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
         data-current-index={active}
       >
         <div className='tool-deck-controls'>
+          <span
+            className='tool-deck-progress-bar'
+            ref={progressBar}
+            aria-hidden='true'
+          />
           <p>{pinned ? text.scroll : text.manual}</p>
           <span className='tool-deck-counter' dir='ltr' aria-hidden='true'>
             {String(active + 1).padStart(2, '0')} /{' '}
@@ -444,6 +470,8 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
             <span
               className='tool-icon-token'
               key={card.id}
+              // Keep ordering static while transforms and opacity animate.
+              style={{ zIndex: cards.length - index }}
               data-state={
                 index === active
                   ? 'active'

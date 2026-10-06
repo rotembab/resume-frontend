@@ -32,7 +32,7 @@
   font-variant-numeric: tabular-nums;
 }
 .tool-deck-controls::before,
-.tool-deck-controls::after {
+.tool-deck-progress-bar {
   content: '';
   position: absolute;
   inset-inline: 0;
@@ -40,12 +40,12 @@
   height: 2px;
   background: var(--color-raised);
 }
-.tool-deck-controls::after {
+.tool-deck-progress-bar {
   background: var(--color-focus);
-  transform: scaleX(var(--tool-progress, 0));
+  transform: scaleX(0);
   transform-origin: left;
 }
-html[dir='rtl'] .tool-deck-controls::after {
+html[dir='rtl'] .tool-deck-progress-bar {
   transform-origin: right;
 }
 .tool-deck-picker {
@@ -104,30 +104,10 @@ html[dir='rtl'] .tool-deck-field::after {
 .tool-icon-token {
   grid-area: 1 / 1;
   transform-origin: center;
-  --tool-stack-depth: clamp(0, var(--tool-offset, 0), 3);
-  --tool-exit: clamp(0, calc(0 - var(--tool-offset, 0)), 1);
-  z-index: calc(6 - var(--tool-stack-depth));
-  transform: translate3d(
-      calc(var(--tool-stack-depth) * 14px - var(--tool-exit) * 90px),
-      calc(var(--tool-stack-depth) * 12px + var(--tool-exit) * 6px),
-      0
-    )
-    rotate(calc(var(--tool-stack-depth) * 6deg - var(--tool-exit) * 18deg))
-    scale(calc(1 - var(--tool-stack-depth) * 0.08));
-  opacity: calc((1 - var(--tool-stack-depth) * 0.2) * (1 - var(--tool-exit)));
   backface-visibility: hidden;
 }
 .tool-icon-token[data-visible='true'] {
   will-change: transform, opacity;
-}
-html[dir='rtl'] .tool-icon-token {
-  transform: translate3d(
-      calc(var(--tool-stack-depth) * -14px + var(--tool-exit) * 90px),
-      calc(var(--tool-stack-depth) * 12px + var(--tool-exit) * 6px),
-      0
-    )
-    rotate(calc(var(--tool-stack-depth) * -6deg + var(--tool-exit) * 18deg))
-    scale(calc(1 - var(--tool-stack-depth) * 0.08));
 }
 .tool-icon-token:not([data-visible='true']) {
   visibility: hidden;

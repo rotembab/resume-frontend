@@ -581,8 +581,9 @@ describe('Page-scroll project carousel', () => {
       scrollPage(phaseY(index));
       expect(current()).toHaveAttribute('data-current-index', String(index));
       expect(
-        Number(entries()[index].style.getPropertyValue('--carousel-distance'))
-      ).toBeCloseTo(0);
+        (entries()[index].querySelector('.carousel-media') as HTMLElement).style
+          .opacity
+      ).toBe('1');
     }
     scrollPage(phaseY(1));
     expect(current()).toHaveAttribute('data-current-index', '1');
@@ -591,6 +592,54 @@ describe('Page-scroll project carousel', () => {
     scrollPage(10000);
     expect(story()).toHaveAttribute('data-scroll-progress', '1.0000');
     expect(scrollTo).not.toHaveBeenCalled();
+  });
+
+  it('renders only the current image transition through fast skips and reverse scrolling', () => {
+    const projects = getProjectCatalog('en');
+    render(
+      <TestRouter>
+        <ProjectCarousel projects={projects} />
+      </TestRouter>
+    );
+    flushFrames();
+    const start = sectionTop - stickyTop;
+    for (const position of [0.2, 8.25, 10, 4.5, 0]) {
+      scrollPage(start + (position / 10) * span());
+      const rendered = entries().filter(
+        (entry) => entry.dataset.rendered === 'true'
+      );
+      expect(rendered.map((entry) => Number(entry.dataset.slideIndex))).toEqual(
+        Number.isInteger(position)
+          ? [position]
+          : [Math.floor(position), Math.ceil(position)]
+      );
+      for (const entry of entries()) {
+        const image = entry.querySelector('.carousel-media') as HTMLElement;
+        if (!rendered.includes(entry)) expect(image.style.transform).toBe('');
+      }
+      expect(current()).toHaveAttribute(
+        'data-current-index',
+        String(Math.round(position))
+      );
+    }
+  });
+
+  it('leaves offscreen project styles untouched while the viewer scrolls later sections', async () => {
+    renderCarousel();
+    flushFrames();
+    scrollPage(10000);
+    await act(async () => {});
+    const mutations: MutationRecord[] = [];
+    const observer = new MutationObserver((records) =>
+      mutations.push(...records)
+    );
+    observer.observe(story(), { attributes: true, subtree: true });
+    scrollPage(11000);
+    scrollPage(12000);
+    await act(async () => {});
+    observer.disconnect();
+    expect(mutations).toHaveLength(0);
+    expect(current()).toHaveAttribute('data-current-index', '3');
   });
 
   it('only announces the current project after native scrolling settles', () => {
@@ -712,9 +761,10 @@ describe('Page-scroll project carousel', () => {
     );
     scrollPage(phaseY(1));
     expect(current()).toHaveAttribute('data-current-index', '1');
-    expect(entries()[1].style.getPropertyValue('--carousel-distance')).toBe(
-      '0'
-    );
+    expect(
+      (entries()[1].querySelector('.carousel-media') as HTMLElement).style
+        .opacity
+    ).toBe('1');
     for (const key of ['PageDown', 'ArrowDown', 'ArrowLeft', 'Home', 'End']) {
       const event = new KeyboardEvent('keydown', {
         key,
@@ -832,8 +882,9 @@ describe('Page-scroll project carousel', () => {
       expect(current()).toHaveAttribute('data-layout', 'manual');
       expect(story().style.height).toBe('');
       expect(entries()).toHaveLength(4);
-      for (const entry of entries())
-        expect(entry.style.getPropertyValue('--carousel-distance')).toBe('0');
+      expect(
+        entries().filter((entry) => entry.dataset.rendered === 'true')
+      ).toHaveLength(1);
       fireEvent.click(
         screen.getByRole('button', { name: getProjects('en')[2].title })
       );

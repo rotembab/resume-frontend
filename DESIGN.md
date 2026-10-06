@@ -46,6 +46,8 @@ Homepage navigation follows the content order: Experience, Work, Tools, About, C
 
 The wordmark uses the uppercase initials **RB.** Tools appears immediately below Work on the homepage; its navigation link scrolls to that section. Its dedicated `/tools` page remains available. Its 24 technologies form a compact pack of their regular 64px icons. Native page scrolling brings each icon forward and reveals its name, purpose and precise links to related work. The stage pins only when it fits beneath the header, including fitting mobile viewports. Short screens, reduced motion, effects-off and save-data retain direct selection without a scroll spacer. Both pickers have stable widths and inset chevrons. Tools preserves selection and focus through language/layout changes and browser Back. Lab remains available at its existing route for compatibility, without header or footer links.
 
+Continuous scroll frames update local transforms and opacity on only the current image pair or visible tool icons. Hidden project media releases animation layers, and unchanged positions perform no DOM writes. Progress indicators have their own small elements, avoiding inherited animation variables across the full stage. Keep all chapter content in layout for reliable fit, history and localization measurements.
+
 Motion concentrates on the initial identity entrance, selected project media, and transitions into detail imagery. Use a soft settling curve, brief control feedback, and no automatic cycling or wheel interception.
 
 ## Complete states and verification

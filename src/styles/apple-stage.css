@@ -139,7 +139,7 @@ html[dir='rtl'] .project-carousel .carousel-picker-field::after {
 }
 
 .project-carousel .carousel-toolbar::before,
-.project-carousel .carousel-toolbar::after {
+.project-carousel .carousel-progress-bar {
   content: '';
   position: absolute;
   inset-inline: 0;
@@ -152,13 +152,13 @@ html[dir='rtl'] .project-carousel .carousel-picker-field::after {
   background: var(--color-raised);
 }
 
-.project-carousel .carousel-toolbar::after {
+.project-carousel .carousel-progress-bar {
   background: var(--color-focus);
-  transform: scaleX(var(--carousel-progress, 0));
+  transform: scaleX(0);
   transform-origin: left;
 }
 
-html[dir='rtl'] .project-carousel .carousel-toolbar::after {
+html[dir='rtl'] .project-carousel .carousel-progress-bar {
   transform-origin: right;
 }
 
@@ -293,18 +293,21 @@ html[dir='rtl'] .project-carousel .carousel-toolbar::after {
   height: clamp(280px, 44vh, 520px);
   min-width: 0;
   margin-inline: auto;
-  transform: translateY(
-      calc(var(--carousel-entry, 0) * 48px - var(--carousel-exit, 0) * 24px)
-    )
-    scale(
-      calc(1 - var(--carousel-entry, 0) * 0.1 + var(--carousel-exit, 0) * 0.08)
-    );
   transform-origin: center;
 }
 
 .project-carousel-scroll-story[data-layout='scroll'] .carousel-media {
-  opacity: clamp(0, calc(1 - var(--carousel-distance, 0)), 1);
+  opacity: 0;
+}
+
+.project-carousel-scroll-story[data-layout='scroll']
+  .carousel-slide[data-rendered='true']
+  .carousel-media {
   will-change: transform, opacity;
+}
+
+.project-carousel .carousel-slide[data-rendered='false'] .carousel-media {
+  visibility: hidden;
 }
 
 .project-carousel .carousel-media img,
@@ -367,15 +370,6 @@ html[dir='rtl'] .project-carousel .carousel-toolbar::after {
   line-height: 1.45;
   text-wrap: pretty;
   opacity: 1;
-  transform: translateY(
-    calc(var(--carousel-entry, 0) * 12px - var(--carousel-exit, 0) * 8px)
-  );
-}
-
-.project-carousel .carousel-story-features > p:nth-child(2) {
-  transform: translateY(
-    calc(var(--carousel-entry, 0) * 18px - var(--carousel-exit, 0) * 12px)
-  );
 }
 
 .project-carousel .carousel-story-features strong {

@@ -162,6 +162,22 @@ describe('scroll-driven tool icons', () => {
       ).toHaveLength(1);
     }
   });
+  it('leaves offscreen tool styles untouched while the viewer scrolls earlier sections', async () => {
+    renderDeck();
+    flush();
+    const mutations: MutationRecord[] = [];
+    const observer = new MutationObserver((records) =>
+      mutations.push(...records)
+    );
+    observer.observe(story(), { attributes: true, subtree: true });
+    scroll(100);
+    scroll(200);
+    await act(async () => {});
+    observer.disconnect();
+    expect(mutations).toHaveLength(0);
+    expect(picker()).toHaveValue('react');
+  });
+
   it('direct selection moves to the same measured scroll chapter', () => {
     renderDeck();
     fireEvent.change(picker(), { target: { value: 'python' } });
