@@ -573,17 +573,6 @@ export const ProjectCarousel = ({
     event.preventDefault();
     const button = chapterButtons.current[next];
     button?.focus({ preventScroll: true });
-    if (button?.parentElement) {
-      const bounds = button.getBoundingClientRect();
-      const container = button.parentElement.getBoundingClientRect();
-      const offset =
-        bounds.left < container.left
-          ? bounds.left - container.left
-          : bounds.right > container.right
-            ? bounds.right - container.right
-            : 0;
-      button.parentElement.scrollLeft += offset;
-    }
     chooseChapter(next, false);
   };
 

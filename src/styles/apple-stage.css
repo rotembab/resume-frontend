@@ -120,16 +120,15 @@ html[dir='rtl'] .project-carousel .carousel-picker-field::after {
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 6px;
   width: 100%;
   min-width: 0;
   margin-inline: auto;
   padding: 6px;
-  overflow-x: auto;
-  border-radius: 999px;
+  border-radius: 24px;
   background: var(--color-surface);
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-focus) var(--color-raised);
 }
 
 .project-carousel
@@ -165,7 +164,9 @@ html[dir='rtl'] .project-carousel .carousel-progress-bar {
 .project-carousel .carousel-chapters button {
   position: relative;
   flex: 0 0 auto;
-  white-space: nowrap;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
   min-height: 44px;
   padding: 10px 14px;
   border: 0;
@@ -175,13 +176,10 @@ html[dir='rtl'] .project-carousel .carousel-progress-bar {
   text-align: center;
   font-size: 14px;
   line-height: 1.4;
-  transition:
-    color 180ms,
-    background-color 180ms;
+  transition: color 180ms;
 }
 
 .project-carousel .carousel-chapters button:hover {
-  background: var(--color-raised);
   color: var(--color-text);
 }
 

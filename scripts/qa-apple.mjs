@@ -746,6 +746,70 @@ async function stage(qa) {
       (await buttons.first().isVisible()) === showsChapterStrip,
       { showsChapterStrip }
     );
+    if (showsChapterStrip) {
+      const chapters = await region
+        .locator('.carousel-chapters')
+        .evaluate((strip) => {
+          const bounds = strip.getBoundingClientRect();
+          return {
+            width: strip.clientWidth,
+            contentWidth: strip.scrollWidth,
+            wraps: getComputedStyle(strip).flexWrap === 'wrap',
+            buttonsFit: [...strip.querySelectorAll('button')].every(
+              (button) => {
+                const rect = button.getBoundingClientRect();
+                return (
+                  rect.left >= bounds.left &&
+                  rect.right <= bounds.right &&
+                  rect.top >= bounds.top &&
+                  rect.bottom <= bounds.bottom
+                );
+              }
+            ),
+          };
+        });
+      mark(
+        'desktop project controls wrap without a horizontal scroller or clipped buttons',
+        chapters.wraps &&
+          chapters.buttonsFit &&
+          chapters.contentWidth <= chapters.width + 1,
+        chapters
+      );
+      await buttons
+        .first()
+        .evaluate((button) => button.focus({ preventScroll: true }));
+      await page.keyboard.press('End');
+      await waitForStageIndex(page, buttonCount - 1);
+      mark(
+        'wrapped project buttons retain keyboard selection and focus on the last project',
+        (await buttons.last().getAttribute('aria-pressed')) === 'true' &&
+          (await buttons
+            .last()
+            .evaluate((button) => document.activeElement === button))
+      );
+      await picker.evaluate((element) =>
+        element.focus({ preventScroll: true })
+      );
+      await selectStageProject(page, region, 7);
+      await buttons.first().hover();
+      const highlights = await buttons.evaluateAll((elements) =>
+        elements.map((button) => ({
+          selected: button.getAttribute('aria-pressed') === 'true',
+          background: getComputedStyle(button).backgroundColor,
+        }))
+      );
+      mark(
+        'hovering an inactive project leaves only the selected project filled',
+        highlights.filter(({ selected }) => selected).length === 1 &&
+          highlights.every(({ selected, background }) =>
+            selected
+              ? background !== 'rgba(0, 0, 0, 0)'
+              : background === 'rgba(0, 0, 0, 0)'
+          ),
+        highlights
+      );
+      await screenshot('wrapped-desktop-project-controls');
+    }
   }
   mark(
     'homepage keeps the complete story without a duplicated catalog or search',
