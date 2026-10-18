@@ -64,7 +64,14 @@ const ToolIcon = ({ card }: { card: ToolCard }) => {
   );
 };
 
-export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
+export const ToolDeck = ({
+  cards,
+  request,
+}: {
+  cards: ToolCard[];
+  /** Selects a tool from elsewhere on the page, such as the hero globe. */
+  request?: { id: string; nonce: number };
+}) => {
   const { copy, i18n } = usePortfolio();
   const text = getToolDeckCopy(i18n.language);
   const direction = i18n.dir() === 'rtl' ? -1 : 1;
@@ -477,6 +484,18 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
       progressBar.current.style.transform = `scaleX(${last ? next / last : 0})`;
   };
 
+  const chooseRef = useRef(choose);
+  chooseRef.current = choose;
+  useEffect(() => {
+    if (!request) return;
+    const index = cards.findIndex((card) => card.id === request.id);
+    if (index < 0) return;
+    if (!layoutRef.current)
+      story.current?.scrollIntoView({ block: 'start', behavior: 'instant' });
+    chooseRef.current(index);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [request]);
+
   if (!cards.length) return null;
   return (
     <div
@@ -545,6 +564,21 @@ export const ToolDeck = ({ cards }: { cards: ToolCard[] }) => {
             >
               <ToolIcon card={card} />
             </span>
+          ))}
+        </div>
+        <div className='tool-dock' aria-hidden='true'>
+          {cards.map((card, index) => (
+            <button
+              type='button'
+              key={card.id}
+              tabIndex={-1}
+              className='tool-dock-item'
+              data-active={index === active}
+              title={card.name}
+              onClick={() => choose(index)}
+            >
+              <ToolIcon card={card} />
+            </button>
           ))}
         </div>
         <div className='tool-deck-details' id='tool-deck-details'>

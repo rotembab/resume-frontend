@@ -8,6 +8,9 @@ export const getToolDeckCopy = (language: string) => {
         scroll: 'גללו כדי לעבור בין הכלים.',
         manual: 'בחרו כלי כדי להכיר אותו.',
         docs: 'לאתר הכלי',
+        globeLabel: 'הטכנולוגיות שאני עובד איתן',
+        globeHint: 'גררו כדי לסובב · בחרו כלי כדי לראות איפה השתמשתי בו',
+        globeItem: (name: string) => name + ': הצגה בערכת הכלים',
       }
     : code === 'jp' || code === 'ja'
       ? {
@@ -17,6 +20,9 @@ export const getToolDeckCopy = (language: string) => {
           scroll: 'スクロールしてツールをご覧ください。',
           manual: 'ツールを選んでご覧ください。',
           docs: '公式サイト',
+          globeLabel: '使っている技術',
+          globeHint: 'ドラッグで回転・ツールを選ぶと使用例を表示',
+          globeItem: (name: string) => name + '：ツールで見る',
         }
       : {
           label: 'The toolkit',
@@ -25,5 +31,8 @@ export const getToolDeckCopy = (language: string) => {
           scroll: 'Scroll through the tools.',
           manual: 'Choose a tool to explore.',
           docs: 'Official website',
+          globeLabel: 'Technologies I work with',
+          globeHint: 'Drag to spin · Pick a tool to see where I used it',
+          globeItem: (name: string) => name + ': see it in the toolkit',
         };
 };

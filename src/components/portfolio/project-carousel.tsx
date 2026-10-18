@@ -716,6 +716,9 @@ export const ProjectCarousel = ({
                         }}
                       >
                         <div className='carousel-copy'>
+                          <span className='carousel-index' aria-hidden='true'>
+                            {String(index + 1).padStart(2, '0')}
+                          </span>
                           <p className='carousel-status'>
                             <span>{narrative?.eyebrow ?? project.title}</span>
                             <span aria-hidden='true'> · </span>
@@ -737,6 +740,11 @@ export const ProjectCarousel = ({
                           <p className='carousel-summary'>
                             {narrative?.caption ?? project.summary}
                           </p>
+                          {project.technologies.length > 0 && (
+                            <p className='carousel-tech'>
+                              {project.technologies.slice(0, 4).join(' · ')}
+                            </p>
+                          )}
                         </div>
                         <div
                           className='carousel-media'

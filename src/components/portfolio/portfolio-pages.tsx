@@ -1,3 +1,4 @@
+import { useEffects } from './effects-context';
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router';
 import { usePortfolio } from './use-portfolio';
@@ -207,10 +208,12 @@ const ProjectPage = () => {
 const ExperiencePage = () => {
   const { copy } = usePortfolio();
   const resume = useResume();
+  const { motionAllowed } = useEffects();
   return (
     <div
       className='page-container interior-page experience-page'
       data-studio-page='experience'
+      data-effects={motionAllowed ? 'on' : 'off'}
     >
       <header className='page-heading'>
         <h1 tabIndex={-1}>{copy.experienceTitle}</h1>

@@ -58,6 +58,24 @@ Create tool timelines after React commits the scroll spacer. Reattach after a ro
 
 Motion concentrates on the initial identity entrance, selected project media, and transitions into detail imagery. Use a soft settling curve, brief control feedback, and no automatic cycling or wheel interception.
 
+## 3D tool globe and motion layer (October 2026)
+
+Research into 2026 award-winning and hiring-focused portfolios favored one meaningful 3D piece over decorative effects, so the introduction pairs a left-aligned name with a 3D globe of the 24 real toolkit icons orbiting the portrait. Icons in front pass over the portrait and those behind it dim. The globe turns slowly, can be dragged (horizontal only on touch, so vertical swipes still scroll), and keeps a little momentum.
+
+Every icon opens that tool in the Tools stage and moves focus to the Tools heading. The globe is a toolbar with one tab stop: arrow keys, Home and End move between icons and turn the focused one to the front, where its name appears. It uses the same icon files as the Tools stage, so it adds no downloads. It is plain DOM with transforms and opacity, pauses offscreen and in hidden tabs, and holds still (still draggable) under reduced motion, effects-off or save-data.
+
+The name rises word by word behind a mask (words, not letters, so Hebrew and Japanese shape correctly); the heading keeps its full accessible name. A soft red glow sits behind the globe.
+
+Experience and capability panels are spotlight surfaces: a soft red light and border highlight follow the mouse, with up to 3° of tilt. Touch never triggers them, and tilt is off with reduced motion or effects off. Capability panels carry 01–03 indices.
+
+The same light, without tilt, extends to the about panel, the contact form, project catalog cards and experience entries. Education in the about panel reads as a short dotted timeline. The experience page has a vertical timeline whose red line fills as you read (native view timeline; full and static elsewhere), with a dot per role. The projects stage has a soft red floor of light under the media, the tools stage frames the active icon in an orbit ring that echoes the globe, the contact section has a warm glow and an email link whose underline draws in, and interior pages share a faint glow behind their headings. None of these touch the scroll-animated media or icons themselves.
+
+Section headings, the about panel and these surfaces reveal with native view timelines (`translate`, `scale` and opacity only, so the tilt is untouched). A thin red reading-progress line follows the root scroll timeline. Both run only where `animation-timeline` is supported, motion is allowed and effects are on. Reveals never apply to the pinned project or tool stages.
+
+### Projects and tools showcases
+
+On desktop (1024px and up) the project story is a two-column chapter: an outline numeral, title, summary, a red tech line and features on the left, and the screenshot in a framed window on the right. The tool stage pairs the icon stack, shown in a glowing panel with an orbit ring, with left-aligned details, and adds a dock of every tool icon below. Dock buttons are mouse shortcuts only (`aria-hidden`, `tabIndex=-1`) because the select is the accessible control. Phones and tablets keep the single-column layout without the dock. Only borders, backgrounds and layout change, so the scroll-driven animations and pinning stay as they were.
+
 ## Complete states and verification
 
 Keep all eleven public repositories in the homepage scroll story and project index, with internal detail pages and source links. Order both surfaces newest to oldest by repository creation date, independent of later commits or edits. Search and the card grid appear only on `/projects`; the old `/#all-projects` bookmark redirects there. A shared paginated query and complete local snapshot preserve useful content during loading/failure. Future repositories gain factual entries and stable ID routes automatically.

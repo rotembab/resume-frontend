@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link, Navigate, useLocation } from 'react-router';
 import { getStudioCopy } from '../../data/studio-copy';
 import { getHomeCopy } from '../../data/home-copy';
@@ -13,6 +13,7 @@ import { ContactSection } from './shared-sections';
 import { ToolDeck } from './tool-deck';
 import { useToolCards } from './use-tool-cards';
 import { getToolDeckCopy } from '../../data/tool-deck-copy';
+import { SpotlightCard } from './spotlight-card';
 
 const HomePage = () => {
   const location = useLocation();
@@ -23,6 +24,16 @@ const HomePage = () => {
   const home = getHomeCopy(i18n.language);
   const resume = useResume();
   const { motionAllowed } = useEffects();
+  const [toolRequest, setToolRequest] = useState<{
+    id: string;
+    nonce: number;
+  }>();
+  const openTool = useCallback((id: string) => {
+    setToolRequest((current) => ({ id, nonce: (current?.nonce ?? 0) + 1 }));
+    requestAnimationFrame(() =>
+      document.getElementById('tools-title')?.focus({ preventScroll: true })
+    );
+  }, []);
   const studies = resume.experience.filter(
     (entry) => entry.id === 'ono-bsc' || entry.id === 'kernelios'
   );
@@ -33,7 +44,8 @@ const HomePage = () => {
     return <Navigate to='/projects' replace />;
   return (
     <div className='portfolio-home' data-effects={motionAllowed ? 'on' : 'off'}>
-      <StudioHero />
+      <div className='page-progress' aria-hidden='true' />
+      <StudioHero onToolSelect={openTool} />
       <section
         id='experience'
         className='professional-proof page-container'
@@ -46,7 +58,7 @@ const HomePage = () => {
           const job = resume.experience.find((entry) => entry.id === jobId);
           if (!job) return null;
           return (
-            <article key={jobId}>
+            <SpotlightCard key={jobId} className='reveal'>
               <div className='proof-heading'>
                 <h3>{job.organization}</h3>
                 <p>{job.period.durationLabel}</p>
@@ -55,7 +67,7 @@ const HomePage = () => {
               <Link className='text-link' to={'/experience#' + jobId}>
                 {studio.seeExperience}
               </Link>
-            </article>
+            </SpotlightCard>
           );
         })}
       </section>
@@ -64,7 +76,7 @@ const HomePage = () => {
         className='featured-work page-container'
         aria-labelledby='featured-title'
       >
-        <div className='section-heading'>
+        <div className='section-heading reveal'>
           <div>
             <h2 id='featured-title' tabIndex={-1}>
               {home.featuredTitle}
@@ -83,7 +95,7 @@ const HomePage = () => {
         className='home-tools page-container'
         aria-labelledby='tools-title'
       >
-        <div className='section-heading'>
+        <div className='section-heading reveal'>
           <div>
             <h2 id='tools-title' tabIndex={-1}>
               {copy.skillsTitle}
@@ -94,19 +106,22 @@ const HomePage = () => {
             {getToolDeckCopy(i18n.language).fullPage}
           </Link>
         </div>
-        <ToolDeck cards={tools} />
+        <ToolDeck cards={tools} request={toolRequest} />
       </section>
       <section
         className='home-capabilities page-container'
         aria-labelledby='capabilities-title'
       >
-        <div className='section-heading'>
+        <div className='section-heading reveal'>
           <h2 id='capabilities-title'>{home.capabilities}</h2>
         </div>
         <div className='home-capability-grid'>
           {(['interfaces', 'systems', 'delivery'] as const).map(
-            (capability) => (
-              <article key={capability}>
+            (capability, index) => (
+              <SpotlightCard key={capability} className='reveal'>
+                <span className='capability-index' aria-hidden='true'>
+                  {String(index + 1).padStart(2, '0')}
+                </span>
                 <h3>{studio.capabilities[capability].title}</h3>
                 <p>{studio.capabilities[capability].description}</p>
                 <Link
@@ -121,14 +136,16 @@ const HomePage = () => {
                     ? studio.seeSystems
                     : studio.seeExperience}
                 </Link>
-              </article>
+              </SpotlightCard>
             )
           )}
         </div>
       </section>
-      <section
+      <SpotlightCard
+        as='section'
+        tilt={false}
         id='about'
-        className='home-about page-container'
+        className='home-about page-container reveal'
         aria-labelledby='about-title'
       >
         <div className='home-about-copy'>
@@ -150,7 +167,7 @@ const HomePage = () => {
             </article>
           ))}
         </div>
-      </section>
+      </SpotlightCard>
       <ContactSection />
     </div>
   );
