@@ -13,6 +13,8 @@ import { ContactSection } from './shared-sections';
 import { ToolDeck } from './tool-deck';
 import { useToolCards } from './use-tool-cards';
 import { getToolDeckCopy } from '../../data/tool-deck-copy';
+import { SpotlightCard } from './spotlight-card';
+import { ToolMarquee } from './tool-marquee';
 
 const HomePage = () => {
   const location = useLocation();
@@ -33,7 +35,9 @@ const HomePage = () => {
     return <Navigate to='/projects' replace />;
   return (
     <div className='portfolio-home' data-effects={motionAllowed ? 'on' : 'off'}>
+      <div className='page-progress' aria-hidden='true' />
       <StudioHero />
+      <ToolMarquee names={tools.map((tool) => tool.name)} />
       <section
         id='experience'
         className='professional-proof page-container'
@@ -46,7 +50,7 @@ const HomePage = () => {
           const job = resume.experience.find((entry) => entry.id === jobId);
           if (!job) return null;
           return (
-            <article key={jobId}>
+            <SpotlightCard key={jobId} className='reveal'>
               <div className='proof-heading'>
                 <h3>{job.organization}</h3>
                 <p>{job.period.durationLabel}</p>
@@ -55,7 +59,7 @@ const HomePage = () => {
               <Link className='text-link' to={'/experience#' + jobId}>
                 {studio.seeExperience}
               </Link>
-            </article>
+            </SpotlightCard>
           );
         })}
       </section>
@@ -64,7 +68,7 @@ const HomePage = () => {
         className='featured-work page-container'
         aria-labelledby='featured-title'
       >
-        <div className='section-heading'>
+        <div className='section-heading reveal'>
           <div>
             <h2 id='featured-title' tabIndex={-1}>
               {home.featuredTitle}
@@ -83,7 +87,7 @@ const HomePage = () => {
         className='home-tools page-container'
         aria-labelledby='tools-title'
       >
-        <div className='section-heading'>
+        <div className='section-heading reveal'>
           <div>
             <h2 id='tools-title' tabIndex={-1}>
               {copy.skillsTitle}
@@ -100,13 +104,16 @@ const HomePage = () => {
         className='home-capabilities page-container'
         aria-labelledby='capabilities-title'
       >
-        <div className='section-heading'>
+        <div className='section-heading reveal'>
           <h2 id='capabilities-title'>{home.capabilities}</h2>
         </div>
         <div className='home-capability-grid'>
           {(['interfaces', 'systems', 'delivery'] as const).map(
-            (capability) => (
-              <article key={capability}>
+            (capability, index) => (
+              <SpotlightCard key={capability} className='reveal'>
+                <span className='capability-index' aria-hidden='true'>
+                  {String(index + 1).padStart(2, '0')}
+                </span>
                 <h3>{studio.capabilities[capability].title}</h3>
                 <p>{studio.capabilities[capability].description}</p>
                 <Link
@@ -121,14 +128,14 @@ const HomePage = () => {
                     ? studio.seeSystems
                     : studio.seeExperience}
                 </Link>
-              </article>
+              </SpotlightCard>
             )
           )}
         </div>
       </section>
       <section
         id='about'
-        className='home-about page-container'
+        className='home-about page-container reveal'
         aria-labelledby='about-title'
       >
         <div className='home-about-copy'>

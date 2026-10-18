@@ -58,6 +58,18 @@ Create tool timelines after React commits the scroll spacer. Reattach after a ro
 
 Motion concentrates on the initial identity entrance, selected project media, and transitions into detail imagery. Use a soft settling curve, brief control feedback, and no automatic cycling or wheel interception.
 
+## 3D introduction and motion layer (October 2026)
+
+The introduction pairs a left-aligned kinetic name with a live 3D centerpiece: a glossy crimson form that slowly morphs, circled by a graphite orbit ring and three satellites, with the portrait floating in front. It is a single raymarched WebGL fragment shader (`hero-scene.tsx`), so no 3D library is downloaded. The camera follows the mouse gently and the form deepens its morph as the reader scrolls. It renders one still frame when motion is reduced, effects are off or save-data is on; it pauses offscreen and in hidden tabs, caps pixel density at 1.5, and falls back to a CSS sphere when WebGL is unavailable or the context is lost.
+
+The name rises word by word behind a mask (words, not letters, so Hebrew and Japanese shape correctly); the heading keeps its full accessible name. The role carries a slow crimson shimmer. A faint technical grid and red glow sit behind the introduction.
+
+A decorative technology ribbon follows the introduction and pauses on hover. It is hidden from assistive technology because the Tools section lists the same names.
+
+Experience and capability panels are spotlight surfaces: a soft red light and border highlight follow the mouse, with up to 5° of 3D tilt. Touch input never triggers them, and tilt is disabled with reduced motion or effects off. Capability panels carry 01–03 indices.
+
+Section headings, the about panel and these surfaces reveal with native view timelines (`translate`, `scale` and opacity only, so the tilt transform is untouched). A thin red reading-progress line follows the root scroll timeline. Both run only where `animation-timeline` is supported, motion is allowed and effects are on; elsewhere content is simply visible. Reveals are never applied to the pinned project or tool stages.
+
 ## Complete states and verification
 
 Keep all eleven public repositories in the homepage scroll story and project index, with internal detail pages and source links. Order both surfaces newest to oldest by repository creation date, independent of later commits or edits. Search and the card grid appear only on `/projects`; the old `/#all-projects` bookmark redirects there. A shared paginated query and complete local snapshot preserve useful content during loading/failure. Future repositories gain factual entries and stable ID routes automatically.
