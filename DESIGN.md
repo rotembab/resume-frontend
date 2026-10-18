@@ -72,6 +72,10 @@ The same light, without tilt, extends to the about panel, the contact form, proj
 
 Section headings, the about panel and these surfaces reveal with native view timelines (`translate`, `scale` and opacity only, so the tilt is untouched). A thin red reading-progress line follows the root scroll timeline. Both run only where `animation-timeline` is supported, motion is allowed and effects are on. Reveals never apply to the pinned project or tool stages.
 
+### Projects and tools showcases
+
+On desktop (1024px and up) the project story is a two-column chapter: an outline numeral, title, summary, a red tech line and features on the left, and the screenshot in a framed window on the right. The tool stage pairs the icon stack, shown in a glowing panel with an orbit ring, with left-aligned details, and adds a dock of every tool icon below. Dock buttons are mouse shortcuts only (`aria-hidden`, `tabIndex=-1`) because the select is the accessible control. Phones and tablets keep the single-column layout without the dock. Only borders, backgrounds and layout change, so the scroll-driven animations and pinning stay as they were.
+
 ## Complete states and verification
 
 Keep all eleven public repositories in the homepage scroll story and project index, with internal detail pages and source links. Order both surfaces newest to oldest by repository creation date, independent of later commits or edits. Search and the card grid appear only on `/projects`; the old `/#all-projects` bookmark redirects there. A shared paginated query and complete local snapshot preserve useful content during loading/failure. Future repositories gain factual entries and stable ID routes automatically.

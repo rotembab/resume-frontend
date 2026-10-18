@@ -566,6 +566,21 @@ export const ToolDeck = ({
             </span>
           ))}
         </div>
+        <div className='tool-dock' aria-hidden='true'>
+          {cards.map((card, index) => (
+            <button
+              type='button'
+              key={card.id}
+              tabIndex={-1}
+              className='tool-dock-item'
+              data-active={index === active}
+              title={card.name}
+              onClick={() => choose(index)}
+            >
+              <ToolIcon card={card} />
+            </button>
+          ))}
+        </div>
         <div className='tool-deck-details' id='tool-deck-details'>
           {cards.map((card, index) => (
             <article
