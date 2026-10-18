@@ -1,7 +1,7 @@
 import { HTMLAttributes, PointerEvent, ReactNode } from 'react';
 import { useEffects } from './effects-context';
 
-const MAX_TILT = 5;
+const MAX_TILT = 3;
 
 /**
  * A surface whose border and background follow the mouse with a soft red

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link, Navigate, useLocation } from 'react-router';
 import { getStudioCopy } from '../../data/studio-copy';
 import { getHomeCopy } from '../../data/home-copy';
@@ -14,7 +14,6 @@ import { ToolDeck } from './tool-deck';
 import { useToolCards } from './use-tool-cards';
 import { getToolDeckCopy } from '../../data/tool-deck-copy';
 import { SpotlightCard } from './spotlight-card';
-import { ToolMarquee } from './tool-marquee';
 
 const HomePage = () => {
   const location = useLocation();
@@ -25,6 +24,16 @@ const HomePage = () => {
   const home = getHomeCopy(i18n.language);
   const resume = useResume();
   const { motionAllowed } = useEffects();
+  const [toolRequest, setToolRequest] = useState<{
+    id: string;
+    nonce: number;
+  }>();
+  const openTool = useCallback((id: string) => {
+    setToolRequest((current) => ({ id, nonce: (current?.nonce ?? 0) + 1 }));
+    requestAnimationFrame(() =>
+      document.getElementById('tools-title')?.focus({ preventScroll: true })
+    );
+  }, []);
   const studies = resume.experience.filter(
     (entry) => entry.id === 'ono-bsc' || entry.id === 'kernelios'
   );
@@ -36,8 +45,7 @@ const HomePage = () => {
   return (
     <div className='portfolio-home' data-effects={motionAllowed ? 'on' : 'off'}>
       <div className='page-progress' aria-hidden='true' />
-      <StudioHero />
-      <ToolMarquee names={tools.map((tool) => tool.name)} />
+      <StudioHero onToolSelect={openTool} />
       <section
         id='experience'
         className='professional-proof page-container'
@@ -98,7 +106,7 @@ const HomePage = () => {
             {getToolDeckCopy(i18n.language).fullPage}
           </Link>
         </div>
-        <ToolDeck cards={tools} />
+        <ToolDeck cards={tools} request={toolRequest} />
       </section>
       <section
         className='home-capabilities page-container'

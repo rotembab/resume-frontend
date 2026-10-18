@@ -1,9 +1,10 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import { EffectsContext } from './effects-context';
-import { HeroScene } from './hero-scene';
 import { SpotlightCard } from './spotlight-card';
-import { ToolMarquee } from './tool-marquee';
+import { ToolGlobe } from './tool-globe';
+import { facing, rotate, spherePoints } from './globe-math';
+import type { ToolCard } from './tool-deck';
 
 afterEach(cleanup);
 
@@ -33,14 +34,6 @@ const withEffects = (motionAllowed: boolean, node: JSX.Element) => (
 );
 
 describe('3D introduction and motion surfaces', () => {
-  it('falls back to a decorative CSS form when WebGL is unavailable', () => {
-    const { container } = render(<HeroScene animate />);
-    const scene = container.querySelector('.hero-scene')!;
-    expect(scene).toHaveAttribute('aria-hidden', 'true');
-    expect(scene).toHaveAttribute('data-fallback', 'true');
-    expect(container.querySelector('canvas')).toBeNull();
-  });
-
   it('follows the mouse with light and tilt only while motion is allowed', () => {
     const { rerender } = render(
       withEffects(true, <SpotlightCard data-testid='card'>Card</SpotlightCard>)
@@ -72,9 +65,56 @@ describe('3D introduction and motion surfaces', () => {
     expect(card.style.getPropertyValue('--spot-opacity')).toBe('');
   });
 
-  it('keeps the technology ribbon out of the accessibility tree', () => {
-    const { container } = render(<ToolMarquee names={['React', 'Kotlin']} />);
-    expect(container.firstElementChild).toHaveAttribute('aria-hidden', 'true');
-    expect(screen.queryByRole('list')).toBeNull();
+  it('spreads tools over a sphere and can turn any of them to the front', () => {
+    const points = spherePoints(24);
+    expect(points).toHaveLength(24);
+    points.forEach((point) => {
+      expect(Math.hypot(point.x, point.y, point.z)).toBeCloseTo(1, 5);
+      const { yaw, pitch } = facing(point);
+      const front = rotate(point, yaw, pitch);
+      expect(front.x).toBeCloseTo(0, 5);
+      expect(front.y).toBeCloseTo(0, 5);
+      expect(front.z).toBeCloseTo(1, 5);
+    });
+  });
+
+  it('offers every tool as one keyboard stop and opens the chosen tool', () => {
+    const cards = ['React', 'Kotlin', 'Docker'].map((name) => ({
+      id: name.toLowerCase(),
+      name,
+    })) as unknown as ToolCard[];
+    const selected: string[] = [];
+    render(
+      <ToolGlobe
+        cards={cards}
+        animate={false}
+        label='Technologies I work with'
+        hint='Drag to spin'
+        itemLabel={(name) => name + ': see it in the toolkit'}
+        onSelect={(id) => selected.push(id)}
+      />
+    );
+    const toolbar = screen.getByRole('toolbar', {
+      name: 'Technologies I work with',
+    });
+    const buttons = screen.getAllByRole('button');
+    expect(buttons).toHaveLength(3);
+    expect(buttons.filter((button) => button.tabIndex === 0)).toHaveLength(1);
+
+    buttons[0].focus();
+    fireEvent.keyDown(toolbar, { key: 'ArrowRight' });
+    const kotlin = screen.getByRole('button', {
+      name: 'Kotlin: see it in the toolkit',
+    });
+    expect(kotlin).toHaveFocus();
+    expect(kotlin.tabIndex).toBe(0);
+    fireEvent.keyDown(toolbar, { key: 'ArrowLeft' });
+    fireEvent.keyDown(toolbar, { key: 'ArrowLeft' });
+    expect(
+      screen.getByRole('button', { name: 'Docker: see it in the toolkit' })
+    ).toHaveFocus();
+
+    fireEvent.click(kotlin, { detail: 0 });
+    expect(selected).toEqual(['kotlin']);
   });
 });
