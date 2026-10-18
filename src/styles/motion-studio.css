@@ -403,6 +403,201 @@ html[lang='ja'] .identity-copy h1 {
   font-variant-numeric: tabular-nums;
 }
 
+/* ---------- Panels across the site ---------- */
+.home-about.spotlight-card,
+.contact-form.spotlight-card,
+.experience-entry.spotlight-card,
+.catalog-card.spotlight-card {
+  border: 1px solid #ffffff12;
+}
+.home-about.spotlight-card {
+  background: linear-gradient(160deg, #1d1d1f, #111112 70%);
+}
+
+/* Education reads as a short timeline. */
+.home-education article {
+  position: relative;
+  padding-inline-start: 24px;
+}
+.home-education article::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 7px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-focus);
+  box-shadow: 0 0 0 4px #d3392e26;
+}
+.home-education article + article::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: 4px;
+  inset-block: -24px calc(100% - 7px);
+  width: 1px;
+  background: linear-gradient(#d3392e66, #ffffff1f);
+}
+
+/* Projects stage: a soft floor of light under the media. */
+.project-carousel .carousel-window {
+  position: relative;
+  isolation: isolate;
+}
+.project-carousel .carousel-window::before {
+  content: '';
+  position: absolute;
+  inset-inline: 10%;
+  inset-block-end: 4%;
+  height: 46%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 50% 60% at 50% 70%,
+    #b91c1c2e,
+    transparent 70%
+  );
+}
+
+/* Tools stage: the active icon sits in an orbit, echoing the hero globe. */
+.tool-icon-stack::before {
+  content: '';
+  position: absolute;
+  inset-block-start: -22px;
+  inset-inline-start: 50%;
+  width: 160px;
+  height: 160px;
+  translate: -50% 0;
+  border-radius: 50%;
+  border: 1px solid #ffffff14;
+  background: radial-gradient(circle, #b91c1c2e, transparent 65%);
+  pointer-events: none;
+}
+[dir='rtl'] .tool-icon-stack::before {
+  translate: 50% 0;
+}
+
+/* Projects catalog. */
+.catalog-card.spotlight-card .catalog-project-image {
+  transition: transform 500ms var(--ease-standard);
+}
+.catalog-card.spotlight-card:hover .catalog-project-image {
+  transform: scale(1.04);
+}
+
+/* Experience page: a timeline that fills in red as you read. */
+.experience-page > .experience-list,
+.education-section .experience-list {
+  position: relative;
+  padding-inline-start: 36px;
+  view-timeline: --experience block;
+}
+.experience-page > .experience-list::before,
+.education-section .experience-list::before,
+.experience-page > .experience-list::after,
+.education-section .experience-list::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: 7px;
+  inset-block: 40px;
+  width: 2px;
+  border-radius: 2px;
+  background: #ffffff14;
+}
+.experience-page > .experience-list::after,
+.education-section .experience-list::after {
+  background: linear-gradient(var(--color-focus), var(--color-accent));
+  transform-origin: top;
+  transform: none;
+}
+.experience-page .experience-item {
+  position: relative;
+}
+.experience-page .experience-item::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset-inline-start: -36px;
+  inset-block-start: 44px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--color-focus);
+  background: var(--color-canvas);
+  box-shadow:
+    0 0 0 5px #000,
+    0 0 18px #d3392e66;
+}
+
+/* Contact: a warm glow and a livelier email link. */
+.contact-section {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+.contact-section::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: -10%;
+  inset-block-start: 10%;
+  width: 60%;
+  height: 80%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(closest-side, #b91c1c24, transparent);
+}
+[dir='rtl'] .contact-section::before {
+  inset-inline-start: auto;
+  inset-inline-end: -10%;
+}
+.contact-email {
+  background: linear-gradient(var(--color-focus), var(--color-focus)) 0 100% /
+    0% 2px no-repeat;
+  transition: background-size 500ms var(--ease-standard);
+}
+[dir='rtl'] .contact-email {
+  background-position: 100% 100%;
+}
+.contact-email:hover,
+.contact-email:focus-visible {
+  background-size: 100% 2px;
+}
+.contact-email > span {
+  transition: transform 300ms var(--ease-standard);
+}
+.contact-email:hover > span {
+  transform: translate(3px, -3px);
+}
+.contact-form.spotlight-card {
+  background: linear-gradient(160deg, #1d1d1f, #111112 70%);
+}
+.form-field input:focus,
+.form-field textarea:focus {
+  box-shadow: 0 0 0 4px #d3392e2e;
+}
+
+/* Interior pages share the soft glow behind their headings. */
+[data-studio-page].interior-page,
+[data-studio-page].detail-page {
+  position: relative;
+  isolation: isolate;
+}
+[data-studio-page].interior-page::before,
+[data-studio-page].detail-page::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: 520px;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 50% 70% at 30% 0%,
+    #b91c1c1f,
+    transparent 70%
+  );
+}
+
 /* ---------- Section headings ---------- */
 .portfolio-home .section-heading h2,
 .portfolio-home .home-about h2,
@@ -438,6 +633,12 @@ html[lang='ja'] .identity-copy h1 {
       animation-timeline: view();
       animation-range: entry 0% entry 70%;
     }
+    [data-effects='on'] .experience-list::after {
+      transform: scaleY(0);
+      animation: timeline-fill linear both;
+      animation-timeline: --experience;
+      animation-range: cover 10% cover 70%;
+    }
     [data-effects='on'] .page-progress {
       opacity: 1;
       animation: page-progress linear both;
@@ -457,6 +658,11 @@ html[lang='ja'] .identity-copy h1 {
     scale: none;
   }
 }
+@keyframes timeline-fill {
+  to {
+    transform: scaleY(1);
+  }
+}
 @keyframes page-progress {
   to {
     transform: scaleX(1);
@@ -474,4 +680,23 @@ html[lang='ja'] .identity-copy h1 {
 }
 [data-effects='off'] .spotlight-card {
   transform: none;
+}
+
+@media (max-width: 767px) {
+  .experience-page > .experience-list,
+  .education-section .experience-list {
+    padding-inline-start: 22px;
+  }
+  .experience-page > .experience-list::before,
+  .education-section .experience-list::before,
+  .experience-page > .experience-list::after,
+  .education-section .experience-list::after {
+    inset-inline-start: 4px;
+  }
+  .experience-page .experience-item::before {
+    inset-inline-start: -23px;
+    width: 12px;
+    height: 12px;
+    inset-block-start: 34px;
+  }
 }

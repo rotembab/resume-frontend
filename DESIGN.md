@@ -68,6 +68,8 @@ The name rises word by word behind a mask (words, not letters, so Hebrew and Jap
 
 Experience and capability panels are spotlight surfaces: a soft red light and border highlight follow the mouse, with up to 3° of tilt. Touch never triggers them, and tilt is off with reduced motion or effects off. Capability panels carry 01–03 indices.
 
+The same light, without tilt, extends to the about panel, the contact form, project catalog cards and experience entries. Education in the about panel reads as a short dotted timeline. The experience page has a vertical timeline whose red line fills as you read (native view timeline; full and static elsewhere), with a dot per role. The projects stage has a soft red floor of light under the media, the tools stage frames the active icon in an orbit ring that echoes the globe, the contact section has a warm glow and an email link whose underline draws in, and interior pages share a faint glow behind their headings. None of these touch the scroll-animated media or icons themselves.
+
 Section headings, the about panel and these surfaces reveal with native view timelines (`translate`, `scale` and opacity only, so the tilt is untouched). A thin red reading-progress line follows the root scroll timeline. Both run only where `animation-timeline` is supported, motion is allowed and effects are on. Reveals never apply to the pinned project or tool stages.
 
 ## Complete states and verification

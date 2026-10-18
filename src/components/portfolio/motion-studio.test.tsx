@@ -56,6 +56,24 @@ describe('3D introduction and motion surfaces', () => {
     expect(card.style.getPropertyValue('--tilt-y')).toBe('0deg');
   });
 
+  it('lights large panels without tilting them', () => {
+    render(
+      withEffects(
+        true,
+        <SpotlightCard as='section' tilt={false} data-testid='panel'>
+          Panel
+        </SpotlightCard>
+      )
+    );
+    const panel = screen.getByTestId('panel');
+    expect(panel.tagName).toBe('SECTION');
+    panel.getBoundingClientRect = () =>
+      ({ left: 0, top: 0, width: 200, height: 100 }) as DOMRect;
+    pointer(panel, 'pointermove', 'mouse', 150, 25);
+    expect(panel.style.getPropertyValue('--spot-opacity')).toBe('1');
+    expect(panel.style.getPropertyValue('--tilt-y')).toBe('');
+  });
+
   it('ignores touch input on spotlight surfaces', () => {
     render(
       withEffects(true, <SpotlightCard data-testid='card'>Card</SpotlightCard>)

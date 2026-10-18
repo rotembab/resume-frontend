@@ -1,4 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
+import { SpotlightCard } from './spotlight-card';
 import { Link } from 'react-router';
 import type { CatalogProject } from '../../data/project-catalog';
 import { getCatalogCopy, getCatalogLanguage } from '../../data/catalog-copy';
@@ -260,7 +261,7 @@ export const ProjectCatalog = ({
       </div>
       <div className='catalog-grid'>
         {shown.map((project) => (
-          <article
+          <SpotlightCard
             className='catalog-card'
             key={project.slug}
             data-project={project.slug}
@@ -299,7 +300,7 @@ export const ProjectCatalog = ({
                 <span aria-hidden='true'>↗</span>
               </a>
             </div>
-          </article>
+          </SpotlightCard>
         ))}
       </div>
       {shown.length === 0 && (

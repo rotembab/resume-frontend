@@ -141,7 +141,9 @@ const HomePage = () => {
           )}
         </div>
       </section>
-      <section
+      <SpotlightCard
+        as='section'
+        tilt={false}
         id='about'
         className='home-about page-container reveal'
         aria-labelledby='about-title'
@@ -165,7 +167,7 @@ const HomePage = () => {
             </article>
           ))}
         </div>
-      </section>
+      </SpotlightCard>
       <ContactSection />
     </div>
   );

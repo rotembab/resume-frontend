@@ -4,8 +4,10 @@ import emailjs from '@emailjs/browser';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useSnackbar } from '../../ui/snackbar/use-snackbar';
 import { usePortfolio } from '../../portfolio/use-portfolio';
+import { useSpotlight } from '../../portfolio/use-spotlight';
 
 export const ContactForm = () => {
+  const spotlight = useSpotlight(false);
   const { copy } = usePortfolio();
   const { showSnackbar } = useSnackbar();
   const [submitting, setSubmitting] = useState(false);
@@ -84,7 +86,12 @@ export const ContactForm = () => {
     await formik.submitForm();
   };
   return (
-    <form className='contact-form' onSubmit={handleSubmit} noValidate>
+    <form
+      className='contact-form spotlight-card'
+      onSubmit={handleSubmit}
+      noValidate
+      {...spotlight}
+    >
       <div className='contact-field-row'>
         <div className='form-field'>
           <label htmlFor='contact-name'>{copy.contactName}</label>

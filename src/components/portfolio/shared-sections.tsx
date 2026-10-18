@@ -4,6 +4,7 @@ import { useResume } from '../../data/use-resume';
 import { splitExperience } from '../pages/experience/experience-sections';
 import { ContactForm } from '../pages/contact-me/contact-form.component';
 import { CV_PUBLIC_PATH } from '../../config/cv';
+import { SpotlightCard } from './spotlight-card';
 
 export const ExperienceList = ({
   compact = false,
@@ -32,7 +33,11 @@ export const ExperienceList = ({
     >
       {entries.map((entry) => (
         <li className='experience-item' key={entry.id}>
-          <article className='experience-entry' id={entry.id}>
+          <SpotlightCard
+            className='experience-entry'
+            id={entry.id}
+            tilt={false}
+          >
             <div className='experience-metadata'>
               <p className='experience-period'>{entry.period.durationLabel}</p>
             </div>
@@ -50,7 +55,7 @@ export const ExperienceList = ({
                 </ul>
               )}
             </div>
-          </article>
+          </SpotlightCard>
         </li>
       ))}
     </ol>
