@@ -136,8 +136,7 @@ html[dir='rtl'] .tool-deck-field::after {
 }
 .tool-icon[data-icon='nextjs'],
 .tool-icon[data-icon='helm'],
-.tool-icon[data-icon='github'],
-.tool-icon[data-icon='express'] {
+.tool-icon[data-icon='github'] {
   background: #f5f5f7;
 }
 .tool-deck-details {
@@ -215,6 +214,34 @@ html[dir='rtl'] .tool-deck-field::after {
   }
   .tool-card h2 {
     font-size: 28px;
+  }
+  /* Keep the stage short enough to pin on phones, like the project stage. */
+  .tool-deck-controls {
+    row-gap: 8px;
+    margin-block-end: 20px;
+    padding-block-end: 12px;
+  }
+  /* Room for the glow ring, which rises above the icon. */
+  .tool-icon-stack {
+    margin-block: 40px 16px;
+  }
+  .tool-card h2 {
+    margin: 8px 0 6px;
+  }
+  .tool-card-evidence {
+    margin-block-start: 16px;
+  }
+  .tool-card-actions {
+    margin-block-start: 12px;
+  }
+}
+@media (max-width: 767px) and (max-height: 720px) {
+  .tool-icon-stack {
+    height: 84px;
+    margin-block: 32px 12px;
+  }
+  .tool-icon-stack .tool-icon-token {
+    scale: 0.75;
   }
 }
 @media (prefers-reduced-motion: reduce) {
