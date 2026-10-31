@@ -221,8 +221,9 @@ html[dir='rtl'] .tool-deck-field::after {
     margin-block-end: 20px;
     padding-block-end: 12px;
   }
+  /* Room for the glow ring, which rises above the icon. */
   .tool-icon-stack {
-    margin-block-end: 16px;
+    margin-block: 40px 16px;
   }
   .tool-card h2 {
     margin: 8px 0 6px;
@@ -237,7 +238,7 @@ html[dir='rtl'] .tool-deck-field::after {
 @media (max-width: 767px) and (max-height: 720px) {
   .tool-icon-stack {
     height: 84px;
-    margin-block-end: 12px;
+    margin-block: 32px 12px;
   }
   .tool-icon-stack .tool-icon-token {
     scale: 0.75;
