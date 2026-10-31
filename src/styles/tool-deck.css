@@ -136,8 +136,7 @@ html[dir='rtl'] .tool-deck-field::after {
 }
 .tool-icon[data-icon='nextjs'],
 .tool-icon[data-icon='helm'],
-.tool-icon[data-icon='github'],
-.tool-icon[data-icon='express'] {
+.tool-icon[data-icon='github'] {
   background: #f5f5f7;
 }
 .tool-deck-details {
