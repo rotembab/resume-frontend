@@ -796,6 +796,13 @@ html[lang='ja'] .identity-copy h1 {
     display: none;
   }
 }
+@media (max-width: 767px) and (max-height: 720px) {
+  .tool-deck-story .tool-icon-stack::before {
+    inset-block-start: -18px;
+    width: 120px;
+    height: 120px;
+  }
+}
 
 /* ---------- Section headings ---------- */
 .portfolio-home .section-heading h2,

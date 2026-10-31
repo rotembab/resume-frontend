@@ -423,6 +423,7 @@ export const ToolDeck = ({
     if (main) observer?.observe(main);
     window.addEventListener('scroll', scroll, { passive: true });
     window.addEventListener('resize', resize);
+    window.visualViewport?.addEventListener('resize', resize);
     window.addEventListener('wheel', userScroll, { passive: true });
     window.addEventListener('touchmove', userScroll, { passive: true });
     let mounted = true;
@@ -435,6 +436,7 @@ export const ToolDeck = ({
       observer?.disconnect();
       window.removeEventListener('scroll', scroll);
       window.removeEventListener('resize', resize);
+      window.visualViewport?.removeEventListener('resize', resize);
       window.removeEventListener('wheel', userScroll);
       window.removeEventListener('touchmove', userScroll);
       if (frame.current !== undefined) cancelAnimationFrame(frame.current);
