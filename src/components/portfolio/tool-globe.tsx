@@ -12,6 +12,7 @@ import type { ToolCard } from './tool-deck';
 import {
   clampPitch,
   facing,
+  GLOBE_START,
   nearestAngle,
   rotate,
   spherePoints,
@@ -49,8 +50,8 @@ export const ToolGlobe = ({
   const [focusIndex, setFocusIndex] = useState(0);
   const [highlight, setHighlight] = useState<number | null>(null);
   const state = useRef({
-    yaw: 0.6,
-    pitch: -0.28,
+    yaw: GLOBE_START.yaw,
+    pitch: GLOBE_START.pitch,
     velocity: 0,
     pitchVelocity: 0,
     target: null as null | { yaw: number; pitch: number },

@@ -84,10 +84,12 @@ Preserve CV bytes, professional facts, language preferences and EmailJS delivery
 
 ## Social sharing
 
-Build the share image from the same name, role, description, portrait and theme
-sources as the homepage introduction. Render the React HTML composition at
+Build the share image from the same name, role, description, portrait, tool
+globe and theme sources as the homepage introduction, laid out like the hero
+(text left, portrait in the globe right, red glow behind it). Front tiles that
+would cover the face are left out of the still image. Render the React HTML composition at
 1200×630 during every production build. Ship static Open Graph metadata and a
-content-hashed PNG URL for `https://rotembabani.com/`, plus an HTML preview at
+content-hashed JPEG URL (under 300 KB for WhatsApp) for `https://rotembabani.com/`, plus an HTML preview at
 `/social-preview.html`. Sharing apps choose their surrounding card layout and
 may retain cached metadata; no client-side React execution is required to read
 these tags.
