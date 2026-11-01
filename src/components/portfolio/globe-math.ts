@@ -1,6 +1,9 @@
 const TAU = Math.PI * 2;
 const MAX_PITCH = 1.1;
 
+/** The orientation the globe starts at; the share image freezes this frame. */
+export const GLOBE_START = { yaw: 0.6, pitch: -0.28 };
+
 export type Point = { x: number; y: number; z: number };
 
 /** Evenly spreads n points over a unit sphere (Fibonacci lattice). */

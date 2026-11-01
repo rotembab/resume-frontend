@@ -133,19 +133,28 @@ review and actual browser zoom require separate checks.
 
 ## Link previews
 
-Every production build renders the homepage's current name, role, description
-and portrait into a 1200×630 PNG and an HTML preview at `/social-preview.html`.
-The renderer reads `resume.json`, `portfolio-copy.ts`, the portrait file and the
-active theme tokens. `SocialPreview` provides the shared HTML/image composition;
-no second biography or screenshot requires manual updating.
+Every production build renders the homepage introduction into a 1200×630 JPEG
+(kept under WhatsApp's ~300 KB limit) and an HTML preview at
+`/social-preview.html`. It mirrors the hero: gradient name, role, description,
+location, and the portrait inside the 3D tool globe, frozen at the globe's
+starting angle. The renderer reads `resume.json`, `portfolio-copy.ts`, the
+portrait, the same tool list and icons as the globe (`buildToolCards`,
+`icon-manifest.json`), the globe geometry (`globe-math.ts`) and the active theme
+tokens. `SocialPreview` provides the shared HTML/image composition; no second
+biography or screenshot requires manual updating.
 
 `scripts/build-social-preview.ts` renders React HTML with Satori and Sharp, then
 writes static Open Graph and large-image card metadata into `dist/index.html`.
 Crawlers receive those tags without running React. Image filenames include their
-content hash, so a changed introduction gets a new image URL automatically.
+content hash, so a changed introduction, tool, icon or color gets a new image
+URL automatically.
 Run `npm run build` and publish through the existing host to refresh everything.
 The preview is for `https://rotembabani.com/`; external crawlers cannot access
 localhost. Sharing apps choose the surrounding card layout and may cache the
-page metadata. The SPA currently shares its portfolio-wide preview on every
+page metadata. WhatsApp keeps a preview per link for a while; new chats pick up
+the new image once its cache expires. To see a change immediately, share a fresh
+URL such as `https://rotembabani.com/?v=2`, or ask Meta to re-read the page in
+the [Sharing Debugger](https://developers.facebook.com/tools/debug/) (Scrape
+Again). The SPA currently shares its portfolio-wide preview on every
 route. Per-project social cards would require prerendered or server-generated
 route metadata.
