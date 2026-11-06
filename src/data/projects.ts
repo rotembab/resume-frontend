@@ -58,7 +58,7 @@ const projects: ProjectMetadata[] = [
     status: 'prototype',
     featured: true,
     technologies: ['Python', 'C++', 'ESP32', 'WebSockets', 'Claude Agent SDK'],
-    image: '/images/projects/esp32-architecture.svg',
+    image: '/images/projects/esp32-architecture.webp',
     github: 'https://github.com/rotembab/esp32-claude-remote',
   },
   {
@@ -127,7 +127,7 @@ const text: Record<Language, Record<ProjectSlug, ProjectText>> = {
         'The bridge requires host setup, network access and an Anthropic API key.',
       ],
       imageAlt:
-        'Prototype architecture: ESP32 serial client and browser test client connect to a Python WebSocket bridge, which runs the Claude Agent SDK.',
+        'Architecture diagram: an ESP32 handheld and a browser test client connect to a Python WebSocket bridge, which runs the Claude Agent SDK and enforces permission modes, with a roadmap of what is built and what is not.',
     },
     blaster: {
       title: 'Blaster',
@@ -219,7 +219,7 @@ const text: Record<Language, Record<ProjectSlug, ProjectText>> = {
         'הגשר דורש הגדרה במחשב, חיבור לרשת ומפתח API של Anthropic.',
       ],
       imageAlt:
-        'ארכיטקטורת אב־טיפוס: לקוח ESP32 טורי ולקוח בדיקה בדפדפן מתחברים לגשר WebSocket ב-Python שמריץ Claude Agent SDK.',
+        'תרשים ארכיטקטורה: מכשיר ESP32 ולקוח בדיקה בדפדפן מתחברים לגשר WebSocket ב-Python שמריץ Claude Agent SDK ואוכף מצבי הרשאה, עם מפת דרכים של מה שנבנה ומה שלא.',
     },
     blaster: {
       title: 'Blaster',
@@ -310,7 +310,7 @@ const text: Record<Language, Record<ProjectSlug, ProjectText>> = {
         'ホスト側の設定、ネットワーク接続、Anthropic APIキーが必要です。',
       ],
       imageAlt:
-        '試作の構成図。ESP32のシリアルクライアントとブラウザーテストクライアントがPython WebSocketブリッジにつながり、Claude Agent SDKを実行します。',
+        '構成図。ESP32端末とブラウザーテストクライアントがPython WebSocketブリッジにつながり、Claude Agent SDKを実行して権限モードを適用します。実装済みと未実装の項目を示すロードマップ付き。',
     },
     blaster: {
       title: 'Blaster',
